@@ -40,26 +40,34 @@ function HeroTile({ title,src }) {
 }
 
 export default function Hero() {
-  return (
-    <section className="grid grid-cols-1 lg:grid-cols-12">
-      <HeroPanel
-        className="lg:col-span-4"
-        eyebrow="Services"
-        title="High quality service at an affordable price"
-        src="/hero3.webp"
-        description="Nam vitae tortor ac justo congue venenatis. Donec ut tortor tellus. Cras quis urna scelerisque felis laoreet tristique."
+ return (
+  <section className="grid grid-cols-1 lg:grid-cols-12">
+    <HeroPanel
+      className="lg:col-span-4"
+      eyebrow="Our Services"
+      title="Quality car parts at affordable prices"
+      src="/hero3.webp"
+      description="Find reliable, high-quality spare parts for your vehicle, backed by excellent service and competitive prices."
+    />
+
+    <HeroPanel
+      className="lg:col-span-5"
+      eyebrow="Auto Parts Supplier"
+      title="Quality parts for every vehicle"
+      src="/hero.webp"
+      description="We supply a wide range of genuine and reliable car parts for different makes and models, helping you keep your vehicle running smoothly."
+    />
+
+    <div className="flex flex-col gap-0 lg:col-span-3">
+      <HeroTile
+        title="Car Parts for All Models"
+        src="/hero1.webp"
       />
-      <HeroPanel
-        className="lg:col-span-5"
-        eyebrow="Auto Parts Supplier"
-        title="We provide quality auto parts"
-        src="/hero.webp"
-        description="Faucibus in ornare quam viverra orci. Justo nec ultrices dui sapien eget. Porttitor rhoncus dolor purus non enim praesent elementum."
+      <HeroTile
+        title="Professional Car Tools"
+        src="/hero2.webp"
       />
-      <div className="flex flex-col gap-0 lg:col-span-3">
-        <HeroTile title="All Model Car Parts" src="/hero1.webp"/>
-        <HeroTile title="Expensive model car tools" src="/hero2.webp"/>
-      </div>
-    </section>
-  );
+    </div>
+  </section>
+);
 }
