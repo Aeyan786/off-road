@@ -19,8 +19,8 @@ export default function Newsletter() {
           Subscribe Our News Letter And Get Exclusive Offers
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-sm text-neutral-500">
-          At auctor urna nunc id cursus. Sem et tortor consequat id porta
-          nibh venenatis cras sed. Fringilla phasellus faucibus scelerisque.
+          Find the right car parts with confidence, designed to deliver reliable performance, lasting durability, and excellent value for every vehicle.
+
         </p>
 
         <form

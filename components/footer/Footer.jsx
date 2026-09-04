@@ -5,7 +5,7 @@ import {
   InstagramIcon,
   YoutubeIcon,
 } from "@/components/icons/SocialIcons";
-import ImagePlaceholder from "@/components/ui/image-placeholder";
+import Image from "next/image";
 
 const LINK_COLUMNS = [
   {
@@ -18,8 +18,7 @@ const LINK_COLUMNS = [
   },
   {
     heading: "Locations",
-    links: ["New York", "Los Angeles", "Chicago", "Houston", "Washington"],
-  },
+links: ["London", "Manchester", "Birmingham", "Glasgow", "Edinburgh"],  },
 ];
 
 const SOCIALS = [
@@ -27,6 +26,15 @@ const SOCIALS = [
   { label: "Facebook", Icon: FacebookIcon },
   { label: "Instagram", Icon: InstagramIcon },
   { label: "YouTube", Icon: YoutubeIcon },
+];
+
+const image = [
+  "/foot1.webp",
+  "/foot2.webp",
+  "/foot3.avif",
+  "/foot4.avif",
+  "/foot5.webp",
+  "/foot6.avif",
 ];
 
 export default function Footer() {
@@ -51,9 +59,8 @@ export default function Footer() {
           <div className="flex items-center justify-center gap-3 py-4 sm:py-0">
             <MapPin className="size-5 shrink-0" />
             <p className="text-sm leading-tight">
-              No: 58 A, East Madison
-              <br />
-              Street, Baltimore, USA
+              58A Sauchiehall Street, <br />
+              Street, Glasgow, Scotland
             </p>
           </div>
         </div>
@@ -62,7 +69,10 @@ export default function Footer() {
       <div className="bg-ink text-ink-foreground">
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 px-6 py-14 lg:grid-cols-[1.1fr_1.6fr_1fr]">
           <div>
-            <Link href="/" className="flex items-center gap-2 text-xl font-extrabold">
+            <Link
+              href="/"
+              className="flex items-center gap-2 text-xl font-extrabold"
+            >
               <Wrench className="size-6 text-brand" />
               Off Road<span className="text-brand"> Performance</span>
             </Link>
@@ -104,12 +114,8 @@ export default function Footer() {
           </div>
 
           <div className="grid grid-cols-3 gap-2">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <ImagePlaceholder
-                key={i}
-                className="aspect-square rounded-sm bg-white/10"
-                iconClassName="text-white/30"
-              />
+            {image.map((e, i) => (
+              <Image key={i} src={e} height={100} width={100} alt="image" />
             ))}
           </div>
         </div>
@@ -120,7 +126,12 @@ export default function Footer() {
           <p>All Right Reserved &copy; 2025 Design Concept By Vebryx Ltd.</p>
           <div className="flex items-center gap-4">
             {SOCIALS.map(({ label, Icon }) => (
-              <Link key={label} href="/" aria-label={label} className="text-white/90 hover:text-white">
+              <Link
+                key={label}
+                href="/"
+                aria-label={label}
+                className="text-white/90 hover:text-white"
+              >
                 <Icon className="size-3.5" />
               </Link>
             ))}

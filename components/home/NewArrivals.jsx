@@ -1,8 +1,7 @@
 import { MOCK_PRODUCTS } from "@/lib/mock-products";
 import ProductGrid from "@/components/home/ProductGrid";
 
-export default function NewArrivals() {
-  const products = MOCK_PRODUCTS.slice(0, 4);
+export default function NewArrivals({products}) {
 
   return (
     <section className="bg-neutral-50">
@@ -12,8 +11,8 @@ export default function NewArrivals() {
             New Arrivals
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-sm text-neutral-500">
-            Pellentesque habitant morbi tristique senectus. Tortor at risus
-            viverra adipiscing at in tellus integer.
+           Discover our latest car parts, featuring quality products and the newest additions to our collection.
+
           </p>
         </div>
 

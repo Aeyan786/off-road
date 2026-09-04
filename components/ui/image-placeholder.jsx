@@ -15,7 +15,7 @@ export default function ImagePlaceholder({ className, iconClassName }) {
         className
       )}
     >
-     <Image fill src="/hero.webp" alt="hero"/>
+     {/* <Image fill src="/blog-1.webp" alt="hero"/> */} <ImageIcon/>
     </div>
   );
 }

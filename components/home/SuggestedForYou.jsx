@@ -3,7 +3,8 @@ import ProductCard from "@/components/home/ProductCard";
 
 const TABS = ["ATV Cylinder", "All"];
 
-export default function SuggestedForYou() {
+export default async function SuggestedForYou({products}) {
+  
   return (
     <section className="mx-auto max-w-[1400px] px-6 py-16">
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -28,7 +29,7 @@ export default function SuggestedForYou() {
       </div>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {MOCK_PRODUCTS.map((product) => (
+        {products.length > 0 && products.map((product) => (
           <ProductCard key={product.id} product={product} variant="row" />
         ))}
       </div>

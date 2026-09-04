@@ -5,25 +5,25 @@ const FEATURES = [
     Icon: Gem,
     title: "Premium Products",
     description:
-      "Etiam ac tempor lacus. Nunc vehser vehicula exeget varius.",
+      "High-quality car parts built for reliable performance, durability, and a perfect fit.",
   },
   {
     Icon: ShieldCheck,
     title: "Secure Payments",
     description:
-      "Duis lacinia vestibulum turp sodales enim blandit at. Proin sodales.",
+      "Shop with confidence using safe and secure payment options for every order.",
   },
   {
     Icon: PackageCheck,
     title: "Easy Returns",
     description:
-      "Integer tincidunt diam ut semtris tique tempor leo suscipit.",
+      "Enjoy a hassle-free return process if your product isn't the right fit.",
   },
   {
     Icon: Truck,
     title: "Free Delivery",
     description:
-      "Risus at nisl placerat, in vehicula metus dictum uiseu egestas.",
+      "Get your car parts delivered safely and conveniently right to your doorstep.",
   },
 ];
 

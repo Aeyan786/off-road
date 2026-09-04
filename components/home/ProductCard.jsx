@@ -24,6 +24,8 @@ function ProductImage({ image, alt, className }) {
  */
 export default function ProductCard({ product, variant = "grid" }) {
   const { vendor, title, price, image } = product;
+  console.log(product);
+  
 
   if (variant === "row") {
     return (

@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowRight, CircleUserRound } from "lucide-react";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
+import Image from "next/image";
 
 const POSTS = [
   {
@@ -37,8 +38,7 @@ export default function RecentUpdates() {
             Recent Updations
           </h2>
           <p className="mt-3 max-w-xl text-sm text-neutral-500">
-            Dictum at tempor commodo ullamcorper a. Fringilla phasellus
-            faucibus scelerisque eleifend. Magnis dis parturient montes.
+            Stay updated with the latest news, improvements, features, and important changes.
           </p>
         </div>
         <div className="flex shrink-0 gap-2">
@@ -63,7 +63,7 @@ export default function RecentUpdates() {
         {POSTS.map((post) => (
           <article key={post.id}>
             <div className="relative aspect-[4/3] overflow-hidden bg-neutral-200">
-              <ImagePlaceholder className="h-full w-full" />
+              <Image fill src='/blog-1.webp' alt="blog"/>
               <span className="absolute right-3 top-3 rounded-md bg-black/80 px-2.5 py-1.5 text-center text-xs font-semibold leading-tight text-white">
                 {post.date.split(" ")[0]}
                 <br />
@@ -77,7 +77,8 @@ export default function RecentUpdates() {
               </div>
               <h3 className="font-semibold text-neutral-900">{post.title}</h3>
               <p className="text-sm leading-relaxed text-neutral-500">
-                {post.excerpt}
+                Car spare parts play an essential role in keeping vehicles safe, reliable, and performing at their best. From brakes and filters to engine components and electrical parts, quality spare parts help maintain the vehicle’s efficiency and extend its lifespan. Choosing the right replacement parts can also prevent costly repairs, improve driving performance, and ensure your car continues to run smoothly on the road.
+
               </p>
             </div>
           </article>

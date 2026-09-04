@@ -20,22 +20,24 @@ export default async function HomePage() {
   const supabase = await createClient();
   const [subcategories, products] = await Promise.all([
     safeQuery(getSecondLevelCategories(supabase), []),
-    safeQuery(getProducts(supabase, { limit: 8 }), []),
+    safeQuery(getProducts(supabase), []),
   ]);
 
-  const storefrontProducts = products.map(toStorefrontProduct);
+  const storefrontProducts = products.slice(0,8).map(toStorefrontProduct);
+  const suggestedProducts = products.slice(8,14).map(toStorefrontProduct);
+  const newArrival = products.slice(14,18).map(toStorefrontProduct);
 
   return (
     <>
       <Hero />
       <ShopByCategory categories={subcategories} />
       <OurProducts products={storefrontProducts} />
-      <SuggestedForYou />
-      <NewArrivals />
+      <SuggestedForYou products={suggestedProducts}/>
+      <NewArrivals products={newArrival} />
       <Features />
       <RecentUpdates />
       <Newsletter />
-      <Marquee />
+      {/* <Marquee /> */}
     </>
   );
 }

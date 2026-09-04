@@ -29,8 +29,8 @@ export default function OurProducts({ products = [] }) {
               Providing high-quality car parts for any brands
             </h3>
             <p className="text-sm leading-relaxed text-neutral-500">
-              Suspendisse ultrices gravida dictum fusce ut placerat. Urna id
-              volutpat lacus laoreet non curabitur gravida.
+             We provide high-quality car parts for all major brands, ensuring reliable performance, durability, and a perfect fit for every vehicle.
+
             </p>
             <ButtonLink href="/" className="w-fit">
               Get New Plans
