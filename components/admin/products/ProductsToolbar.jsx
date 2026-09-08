@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Plus, Search, Upload } from "lucide-react";
+import { Plus, Search, Trash, Upload } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ButtonLink from "@/components/ui/button-link";
 import BulkUploadDialog from "@/components/admin/products/BulkUploadDialog";
+import { deleteBulk } from "@/actions/products";
 
 export default function ProductsToolbar({ initialUploadOpen = false }) {
   const router = useRouter();
@@ -24,6 +25,10 @@ export default function ProductsToolbar({ initialUploadOpen = false }) {
     return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
+
+  const bulkDel = async()=>{
+    await deleteBulk()
+  }
 
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -48,7 +53,11 @@ export default function ProductsToolbar({ initialUploadOpen = false }) {
             </Button>
           }
         />
-        <ButtonLink href="/admin/products/new">
+        <button onClick={bulkDel} className="flex items-center gap-2 bg-white! border rounded-md px-2 hover:bg-muted! text-sm">
+          <Trash className="size-4" />
+          Bulk Delete
+        </button>
+         <ButtonLink  href="/admin/products/new">
           <Plus className="size-4" />
           Add Product
         </ButtonLink>

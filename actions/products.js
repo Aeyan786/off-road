@@ -58,7 +58,7 @@ async function buildProductPayload(supabase, formData) {
     description: toStringOrNull(formData.get("description")),
     small_description: toStringOrNull(formData.get("small_description")),
     additional_information: toStringOrNull(
-      formData.get("additional_information")
+      formData.get("additional_information"),
     ),
     price: toNumberOrNull(formData.get("price")) ?? 0,
     quantity: toNumberOrNull(formData.get("quantity")) ?? 0,
@@ -119,6 +119,21 @@ export async function deleteProduct(id) {
   const supabase = await createClient();
   const { error } = await supabase.from("products").delete().eq("id", id);
   if (error) return { error: error.message };
+
+  revalidatePath("/admin/products");
+  revalidatePath("/");
+  return { success: true };
+}
+
+export async function deleteBulk() {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("categories")
+    .delete()
+    .not("id", "is", null);
+  if (error) {
+    return { error: error.message };
+  }
 
   revalidatePath("/admin/products");
   revalidatePath("/");
