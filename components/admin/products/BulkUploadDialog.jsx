@@ -245,7 +245,7 @@ export default function BulkUploadDialog({ trigger, open: openProp, onOpenChange
                     }
                     className="h-8 w-1/2 rounded-md border border-neutral-300 bg-background px-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
                   >
-                    <option value="">Ignore this column</option>
+                    <option value="">None</option>
                     {PRODUCT_FIELDS.map((field) => (
                       <option key={field.key} value={field.key}>
                         {field.label}
