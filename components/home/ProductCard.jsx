@@ -9,7 +9,13 @@ function ProductImage({ image, alt, className }) {
   if (!image) return <ImagePlaceholder className={className} />;
   return (
     <div className={`relative ${className}`}>
-      <Image src={image} alt={alt} fill sizes="240px" className="object-cover" />
+      <Image
+        src={image}
+        alt={alt}
+        fill
+        sizes="240px"
+        className="object-cover"
+      />
     </div>
   );
 }
@@ -23,9 +29,8 @@ function ProductImage({ image, alt, className }) {
  * variant "row"  -> compact horizontal row used in Suggested For You.
  */
 export default function ProductCard({ product, variant = "grid" }) {
-  const { vendor, title, price, image,model,year,manufacturer } = product;
+  const { vendor, title, price, image, model, year, manufacturer } = product;
   console.log(product);
-  
 
   if (variant === "row") {
     return (
@@ -33,13 +38,17 @@ export default function ProductCard({ product, variant = "grid" }) {
         href="/"
         className="flex items-center gap-4 rounded-md bg-neutral-50 p-3 transition-colors hover:bg-neutral-100"
       >
-        <ProductImage image={image} alt={title} className="size-14 shrink-0 overflow-hidden rounded" />
+        <ProductImage
+          image={image}
+          alt={title}
+          className="size-14 shrink-0 overflow-hidden rounded"
+        />
         <div className="min-w-0 flex-1">
           <p className="text-[11px] font-medium uppercase tracking-wide text-neutral-500">
             {vendor}
           </p>
           <p className="truncate text-sm font-medium text-neutral-800">
-            {`${title} ${manufacturer} ${model} ${year}`}
+            {`${manufacturer} ${model} ${year} ${title}`}
           </p>
         </div>
         <p className="shrink-0 text-sm font-semibold text-neutral-900">
@@ -75,7 +84,7 @@ export default function ProductCard({ product, variant = "grid" }) {
           href="/"
           className="block text-sm font-medium text-neutral-800 hover:text-brand"
         >
-            {`${title} ${manufacturer} ${model} ${year}`}
+          {`${manufacturer} ${model} ${year} ${title}`}
         </Link>
         <p className="text-sm font-semibold text-neutral-900">{price}</p>
       </div>
