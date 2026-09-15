@@ -23,7 +23,7 @@ function ProductImage({ image, alt, className }) {
  * variant "row"  -> compact horizontal row used in Suggested For You.
  */
 export default function ProductCard({ product, variant = "grid" }) {
-  const { vendor, title, price, image,model,year } = product;
+  const { vendor, title, price, image,model,year,manufacturer } = product;
   console.log(product);
   
 
@@ -39,7 +39,7 @@ export default function ProductCard({ product, variant = "grid" }) {
             {vendor}
           </p>
           <p className="truncate text-sm font-medium text-neutral-800">
-            {`${title} ${model} ${year}`}
+            {`${title} ${manufacturer} ${model} ${year}`}
           </p>
         </div>
         <p className="shrink-0 text-sm font-semibold text-neutral-900">
@@ -75,7 +75,7 @@ export default function ProductCard({ product, variant = "grid" }) {
           href="/"
           className="block text-sm font-medium text-neutral-800 hover:text-brand"
         >
-            {`${title} ${model} ${year}`}
+            {`${title} ${manufacturer} ${model} ${year}`}
         </Link>
         <p className="text-sm font-semibold text-neutral-900">{price}</p>
       </div>
