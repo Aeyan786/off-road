@@ -25,11 +25,11 @@ export default function AdminShell({
 
   return (
     <TooltipProvider>
-      <div className="flex h-screen overflow-hidden bg-neutral-50">
+      <div className="flex h-dvh w-full overflow-hidden bg-neutral-50">
         {/* Sidebar */}
         <aside
           className={cn(
-            "hidden h-screen shrink-0 border-r md:flex",
+            "hidden h-dvh shrink-0 overflow-hidden border-r md:flex",
             "transition-[width] duration-300 ease-in-out",
             collapsed ? "w-16" : "w-64"
           )}
@@ -41,13 +41,15 @@ export default function AdminShell({
           />
         </aside>
 
-        {/* Main area */}
-        <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-          {/* Header stays at the top */}
-          <AdminHeader userEmail={userEmail} />
+        {/* Right side */}
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+          {/* Header */}
+          <div className="shrink-0">
+            <AdminHeader userEmail={userEmail} />
+          </div>
 
-          {/* Only this area scrolls */}
-          <main className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-10">
+          {/* ONLY scrollbar in the admin shell */}
+          <main className="min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-10">
             {children}
           </main>
         </div>

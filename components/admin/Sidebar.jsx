@@ -161,7 +161,7 @@ export default function Sidebar({
       {/* Footer */}
       <div
         className={cn(
-          "shrink-0 border-t border-white/20 py-3",
+          "shrink-0 border-t border-white/20 py-4",
           collapsed ? "px-2" : "px-3"
         )}
       >
