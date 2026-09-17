@@ -19,7 +19,7 @@ export default async function ManageProductsPage({ searchParams }) {
   let products = [];
   let setupError = null;
   try {
-    products = await getProducts(supabase);
+    products = await getProducts(supabase, { includeAllStatuses: true });
   } catch (err) {
     setupError = err.message;
   }

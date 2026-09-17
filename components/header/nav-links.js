@@ -1,8 +1,9 @@
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
-  { label: "Shop", href: "/" },
-  { label: "New Arrival", href: "/" },
+  // Opens the category mega-menu on hover (see ShopMenu).
+  { label: "Shop", href: "/products", hasCategoryMenu: true },
+  { label: "New Arrival", href: "/new-arrivals" },
   { label: "Blog", href: "/" },
-  { label: "About", href: "/" },
-  { label: "Contact", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];

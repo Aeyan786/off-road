@@ -6,6 +6,7 @@ import {
   createPaginatedRowModel,
   createSortedRowModel,
   rowPaginationFeature,
+  rowSelectionFeature,
   rowSortingFeature,
   sortFns,
   tableFeatures,
@@ -37,6 +38,7 @@ const features = tableFeatures({
   sortFns,
   rowPaginationFeature,
   paginatedRowModel: createPaginatedRowModel(),
+  rowSelectionFeature,
 });
 
 const EMPTY_DATA = [];
@@ -47,15 +49,24 @@ const EMPTY_DATA = [];
  * @param {object[]} columns column definitions
  * @param {object[]} data
  * @param {(table: object) => React.ReactNode} [toolbar] rendered above the
- *   table and handed the table instance, so filter controls can drive
- *   column filters.
+ *   table and handed the table instance, so filter controls and bulk
+ *   actions can drive column filters and row selection.
  * @param {string} [emptyMessage]
+ * @param {(row: object) => string} [getRowId] keys row selection by a stable
+ *   id, so a selection survives filtering, sorting and paging.
  */
-export function DataTable({ columns, data, toolbar, emptyMessage = "No results." }) {
+export function DataTable({
+  columns,
+  data,
+  toolbar,
+  emptyMessage = "No results.",
+  getRowId,
+}) {
   const table = useTable({
     features,
     columns,
     data: data ?? EMPTY_DATA,
+    getRowId,
     initialState: { pagination: { pageIndex: 0, pageSize: 20 } },
   });
 
@@ -161,7 +172,7 @@ export function DataTable({ columns, data, toolbar, emptyMessage = "No results."
               type="button"
               variant="outline"
               size="icon-sm"
-              className="rounded-sm"
+              className="rounded-sm cursor-pointer"
               aria-label="First page"
               onClick={() => table.setPageIndex(0)}
               disabled={!table.getCanPreviousPage()}
@@ -172,7 +183,7 @@ export function DataTable({ columns, data, toolbar, emptyMessage = "No results."
               type="button"
               variant="outline"
               size="icon-sm"
-              className="rounded-sm"
+              className="rounded-sm cursor-pointer"
               aria-label="Previous page"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
@@ -183,7 +194,7 @@ export function DataTable({ columns, data, toolbar, emptyMessage = "No results."
               type="button"
               variant="outline"
               size="icon-sm"
-              className="rounded-sm"
+              className="rounded-sm cursor-pointer"
               aria-label="Next page"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
@@ -194,7 +205,7 @@ export function DataTable({ columns, data, toolbar, emptyMessage = "No results."
               type="button"
               variant="outline"
               size="icon-sm"
-              className="rounded-sm"
+              className="rounded-sm cursor-pointer"
               aria-label="Last page"
               onClick={() => table.setPageIndex(pageCount - 1)}
               disabled={!table.getCanNextPage()}

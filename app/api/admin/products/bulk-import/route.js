@@ -101,6 +101,7 @@ export async function POST(request) {
         product: record.product.toString().trim(),
         sku: record.sku.toString().trim(),
         price,
+        discount_price: toNumberOrNull(record.discount_price),
         quantity: toNumberOrNull(record.quantity) ?? 0,
         supplier: toStringOrNull(record.supplier),
         manufacturer: toStringOrNull(record.manufacturer),

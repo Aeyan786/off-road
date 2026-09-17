@@ -40,7 +40,7 @@ export default function DeleteProductDialog({ product }) {
             size="icon-sm"
             variant="ghost"
             aria-label={`Delete ${product.product}`}
-            className="text-destructive hover:bg-destructive/10"
+            className="text-destructive hover:bg-destructive/10 cursor-pointer rounded-sm"
           >
             <Trash2 className="size-3.5" />
           </Button>
@@ -62,10 +62,10 @@ export default function DeleteProductDialog({ product }) {
         ) : null}
 
         <DialogFooter>
-          <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+          <Button className="cursor-pointer rounded-sm px-3" type="button" variant="outline" onClick={() => setOpen(false)}>
             Cancel
           </Button>
-          <Button
+          <Button className="cursor-pointer rounded-sm px-3"
             type="button"
             variant="destructive"
             onClick={handleDelete}

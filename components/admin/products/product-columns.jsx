@@ -4,7 +4,9 @@ import Image from "next/image";
 import { filterFn_includesString } from "@tanstack/react-table";
 import { ImageIcon, Pencil } from "lucide-react";
 import ButtonLink from "@/components/ui/button-link";
+import { Checkbox } from "@/components/ui/checkbox";
 import DeleteProductDialog from "@/components/admin/products/DeleteProductDialog";
+import ProductStatusSelect from "@/components/admin/products/ProductStatusSelect";
 import { categoryPath } from "@/lib/data/products";
 
 const priceFormatter = new Intl.NumberFormat("en-GB", {
@@ -14,6 +16,28 @@ const priceFormatter = new Intl.NumberFormat("en-GB", {
 
 /** Column definitions for the products DataTable. */
 export const productColumns = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={table.getIsAllPageRowsSelected()}
+        indeterminate={table.getIsSomePageRowsSelected()}
+        onCheckedChange={(checked) => table.toggleAllPageRowsSelected(checked)}
+        aria-label="Select all products on this page"
+        className="cursor-pointer"
+      />
+    ),
+    enableSorting: false,
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(checked) => row.toggleSelected(checked)}
+        aria-label={`Select ${row.original.product}`}
+        className="cursor-pointer"
+      />
+    ),
+    meta: { cellClassName: "w-10" },
+  },
   {
     id: "image",
     header: "",
@@ -90,6 +114,23 @@ export const productColumns = [
     cell: ({ getValue }) => priceFormatter.format(getValue() ?? 0),
   },
   {
+    accessorKey: "discount_price",
+    header: "Discount",
+    cell: ({ getValue }) => {
+      const value = getValue();
+      return value === null || value === undefined ? (
+        <span className="text-neutral-400">—</span>
+      ) : (
+        priceFormatter.format(value)
+      );
+    },
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => <ProductStatusSelect product={row.original} />,
+  },
+  {
     accessorKey: "quantity",
     header: "Stock",
     cell: ({ getValue }) => <span className="tabular-nums">{getValue()}</span>,
@@ -105,7 +146,7 @@ export const productColumns = [
           size="icon-sm"
           variant="ghost"
           aria-label={`Edit ${row.original.product}`}
-          className="rounded-sm"
+          className="rounded-sm cursor-pointer"
         >
           <Pencil className="size-3.5" />
         </ButtonLink>

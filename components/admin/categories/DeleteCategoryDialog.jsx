@@ -55,10 +55,10 @@ export default function DeleteCategoryDialog({ trigger, category, isParent }) {
         ) : null}
 
         <DialogFooter>
-          <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+          <Button className="cursor-pointer rounded-sm px-3" type="button" variant="outline" onClick={() => setOpen(false)}>
             Cancel
           </Button>
-          <Button
+          <Button className="cursor-pointer rounded-sm px-3"
             type="button"
             variant="destructive"
             onClick={handleDelete}

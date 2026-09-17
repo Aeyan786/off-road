@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import JSZip from "jszip";
 import { requireAdmin } from "@/lib/server/requireAdmin";
+import { detachMediaUrlsFromProducts } from "@/lib/server/detachMediaUrls";
 import { getMedia, getMediaByFileNames } from "@/lib/data/media";
 
 // Media files live alongside product images in the existing bucket, under a
@@ -21,6 +22,15 @@ const MIME_BY_EXTENSION = {
   svg: "image/svg+xml",
   bmp: "image/bmp",
 };
+
+/** Also refreshes product views when a delete rewrote any product's images. */
+function revalidateMediaViews(productsUpdated = 0) {
+  revalidatePath("/admin/media");
+  if (productsUpdated > 0) {
+    revalidatePath("/admin/products");
+    revalidatePath("/");
+  }
+}
 
 function extensionOf(fileName) {
   const match = /\.([^.]+)$/.exec(fileName ?? "");
@@ -259,19 +269,30 @@ export async function uploadMediaZip(formData) {
   return { uploaded: data.length, skipped, failed, media: data };
 }
 
-/** Removes the stored file and its metadata row. */
+/**
+ * Removes the stored file, its metadata row, and the image URL from any
+ * product that was using it.
+ */
 export async function deleteMedia(id) {
   const { supabase, error: authError } = await requireAdmin();
   if (authError) return { error: authError };
 
   const { data: item, error: findError } = await supabase
     .from("media")
-    .select("id, storage_path")
+    .select("id, storage_path, file_url")
     .eq("id", id)
     .maybeSingle();
 
   if (findError) return { error: findError.message };
   if (!item) return { error: "That media item no longer exists." };
+
+  // Detach first: if this fails nothing has been destroyed yet.
+  let productsUpdated = 0;
+  try {
+    ({ productsUpdated } = await detachMediaUrlsFromProducts(supabase, [item.file_url]));
+  } catch (err) {
+    return { error: `Could not update products using this image: ${err.message}` };
+  }
 
   const { error: storageError } = await supabase.storage
     .from(MEDIA_BUCKET)
@@ -281,8 +302,59 @@ export async function deleteMedia(id) {
   const { error: deleteError } = await supabase.from("media").delete().eq("id", id);
   if (deleteError) return { error: deleteError.message };
 
-  revalidatePath("/admin/media");
-  return { success: true };
+  revalidateMediaViews(productsUpdated);
+  return { success: true, productsUpdated };
+}
+
+/**
+ * Removes several media items at once — the files, their metadata rows, and
+ * their URLs from any product that was using them. Only the ids the admin
+ * selected are touched.
+ */
+export async function deleteMediaItems(ids) {
+  const { supabase, error: authError } = await requireAdmin();
+  if (authError) return { error: authError };
+
+  const mediaIds = (Array.isArray(ids) ? ids : []).filter(Boolean);
+  if (mediaIds.length === 0) return { error: "No media was selected." };
+
+  const { data: items, error: findError } = await supabase
+    .from("media")
+    .select("id, storage_path, file_url")
+    .in("id", mediaIds);
+
+  if (findError) return { error: findError.message };
+  if (items.length === 0) return { error: "Those media items no longer exist." };
+
+  // Detach first: if this fails nothing has been destroyed yet.
+  let productsUpdated = 0;
+  try {
+    ({ productsUpdated } = await detachMediaUrlsFromProducts(
+      supabase,
+      items.map((item) => item.file_url)
+    ));
+  } catch (err) {
+    return { error: `Could not update products using these images: ${err.message}` };
+  }
+
+  const { error: storageError } = await supabase.storage
+    .from(MEDIA_BUCKET)
+    .remove(items.map((item) => item.storage_path));
+  if (storageError) {
+    return { error: `Could not delete the files: ${storageError.message}` };
+  }
+
+  const { error: deleteError } = await supabase
+    .from("media")
+    .delete()
+    .in(
+      "id",
+      items.map((item) => item.id)
+    );
+  if (deleteError) return { error: deleteError.message };
+
+  revalidateMediaViews(productsUpdated);
+  return { success: true, deleted: items.length, productsUpdated };
 }
 
 /** Used by the media picker dialog to search the library on demand. */

@@ -64,7 +64,7 @@ export default function DeleteMediaDialog({ item }) {
           <Button
             type="button"
             variant="outline"
-            className="rounded-sm px-3 text-xs"
+            className="rounded-sm px-3 text-xs cursor-pointer"
             onClick={() => setOpen(false)}
           >
             Cancel
@@ -72,7 +72,7 @@ export default function DeleteMediaDialog({ item }) {
           <Button
             type="button"
             variant="destructive"
-            className="rounded-sm px-3 text-xs"
+            className="rounded-sm px-3 text-xs cursor-pointer"
             onClick={handleDelete}
             disabled={isPending}
           >

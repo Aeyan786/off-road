@@ -31,7 +31,10 @@ export default function Breadcrumbs({ items = [] }) {
                 {isLast || !item.href ? (
                   <BreadcrumbPage>{item.label}</BreadcrumbPage>
                 ) : (
-                  <BreadcrumbLink render={<Link href={item.href} />}>
+                  <BreadcrumbLink
+                    className="cursor-pointer"
+                    render={<Link href={item.href} />}
+                  >
                     {item.label}
                   </BreadcrumbLink>
                 )}

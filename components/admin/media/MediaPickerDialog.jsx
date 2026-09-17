@@ -140,7 +140,7 @@ export default function MediaPickerDialog({
                     type="button"
                     onClick={() => toggle(item)}
                     aria-pressed={isSelected}
-                    className={cn(
+                    className={cn("cursor-pointer", 
                       "group relative cursor-pointer overflow-hidden rounded-sm border-2 text-left transition-colors",
                       isSelected ? "border-brand" : "border-transparent hover:border-neutral-300"
                     )}
@@ -181,14 +181,14 @@ export default function MediaPickerDialog({
           <Button
             type="button"
             variant="outline"
-            className="rounded-sm px-3 text-xs"
+            className="rounded-sm px-3 text-xs cursor-pointer"
             onClick={() => handleOpenChange(false)}
           >
             Cancel
           </Button>
           <Button
             type="button"
-            className="rounded-sm px-3 text-xs"
+            className="rounded-sm px-3 text-xs cursor-pointer"
             onClick={handleConfirm}
             disabled={selectedIds.length === 0}
           >

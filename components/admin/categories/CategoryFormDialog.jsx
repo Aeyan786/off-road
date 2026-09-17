@@ -64,10 +64,10 @@ export default function CategoryFormDialog({ trigger, parentId, parentName }) {
           ) : null}
 
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+            <Button className="cursor-pointer rounded-sm px-3" type="button" variant="outline" onClick={() => setOpen(false)}>
               Cancel
             </Button>
-            <Button type="submit" disabled={isPending}>
+            <Button className="cursor-pointer rounded-sm px-3" type="submit" disabled={isPending}>
               {isPending ? <Loader2 className="size-4 animate-spin" /> : null}
               Save
             </Button>

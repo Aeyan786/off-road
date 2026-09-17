@@ -2,7 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { PanelLeftClose, PanelLeftOpen, Wrench } from "lucide-react";
+import {
+  PanelLeftClose,
+  PanelLeftOpen,
+  Wrench,
+  ExternalLink,
+  LogOut,
+} from "lucide-react";
 import { ADMIN_NAV_LINKS } from "@/components/admin/nav-links";
 import {
   Tooltip,
@@ -10,6 +16,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { logout } from "@/actions/auth";
 
 export default function Sidebar({
   onNavigate,
@@ -22,7 +29,7 @@ export default function Sidebar({
   return (
     <div
       className={cn(
-        "flex h-full flex-col bg-[#1B9DDB] overflow-hidden",
+        "flex h-full flex-col overflow-hidden bg-[#1B9DDB]",
         "transition-[width] duration-400 ease-in-out",
         collapsed ? "w-16" : "w-64",
         className
@@ -41,7 +48,7 @@ export default function Sidebar({
         <Link
           href="/admin"
           className={cn(
-            "flex min-w-0 items-center gap-2 overflow-hidden",
+            "flex min-w-0 cursor-pointer items-center gap-2 overflow-hidden",
             "transition-all duration-300 ease-in-out",
             collapsed
               ? "w-0 -translate-x-2 opacity-0"
@@ -50,7 +57,7 @@ export default function Sidebar({
         >
           <Wrench className="size-5 shrink-0 text-white" />
 
-          <span className="truncate font-bold text-white whitespace-nowrap">
+          <span className="truncate whitespace-nowrap font-bold text-white">
             Off Road Admin
           </span>
         </Link>
@@ -107,11 +114,9 @@ export default function Sidebar({
               onClick={onNavigate}
               aria-label={collapsed ? link.label : undefined}
               className={cn(
-                "group flex items-center rounded-md py-2.5 text-sm font-medium",
+                "group flex cursor-pointer items-center rounded-md py-2.5 text-sm font-medium",
                 "transition-all duration-300 ease-in-out",
-                collapsed
-                  ? "justify-center px-0"
-                  : "gap-3 px-3",
+                collapsed ? "justify-center px-0" : "gap-3 px-3",
                 isActive
                   ? "bg-white text-black"
                   : "text-white hover:bg-neutral-100 hover:text-neutral-900"
@@ -152,6 +157,92 @@ export default function Sidebar({
           );
         })}
       </nav>
+
+      {/* Footer */}
+      <div
+        className={cn(
+          "shrink-0 border-t border-white/20 py-3",
+          collapsed ? "px-2" : "px-3"
+        )}
+      >
+        {/* Visit Website */}
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <Link
+                href="/"
+                target="_blank"
+                aria-label={collapsed ? "Visit Website" : undefined}
+                className={cn(
+                  "flex cursor-pointer items-center rounded-sm py-2.5 text-sm font-medium text-white",
+                  "transition-all duration-200 hover:bg-neutral-100 hover:text-neutral-900",
+                  collapsed
+                    ? "justify-center px-0"
+                    : "gap-3 px-3"
+                )}
+              >
+                <ExternalLink className="size-4 shrink-0" />
+
+                <span
+                  className={cn(
+                    "overflow-hidden whitespace-nowrap transition-all duration-300",
+                    collapsed
+                      ? "w-0 opacity-0"
+                      : "w-auto opacity-100"
+                  )}
+                >
+                  Visit Website
+                </span>
+              </Link>
+            }
+          />
+
+          {collapsed && (
+            <TooltipContent side="right">
+              Visit Website
+            </TooltipContent>
+          )}
+        </Tooltip>
+
+        {/* Logout */}
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <button
+                type="button"
+                onClick={()=>logout()}
+                aria-label={collapsed ? "Logout" : undefined}
+                className={cn(
+                  "flex w-full cursor-pointer items-center rounded-sm py-2.5 text-sm font-medium text-white",
+                  "transition-all duration-200 hover:bg-neutral-100 hover:text-neutral-900",
+                  collapsed
+                    ? "justify-center px-0"
+                    : "gap-3 px-3"
+                )}
+              >
+                <LogOut className="size-4 shrink-0" />
+
+                <span
+                  className={cn(
+                    "overflow-hidden whitespace-nowrap transition-all duration-300",
+                    collapsed
+                      ? "w-0 opacity-0"
+                      : "w-auto opacity-100"
+                  )}
+                >
+                  Logout
+                </span>
+              </button>
+            }
+          />
+
+          {collapsed && (
+            <TooltipContent side="right">
+              Logout
+            </TooltipContent>
+          )}
+        </Tooltip>
+      </div>
     </div>
   );
 }

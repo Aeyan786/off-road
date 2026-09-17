@@ -94,7 +94,7 @@ export default function ProductImagesField({ value = [], onChange, error }) {
         <Button
           type="button"
           variant="outline"
-          className="rounded-sm px-3 text-xs"
+          className="rounded-sm px-3 text-xs cursor-pointer"
           disabled={isUploading}
           onClick={() => fileInputRef.current?.click()}
         >
@@ -118,7 +118,7 @@ export default function ProductImagesField({ value = [], onChange, error }) {
           alreadySelected={value}
           onSelect={(items) => addUrls(items.map((item) => item.file_url))}
           trigger={
-            <Button type="button" variant="outline" className="rounded-sm px-3 text-xs">
+            <Button type="button" variant="outline" className="rounded-sm px-3 text-xs cursor-pointer">
               <Images className="size-3.5" />
               Select from Media
             </Button>

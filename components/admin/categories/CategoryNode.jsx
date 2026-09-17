@@ -20,7 +20,7 @@ export default function CategoryNode({ category, depth = 0 }) {
             parentId={category.id}
             parentName={category.name}
             trigger={
-              <Button type="button" size="icon-xs" variant="outline" aria-label={`Add category under ${category.name}`}>
+              <Button className="cursor-pointer rounded-sm" type="button" size="icon-xs" variant="outline" aria-label={`Add category under ${category.name}`}>
                 <Plus className="size-3" />
               </Button>
             }
@@ -34,7 +34,7 @@ export default function CategoryNode({ category, depth = 0 }) {
                 size="icon-xs"
                 variant="ghost"
                 aria-label={`Delete ${category.name}`}
-                className="text-destructive hover:bg-destructive/10"
+                className="text-destructive hover:bg-destructive/10 cursor-pointer rounded-sm"
               >
                 <Trash2 className="size-3" />
               </Button>

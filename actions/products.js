@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/server/requireAdmin";
 import { parseProductForm } from "@/lib/validation/product";
+import { PRODUCT_STATUSES } from "@/lib/data/products";
 
 function revalidateProductViews() {
   revalidatePath("/admin/products");
@@ -57,6 +58,29 @@ export async function updateProduct(id, formData) {
   return { success: true };
 }
 
+/**
+ * Publishes or unpublishes a product straight from the listing. The column
+ * is plain text with no DB constraint, so the value is checked here.
+ */
+export async function setProductStatus(id, status) {
+  const { supabase, error: authError } = await requireAdmin();
+  if (authError) return { error: authError };
+
+  if (!PRODUCT_STATUSES.includes(status)) {
+    return { error: `"${status}" is not a valid product status.` };
+  }
+
+  const { error } = await supabase
+    .from("products")
+    .update({ status })
+    .eq("id", id);
+
+  if (error) return { error: error.message };
+
+  revalidateProductViews();
+  return { success: true, status };
+}
+
 export async function deleteProduct(id) {
   const { supabase, error: authError } = await requireAdmin();
   if (authError) return { error: authError };
@@ -66,6 +90,31 @@ export async function deleteProduct(id) {
 
   revalidateProductViews();
   return { success: true };
+}
+
+/**
+ * Deletes the products the admin selected in the listing, and nothing else.
+ * Images are left alone on purpose — products reference media by URL and the
+ * same image can be used by other products, so the library is not touched
+ * (same as deleting a single product).
+ */
+export async function deleteProducts(ids) {
+  const { supabase, error: authError } = await requireAdmin();
+  if (authError) return { error: authError };
+
+  const productIds = (Array.isArray(ids) ? ids : []).filter(Boolean);
+  if (productIds.length === 0) return { error: "No products were selected." };
+
+  const { data, error } = await supabase
+    .from("products")
+    .delete()
+    .in("id", productIds)
+    .select("id");
+
+  if (error) return { error: error.message };
+
+  revalidateProductViews();
+  return { success: true, deleted: data.length };
 }
 
 // Bulk import lives in app/api/admin/products/bulk-import/route.js (a plain

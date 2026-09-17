@@ -150,7 +150,7 @@ export default function MediaUploader() {
   }
 
   return (
-    <Card>
+    <Card className="rounded-sm">
       <CardHeader>
         <CardTitle className="text-base">Upload Media</CardTitle>
       </CardHeader>
@@ -169,7 +169,7 @@ export default function MediaUploader() {
           />
           <Button
             type="button"
-            className="rounded-sm px-3 text-xs"
+            className="rounded-sm px-3 text-xs cursor-pointer"
             disabled={imageFiles.length === 0 || isPending}
             onClick={() =>
               runUpload(
@@ -199,7 +199,7 @@ export default function MediaUploader() {
           <Button
             type="button"
             variant="outline"
-            className="rounded-sm px-3 text-xs"
+            className="rounded-sm px-3 text-xs cursor-pointer"
             disabled={!zipFile || isPending}
             onClick={() =>
               runUpload(

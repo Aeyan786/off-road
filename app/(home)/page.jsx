@@ -25,7 +25,7 @@ export default async function HomePage() {
 
   const storefrontProducts = products.slice(0,9).map(toStorefrontProduct);
   const suggestedProducts = products.slice(9,14).map(toStorefrontProduct);
-  const newArrival = products.slice(14,18).map(toStorefrontProduct);
+  const newArrival = products.filter((e)=>e.new_arrival === true && e.status == "active").slice(0,4).map(toStorefrontProduct);
 
   return (
     <>

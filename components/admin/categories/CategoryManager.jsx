@@ -17,7 +17,7 @@ export default function CategoryManager({ categories }) {
       <div className="flex justify-end">
         <CategoryFormDialog
           trigger={
-            <Button type="button">
+            <Button className="cursor-pointer rounded-sm px-3" type="button">
               <Plus className="size-4" />
               Add Category
             </Button>
@@ -36,7 +36,7 @@ export default function CategoryManager({ categories }) {
           </p>
         </div>
       ) : (
-        <Card>
+        <Card className="rounded-sm">
           <CardContent className="divide-y">
             {categories.map((category) => (
               <div key={category.id} className="py-2 first:pt-0 last:pb-0">

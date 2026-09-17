@@ -19,7 +19,7 @@ export default function AdminDashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <Card>
+        <Card className="rounded-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-neutral-500">
               Manage Products
@@ -31,14 +31,14 @@ export default function AdminDashboardPage() {
               Add, edit, and bulk import products.
             </p>
             <div className="flex flex-wrap gap-2">
-              <ButtonLink href="/admin/products" className="rounded-sm px-3 text-xs">
+              <ButtonLink href="/admin/products" className="rounded-sm px-3 text-xs cursor-pointer">
                 <PlusCircle className="size-3.5" />
                 Open
               </ButtonLink>
               <ButtonLink
                 href="/admin/products?upload=1"
                 variant="outline"
-                className="rounded-sm px-3 text-xs"
+                className="rounded-sm px-3 text-xs cursor-pointer"
               >
                 <Upload className="size-3.5" />
                 Bulk Upload
@@ -47,7 +47,7 @@ export default function AdminDashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="rounded-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-neutral-500">
               Media
@@ -59,7 +59,7 @@ export default function AdminDashboardPage() {
               Upload images individually or import a ZIP archive.
             </p>
             <div className="flex flex-wrap gap-2">
-              <ButtonLink href="/admin/media" className="rounded-sm px-3 text-xs">
+              <ButtonLink href="/admin/media" className="rounded-sm px-3 text-xs cursor-pointer">
                 <Images className="size-3.5" />
                 Open Media
               </ButtonLink>

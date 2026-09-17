@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import ButtonLink from "@/components/ui/button-link";
 import BulkUploadDialog from "@/components/admin/products/BulkUploadDialog";
+import BulkDeleteProductsDialog from "@/components/admin/products/BulkDeleteProductsDialog";
 import { productColumns } from "@/components/admin/products/product-columns";
 
 const FILTER_INPUT_CLASS =
@@ -30,6 +31,10 @@ function Toolbar({ table, categoryOptions, uploadOpen, setUploadOpen }) {
     Boolean(nameColumn.getFilterValue()) ||
     Boolean(categoryColumn.getFilterValue()) ||
     Boolean(priceColumn.getFilterValue());
+
+  const selectedProducts = table
+    .getSelectedRowModel()
+    .rows.map((row) => row.original);
 
   return (
     <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
@@ -87,7 +92,7 @@ function Toolbar({ table, categoryOptions, uploadOpen, setUploadOpen }) {
           <Button
             type="button"
             variant="ghost"
-            className="rounded-sm px-3 text-xs"
+            className="rounded-sm px-3 text-xs cursor-pointer"
             onClick={() => table.resetColumnFilters()}
           >
             <RotateCcw className="size-3.5" />
@@ -97,17 +102,23 @@ function Toolbar({ table, categoryOptions, uploadOpen, setUploadOpen }) {
       </div>
 
       <div className="flex gap-2">
+        {selectedProducts.length > 0 ? (
+          <BulkDeleteProductsDialog
+            products={selectedProducts}
+            onDeleted={() => table.resetRowSelection()}
+          />
+        ) : null}
         <BulkUploadDialog
           open={uploadOpen}
           onOpenChange={setUploadOpen}
           trigger={
-            <Button type="button" variant="outline" className="rounded-sm px-3 text-xs">
+            <Button type="button" variant="outline" className="rounded-sm px-3 text-xs cursor-pointer">
               <Upload className="size-3.5" />
               Bulk Upload
             </Button>
           }
         />
-        <ButtonLink href="/admin/products/new" className="rounded-sm px-3 text-xs">
+        <ButtonLink href="/admin/products/new" className="rounded-sm px-3 text-xs cursor-pointer">
           <Plus className="size-3.5" />
           Add Product
         </ButtonLink>
@@ -127,6 +138,7 @@ export default function ProductsDataTable({
     <DataTable
       columns={productColumns}
       data={products}
+      getRowId={(product) => product.id}
       emptyMessage="No products match these filters."
       toolbar={(table) => (
         <Toolbar

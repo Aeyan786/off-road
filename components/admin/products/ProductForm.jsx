@@ -6,6 +6,7 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ProductImagesField from "@/components/admin/products/ProductImagesField";
 import { createProduct, updateProduct } from "@/actions/products";
@@ -22,7 +23,11 @@ function Field({ label, htmlFor, error, children, className }) {
       <Label htmlFor={htmlFor}>{label}</Label>
       {children}
       {error ? (
-        <p id={`${htmlFor}-error`} role="alert" className="text-xs text-destructive">
+        <p
+          id={`${htmlFor}-error`}
+          role="alert"
+          className="text-xs text-destructive"
+        >
           {error}
         </p>
       ) : null}
@@ -35,17 +40,23 @@ export default function ProductForm({ product, categoryOptions }) {
   const isEdit = Boolean(product?.id);
   const [images, setImages] = useState(product?.images ?? []);
 
-  const [state, formAction, isPending] = useActionState(async (_prev, formData) => {
-    const result = isEdit
-      ? await updateProduct(product.id, formData)
-      : await createProduct(formData);
+  const [state, formAction, isPending] = useActionState(
+    async (_prev, formData) => {
+      const result = isEdit
+        ? await updateProduct(product.id, formData)
+        : await createProduct(formData);
 
-    if (result?.success) {
-      router.push("/admin/products");
-      return initialState;
-    }
-    return { error: result?.error ?? null, fieldErrors: result?.fieldErrors ?? {} };
-  }, initialState);
+      if (result?.success) {
+        router.push("/admin/products");
+        return initialState;
+      }
+      return {
+        error: result?.error ?? null,
+        fieldErrors: result?.fieldErrors ?? {},
+      };
+    },
+    initialState,
+  );
 
   const fieldErrors = state?.fieldErrors ?? {};
   const errorProps = (name) =>
@@ -59,7 +70,7 @@ export default function ProductForm({ product, categoryOptions }) {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
-          <Card>
+          <Card className="rounded-sm">
             <CardHeader>
               <CardTitle className="text-base">Basic Information</CardTitle>
             </CardHeader>
@@ -87,7 +98,11 @@ export default function ProductForm({ product, categoryOptions }) {
                 />
               </Field>
 
-              <Field label="Category" htmlFor="categories" error={fieldErrors.categories}>
+              <Field
+                label="Category"
+                htmlFor="categories"
+                error={fieldErrors.categories}
+              >
                 <select
                   id="categories"
                   name="categories"
@@ -104,7 +119,11 @@ export default function ProductForm({ product, categoryOptions }) {
                 </select>
               </Field>
 
-              <Field label="Supplier" htmlFor="supplier" error={fieldErrors.supplier}>
+              <Field
+                label="Supplier"
+                htmlFor="supplier"
+                error={fieldErrors.supplier}
+              >
                 <Input
                   id="supplier"
                   name="supplier"
@@ -113,7 +132,11 @@ export default function ProductForm({ product, categoryOptions }) {
                 />
               </Field>
 
-              <Field label="Manufacturer" htmlFor="manufacturer" error={fieldErrors.manufacturer}>
+              <Field
+                label="Manufacturer"
+                htmlFor="manufacturer"
+                error={fieldErrors.manufacturer}
+              >
                 <Input
                   id="manufacturer"
                   name="manufacturer"
@@ -142,7 +165,7 @@ export default function ProductForm({ product, categoryOptions }) {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="rounded-sm">
             <CardHeader>
               <CardTitle className="text-base">Description</CardTitle>
             </CardHeader>
@@ -155,9 +178,13 @@ export default function ProductForm({ product, categoryOptions }) {
                 <textarea
                   id="small_description"
                   name="small_description"
-                  rows={2}
                   defaultValue={product?.small_description ?? ""}
-                  className={INPUT_CLASS}
+                  rows={3}
+                  className={`${INPUT_CLASS} resize-none overflow-hidden`}
+                  onInput={(e) => {
+                    e.currentTarget.style.height = "auto";
+                    e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
+                  }}
                   {...errorProps("small_description")}
                 />
               </Field>
@@ -172,7 +199,11 @@ export default function ProductForm({ product, categoryOptions }) {
                   name="description"
                   rows={5}
                   defaultValue={product?.description ?? ""}
-                  className={INPUT_CLASS}
+                  className={`${INPUT_CLASS} resize-none overflow-hidden`}
+                  onInput={(e) => {
+                    e.currentTarget.style.height = "auto";
+                    e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
+                  }}
                   {...errorProps("description")}
                 />
               </Field>
@@ -187,14 +218,18 @@ export default function ProductForm({ product, categoryOptions }) {
                   name="additional_information"
                   rows={3}
                   defaultValue={product?.additional_information ?? ""}
-                  className={INPUT_CLASS}
+                  className={`${INPUT_CLASS} resize-none overflow-hidden`}
+                  onInput={(e) => {
+                    e.currentTarget.style.height = "auto";
+                    e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
+                  }}
                   {...errorProps("additional_information")}
                 />
               </Field>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="rounded-sm">
             <CardHeader>
               <CardTitle className="text-base">Dimensions</CardTitle>
             </CardHeader>
@@ -229,7 +264,11 @@ export default function ProductForm({ product, categoryOptions }) {
                   {...errorProps("height")}
                 />
               </Field>
-              <Field label="Weight (g)" htmlFor="weight_grams" error={fieldErrors.weight_grams}>
+              <Field
+                label="Weight (g)"
+                htmlFor="weight_grams"
+                error={fieldErrors.weight_grams}
+              >
                 <Input
                   id="weight_grams"
                   name="weight_grams"
@@ -244,7 +283,7 @@ export default function ProductForm({ product, categoryOptions }) {
         </div>
 
         <div className="space-y-6">
-          <Card>
+          <Card className="rounded-sm">
             <CardHeader>
               <CardTitle className="text-base">Pricing &amp; Stock</CardTitle>
             </CardHeader>
@@ -260,7 +299,26 @@ export default function ProductForm({ product, categoryOptions }) {
                   {...errorProps("price")}
                 />
               </Field>
-              <Field label="Quantity" htmlFor="quantity" error={fieldErrors.quantity}>
+              <Field
+                label="Discount Price (optional)"
+                htmlFor="discount_price"
+                error={fieldErrors.discount_price}
+              >
+                <Input
+                  id="discount_price"
+                  name="discount_price"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  defaultValue={product?.discount_price ?? ""}
+                  {...errorProps("discount_price")}
+                />
+              </Field>
+              <Field
+                label="Quantity"
+                htmlFor="quantity"
+                error={fieldErrors.quantity}
+              >
                 <Input
                   id="quantity"
                   name="quantity"
@@ -270,10 +328,33 @@ export default function ProductForm({ product, categoryOptions }) {
                   {...errorProps("quantity")}
                 />
               </Field>
+
+              <Field label="Status" htmlFor="status" error={fieldErrors.status}>
+                <select
+                  id="status"
+                  name="status"
+                  defaultValue={product?.status ?? "active"}
+                  className={cn(INPUT_CLASS, "h-9 cursor-pointer py-0")}
+                  {...errorProps("status")}
+                >
+                  <option value="active">Active — visible on the website</option>
+                  <option value="draft">Draft — hidden from the website</option>
+                </select>
+              </Field>
+
+              <label className="flex cursor-pointer items-center gap-2.5 pt-1">
+                <Checkbox
+                  id="new_arrival"
+                  name="new_arrival"
+                  defaultChecked={product?.new_arrival ?? false}
+                  className="cursor-pointer"
+                />
+                <span className="text-sm text-neutral-800">Set as New Arrival</span>
+              </label>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="rounded-sm">
             <CardHeader>
               <CardTitle className="text-base">Images</CardTitle>
             </CardHeader>
@@ -289,20 +370,27 @@ export default function ProductForm({ product, categoryOptions }) {
       </div>
 
       {state?.error ? (
-        <p role="alert" className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
+        <p
+          role="alert"
+          className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive"
+        >
           {state.error}
         </p>
       ) : null}
 
       <div className="flex items-center gap-2">
-        <Button type="submit" className="rounded-sm px-3 text-xs" disabled={isPending}>
+        <Button
+          type="submit"
+          className="rounded-sm px-3 text-xs cursor-pointer"
+          disabled={isPending}
+        >
           {isPending ? <Loader2 className="size-3.5 animate-spin" /> : null}
           {isEdit ? "Save Changes" : "Create Product"}
         </Button>
         <Button
           type="button"
           variant="outline"
-          className="rounded-sm px-3 text-xs"
+          className="rounded-sm px-3 text-xs cursor-pointer"
           onClick={() => router.push("/admin/products")}
         >
           Cancel

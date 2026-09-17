@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Search, ShoppingBag, User } from "lucide-react";
+import { Search } from "lucide-react";
+import HeaderStoreActions from "@/components/cart/HeaderStoreActions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import MobileMenu from "@/components/header/MobileMenu";
@@ -43,13 +44,7 @@ export default async function MainHeader() {
             <p>info@example.com</p>
           </div>
           
-          <Link
-            href="/"
-            aria-label="Cart"
-            className="relative text-neutral-800 hover:text-brand flex gap-2 items-center"
-          >
-            <ShoppingBag className="size-5" /> Cart
-          </Link>
+          <HeaderStoreActions />
           <MobileMenu />
         </div>
       </div>

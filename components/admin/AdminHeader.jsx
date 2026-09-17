@@ -28,7 +28,7 @@ export default function AdminHeader({ userEmail }) {
           type="button"
           variant="ghost"
           size="icon"
-          className="md:hidden"
+          className="md:hidden cursor-pointer rounded-sm"
           aria-label="Open sidebar"
           onClick={() => setOpen(true)}
         >
@@ -42,7 +42,7 @@ export default function AdminHeader({ userEmail }) {
           render={
             <button
               type="button"
-              className="flex cursor-pointer hover:bg-muted px-4 py-2  items-center gap-2 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex cursor-pointer hover:bg-muted px-4 py-2 items-center gap-2 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               <Avatar className="size-8">
                 <AvatarFallback className="bg-brand text-white">

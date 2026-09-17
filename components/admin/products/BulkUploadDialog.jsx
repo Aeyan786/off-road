@@ -214,7 +214,7 @@ export default function BulkUploadDialog({ trigger, open: openProp, onOpenChange
                   type="button"
                   onClick={resetState}
                   aria-label="Remove file"
-                  className="shrink-0 text-neutral-400 hover:text-neutral-600"
+                  className="shrink-0 text-neutral-400 hover:text-neutral-600 cursor-pointer"
                 >
                   <X className="size-4" />
                 </button>
@@ -335,24 +335,24 @@ export default function BulkUploadDialog({ trigger, open: openProp, onOpenChange
 
         <DialogFooter>
           {phase === "mapping" ? (
-            <Button type="button" variant="outline" onClick={() => setPhase("select")}>
+            <Button className="cursor-pointer rounded-sm px-3" type="button" variant="outline" onClick={() => setPhase("select")}>
               Back
             </Button>
           ) : (
-            <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
+            <Button className="cursor-pointer rounded-sm px-3" type="button" variant="outline" onClick={() => setDialogOpen(false)}>
               {phase === "result" ? "Done" : "Close"}
             </Button>
           )}
 
           {phase === "select" ? (
-            <Button type="button" onClick={handleContinue} disabled={!file || isBusy || !!error}>
+            <Button className="cursor-pointer rounded-sm px-3" type="button" onClick={handleContinue} disabled={!file || isBusy || !!error}>
               {isBusy ? <Loader2 className="size-4 animate-spin" /> : null}
               Continue
             </Button>
           ) : null}
 
           {phase === "mapping" ? (
-            <Button type="button" onClick={handleImport} disabled={!canImport || isBusy}>
+            <Button className="cursor-pointer rounded-sm px-3" type="button" onClick={handleImport} disabled={!canImport || isBusy}>
               {isBusy ? <Loader2 className="size-4 animate-spin" /> : null}
               Import {parsed?.rows.length} row{parsed?.rows.length === 1 ? "" : "s"}
             </Button>

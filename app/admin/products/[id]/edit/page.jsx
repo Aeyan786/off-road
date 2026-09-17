@@ -14,7 +14,7 @@ export default async function EditProductPage({ params }) {
   const supabase = await createClient();
 
   const [product, categoryOptions] = await Promise.all([
-    getProductById(supabase, id),
+    getProductById(supabase, id, { includeAllStatuses: true }),
     getCategoryOptions(supabase),
   ]);
 

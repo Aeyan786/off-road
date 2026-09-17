@@ -6,6 +6,10 @@ import {
   YoutubeIcon,
 } from "@/components/icons/SocialIcons";
 import { NAV_LINKS } from "@/components/header/nav-links";
+import ShopMenu from "@/components/header/ShopMenu";
+import { createClient } from "@/lib/supabase/server";
+import { getCategoryTree } from "@/lib/data/categories";
+import { safeQuery } from "@/lib/data/safe";
 
 const SOCIALS = [
   { label: "X", Icon: XIcon },
@@ -14,21 +18,32 @@ const SOCIALS = [
   { label: "YouTube", Icon: YoutubeIcon },
 ];
 
-export default function NavBar() {
+export default async function NavBar() {
+  const supabase = await createClient();
+  const categories = await safeQuery(getCategoryTree(supabase), []);
+
   return (
     <nav className="hidden bg-brand text-white lg:block">
-      <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6">
+      {/* relative: the Shop mega-menu positions itself against this container
+          so it spans the full navbar width. */}
+      <div className="relative mx-auto flex max-w-[1400px] items-center justify-between px-6">
         <ul className="flex items-center gap-8 text-sm font-medium">
-          {NAV_LINKS.map((link) => (
-            <li key={link.label}>
-              <Link
-                href={link.href}
-                className="inline-block py-3.5 text-white/95 hover:text-white"
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
+          {NAV_LINKS.map((link) =>
+            link.hasCategoryMenu ? (
+              <ShopMenu key={link.label} link={link} categories={categories} />
+            ) : (
+              <li key={link.label}>
+                <Link
+                  href={link.href}
+                  className="group relative inline-block cursor-pointer py-3.5 text-white"
+                >
+                  {link.label}
+
+                  <span className="absolute bottom-2 left-0 h-px w-0 bg-white transition-all duration-300 ease-out group-hover:w-full" />
+                </Link>
+              </li>
+            ),
+          )}
         </ul>
 
         <div className="flex items-center gap-5">
