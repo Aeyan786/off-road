@@ -23,8 +23,8 @@ export default async function HomePage() {
     safeQuery(getProducts(supabase), []),
   ]);
 
-  const storefrontProducts = products.slice(0,8).map(toStorefrontProduct);
-  const suggestedProducts = products.slice(8,14).map(toStorefrontProduct);
+  const storefrontProducts = products.slice(0,9).map(toStorefrontProduct);
+  const suggestedProducts = products.slice(9,14).map(toStorefrontProduct);
   const newArrival = products.slice(14,18).map(toStorefrontProduct);
 
   return (

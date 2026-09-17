@@ -37,24 +37,18 @@ export default async function MainHeader() {
           </div>
         </div>
 
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-8">
           <div className="hidden text-right text-sm leading-tight text-neutral-700 xl:block">
             <p className="font-semibold">0000 -1234 56789</p>
             <p>info@example.com</p>
           </div>
-          <Link
-            href="/"
-            aria-label="Account"
-            className="text-neutral-800 hover:text-brand"
-          >
-            <User className="size-5" />
-          </Link>
+          
           <Link
             href="/"
             aria-label="Cart"
-            className="relative text-neutral-800 hover:text-brand"
+            className="relative text-neutral-800 hover:text-brand flex gap-2 items-center"
           >
-            <ShoppingBag className="size-5" />
+            <ShoppingBag className="size-5" /> Cart
           </Link>
           <MobileMenu />
         </div>

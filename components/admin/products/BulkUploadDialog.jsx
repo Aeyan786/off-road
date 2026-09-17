@@ -312,6 +312,24 @@ export default function BulkUploadDialog({ trigger, open: openProp, onOpenChange
                 </ul>
               </div>
             ) : null}
+
+            {result.unmatchedImages?.length > 0 ? (
+              <div className="space-y-2 rounded-md bg-amber-50 px-3 py-2.5 text-sm text-amber-800">
+                <p className="flex items-center gap-2 font-medium">
+                  <AlertTriangle className="size-4 shrink-0" />
+                  {result.unmatchedImages.length} image file name
+                  {result.unmatchedImages.length === 1 ? "" : "s"} not found in Media
+                </p>
+                <p className="text-xs text-amber-700">
+                  Upload these to the Media library, then re-import to attach them.
+                </p>
+                <ul className="max-h-32 space-y-0.5 overflow-y-auto text-xs">
+                  {result.unmatchedImages.map((name) => (
+                    <li key={name}>{name}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
           </div>
         ) : null}
 

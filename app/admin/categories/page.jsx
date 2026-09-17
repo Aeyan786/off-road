@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getCategoryTree } from "@/lib/data/categories";
 import CategoryManager from "@/components/admin/categories/CategoryManager";
 import SetupRequiredBanner from "@/components/admin/SetupRequiredBanner";
+import Breadcrumbs from "@/components/admin/Breadcrumbs";
 
 export const metadata = {
   title: "Manage Categories | Off Road Performance",
@@ -20,11 +21,12 @@ export default async function ManageCategoriesPage() {
 
   return (
     <div className="space-y-6">
-      <div>
+      <div className="space-y-2">
+        <Breadcrumbs items={[{ label: "Categories" }]} />
         <h1 className="text-2xl font-bold text-neutral-900">
           Manage Categories
         </h1>
-        <p className="mt-1 text-sm text-neutral-500">
+        <p className="text-sm text-neutral-500">
           Two levels: a top-level category (e.g. &quot;ATV&quot;) contains
           subcategories (e.g. &quot;ATV Exhaust&quot;). Products attach to a
           subcategory.

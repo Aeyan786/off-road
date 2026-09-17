@@ -19,7 +19,7 @@ export default function ButtonLink({
   return (
     <Link
       href={href}
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={`${cn(buttonVariants({ variant, size, className }))} px-3 rounded-sm`}
       {...props}
     />
   );

@@ -51,7 +51,7 @@ export default function ProductCard({ product, variant = "grid" }) {
             {`${manufacturer} ${model} ${year} ${title}`}
           </p>
         </div>
-        <p className="shrink-0 text-sm font-semibold text-neutral-900">
+        <p className="shrink-0 text-lg font-semibold text-neutral-900">
           {price}
         </p>
       </Link>
@@ -76,7 +76,7 @@ export default function ProductCard({ product, variant = "grid" }) {
           ))}
         </div>
       </div>
-      <div className="space-y-1 px-1 pt-4">
+      <div className="space-y-3 px-3 pt-4 pb-2">
         <p className="text-[11px] font-medium uppercase tracking-wide text-neutral-500">
           {vendor}
         </p>
@@ -86,7 +86,7 @@ export default function ProductCard({ product, variant = "grid" }) {
         >
           {`${manufacturer} ${model} ${year} ${title}`}
         </Link>
-        <p className="text-sm font-semibold text-neutral-900">{price}</p>
+        <p className="text-lg font-semibold text-neutral-900">{price}</p>
       </div>
     </div>
   );

@@ -1,26 +1,31 @@
 "use client";
 
-import { useActionState, useRef, useState } from "react";
+import { useActionState, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ImageIcon, Loader2, Upload, X } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import ProductImagesField from "@/components/admin/products/ProductImagesField";
 import { createProduct, updateProduct } from "@/actions/products";
+import { cn } from "@/lib/utils";
 
-const initialState = { error: null };
+const initialState = { error: null, fieldErrors: {} };
 
-function Field({ label, htmlFor, children, className }) {
+const INPUT_CLASS =
+  "flex w-full rounded-lg border border-neutral-300 bg-background px-2.5 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50";
+
+function Field({ label, htmlFor, error, children, className }) {
   return (
-    <div className={`space-y-1.5 ${className ?? ""}`}>
+    <div className={cn("space-y-1.5", className)}>
       <Label htmlFor={htmlFor}>{label}</Label>
       {children}
+      {error ? (
+        <p id={`${htmlFor}-error`} role="alert" className="text-xs text-destructive">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }
@@ -28,9 +33,7 @@ function Field({ label, htmlFor, children, className }) {
 export default function ProductForm({ product, categoryOptions }) {
   const router = useRouter();
   const isEdit = Boolean(product?.id);
-  const fileInputRef = useRef(null);
   const [images, setImages] = useState(product?.images ?? []);
-  const [pendingFileNames, setPendingFileNames] = useState([]);
 
   const [state, formAction, isPending] = useActionState(async (_prev, formData) => {
     const result = isEdit
@@ -41,16 +44,18 @@ export default function ProductForm({ product, categoryOptions }) {
       router.push("/admin/products");
       return initialState;
     }
-    return result ?? initialState;
+    return { error: result?.error ?? null, fieldErrors: result?.fieldErrors ?? {} };
   }, initialState);
 
-  function removeExistingImage(url) {
-    setImages((prev) => prev.filter((img) => img !== url));
-  }
+  const fieldErrors = state?.fieldErrors ?? {};
+  const errorProps = (name) =>
+    fieldErrors[name]
+      ? { "aria-invalid": true, "aria-describedby": `${name}-error` }
+      : {};
 
   return (
     <form action={formAction} className="space-y-6">
-      <input type="hidden" name="existingImages" value={JSON.stringify(images)} />
+      <input type="hidden" name="images" value={JSON.stringify(images)} />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
@@ -59,25 +64,38 @@ export default function ProductForm({ product, categoryOptions }) {
               <CardTitle className="text-base">Basic Information</CardTitle>
             </CardHeader>
             <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <Field label="Product Name" htmlFor="product" className="sm:col-span-2">
+              <Field
+                label="Product Name"
+                htmlFor="product"
+                error={fieldErrors.product}
+                className="sm:col-span-2"
+              >
                 <Input
                   id="product"
                   name="product"
                   defaultValue={product?.product ?? ""}
-                  required
+                  {...errorProps("product")}
                 />
               </Field>
-              <Field label="SKU" htmlFor="sku">
-                <Input id="sku" name="sku" defaultValue={product?.sku ?? ""} required />
+
+              <Field label="SKU" htmlFor="sku" error={fieldErrors.sku}>
+                <Input
+                  id="sku"
+                  name="sku"
+                  defaultValue={product?.sku ?? ""}
+                  {...errorProps("sku")}
+                />
               </Field>
-              <Field label="Category" htmlFor="categories">
+
+              <Field label="Category" htmlFor="categories" error={fieldErrors.categories}>
                 <select
                   id="categories"
                   name="categories"
                   defaultValue={product?.categories?.id ?? ""}
-                  className="flex h-8 w-full rounded-lg border border-neutral-300 bg-background px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+                  className={cn(INPUT_CLASS, "h-9 py-0")}
+                  {...errorProps("categories")}
                 >
-                  <option value="">No category</option>
+                  <option value="">Select a category</option>
                   {categoryOptions.map((option) => (
                     <option key={option.id} value={option.id}>
                       {option.path}
@@ -85,21 +103,41 @@ export default function ProductForm({ product, categoryOptions }) {
                   ))}
                 </select>
               </Field>
-              <Field label="Supplier" htmlFor="supplier">
-                <Input id="supplier" name="supplier" defaultValue={product?.supplier ?? ""} />
+
+              <Field label="Supplier" htmlFor="supplier" error={fieldErrors.supplier}>
+                <Input
+                  id="supplier"
+                  name="supplier"
+                  defaultValue={product?.supplier ?? ""}
+                  {...errorProps("supplier")}
+                />
               </Field>
-              <Field label="Manufacturer" htmlFor="manufacturer">
+
+              <Field label="Manufacturer" htmlFor="manufacturer" error={fieldErrors.manufacturer}>
                 <Input
                   id="manufacturer"
                   name="manufacturer"
                   defaultValue={product?.manufacturer ?? ""}
+                  {...errorProps("manufacturer")}
                 />
               </Field>
-              <Field label="Model" htmlFor="model">
-                <Input id="model" name="model" defaultValue={product?.model ?? ""} />
+
+              <Field label="Model" htmlFor="model" error={fieldErrors.model}>
+                <Input
+                  id="model"
+                  name="model"
+                  defaultValue={product?.model ?? ""}
+                  {...errorProps("model")}
+                />
               </Field>
-              <Field label="Year" htmlFor="year">
-                <Input id="year" name="year" defaultValue={product?.year ?? ""} />
+
+              <Field label="Year" htmlFor="year" error={fieldErrors.year}>
+                <Input
+                  id="year"
+                  name="year"
+                  defaultValue={product?.year ?? ""}
+                  {...errorProps("year")}
+                />
               </Field>
             </CardContent>
           </Card>
@@ -109,29 +147,48 @@ export default function ProductForm({ product, categoryOptions }) {
               <CardTitle className="text-base">Description</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <Field label="Short Description" htmlFor="small_description">
-                <Input
+              <Field
+                label="Short Description"
+                htmlFor="small_description"
+                error={fieldErrors.small_description}
+              >
+                <textarea
                   id="small_description"
                   name="small_description"
+                  rows={2}
                   defaultValue={product?.small_description ?? ""}
+                  className={INPUT_CLASS}
+                  {...errorProps("small_description")}
                 />
               </Field>
-              <Field label="Description" htmlFor="description">
+
+              <Field
+                label="Description (optional)"
+                htmlFor="description"
+                error={fieldErrors.description}
+              >
                 <textarea
                   id="description"
                   name="description"
-                  rows={4}
+                  rows={5}
                   defaultValue={product?.description ?? ""}
-                  className="flex w-full rounded-lg border border-neutral-300 bg-background px-2.5 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+                  className={INPUT_CLASS}
+                  {...errorProps("description")}
                 />
               </Field>
-              <Field label="Additional Information" htmlFor="additional_information">
+
+              <Field
+                label="Additional Information (optional)"
+                htmlFor="additional_information"
+                error={fieldErrors.additional_information}
+              >
                 <textarea
                   id="additional_information"
                   name="additional_information"
                   rows={3}
                   defaultValue={product?.additional_information ?? ""}
-                  className="flex w-full rounded-lg border border-neutral-300 bg-background px-2.5 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+                  className={INPUT_CLASS}
+                  {...errorProps("additional_information")}
                 />
               </Field>
             </CardContent>
@@ -142,22 +199,44 @@ export default function ProductForm({ product, categoryOptions }) {
               <CardTitle className="text-base">Dimensions</CardTitle>
             </CardHeader>
             <CardContent className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-              <Field label="Width" htmlFor="width">
-                <Input id="width" name="width" type="number" step="any" defaultValue={product?.width ?? ""} />
+              <Field label="Width" htmlFor="width" error={fieldErrors.width}>
+                <Input
+                  id="width"
+                  name="width"
+                  type="number"
+                  step="any"
+                  defaultValue={product?.width ?? ""}
+                  {...errorProps("width")}
+                />
               </Field>
-              <Field label="Length" htmlFor="length">
-                <Input id="length" name="length" type="number" step="any" defaultValue={product?.length ?? ""} />
+              <Field label="Length" htmlFor="length" error={fieldErrors.length}>
+                <Input
+                  id="length"
+                  name="length"
+                  type="number"
+                  step="any"
+                  defaultValue={product?.length ?? ""}
+                  {...errorProps("length")}
+                />
               </Field>
-              <Field label="Height" htmlFor="height">
-                <Input id="height" name="height" type="number" step="any" defaultValue={product?.height ?? ""} />
+              <Field label="Height" htmlFor="height" error={fieldErrors.height}>
+                <Input
+                  id="height"
+                  name="height"
+                  type="number"
+                  step="any"
+                  defaultValue={product?.height ?? ""}
+                  {...errorProps("height")}
+                />
               </Field>
-              <Field label="Weight (g)" htmlFor="weight_grams">
+              <Field label="Weight (g)" htmlFor="weight_grams" error={fieldErrors.weight_grams}>
                 <Input
                   id="weight_grams"
                   name="weight_grams"
                   type="number"
                   step="any"
                   defaultValue={product?.weight_grams ?? ""}
+                  {...errorProps("weight_grams")}
                 />
               </Field>
             </CardContent>
@@ -170,7 +249,7 @@ export default function ProductForm({ product, categoryOptions }) {
               <CardTitle className="text-base">Pricing &amp; Stock</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <Field label="Price" htmlFor="price">
+              <Field label="Price" htmlFor="price" error={fieldErrors.price}>
                 <Input
                   id="price"
                   name="price"
@@ -178,16 +257,17 @@ export default function ProductForm({ product, categoryOptions }) {
                   step="0.01"
                   min="0"
                   defaultValue={product?.price ?? ""}
-                  required
+                  {...errorProps("price")}
                 />
               </Field>
-              <Field label="Quantity" htmlFor="quantity">
+              <Field label="Quantity" htmlFor="quantity" error={fieldErrors.quantity}>
                 <Input
                   id="quantity"
                   name="quantity"
                   type="number"
                   min="0"
-                  defaultValue={product?.quantity ?? 0}
+                  defaultValue={product?.quantity ?? ""}
+                  {...errorProps("quantity")}
                 />
               </Field>
             </CardContent>
@@ -197,57 +277,12 @@ export default function ProductForm({ product, categoryOptions }) {
             <CardHeader>
               <CardTitle className="text-base">Images</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
-              {images.length > 0 ? (
-                <div className="grid grid-cols-3 gap-2">
-                  {images.map((url) => (
-                    <div key={url} className="group relative aspect-square overflow-hidden rounded-md border bg-neutral-100">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={url} alt="" className="h-full w-full object-cover" />
-                      <button
-                        type="button"
-                        onClick={() => removeExistingImage(url)}
-                        aria-label="Remove image"
-                        className="absolute right-1 top-1 flex size-5 items-center justify-center rounded-full bg-black/70 text-white opacity-0 transition-opacity group-hover:opacity-100"
-                      >
-                        <X className="size-3" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              ) : null}
-
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="flex w-full flex-col items-center justify-center gap-1.5 rounded-lg border-2 border-dashed border-neutral-300 py-6 text-neutral-400 hover:border-neutral-400"
-              >
-                <ImageIcon className="size-5" />
-                <span className="text-xs font-medium">
-                  <Upload className="mr-1 inline size-3" />
-                  Add images
-                </span>
-              </button>
-              <input
-                ref={fileInputRef}
-                type="file"
-                name="imageFiles"
-                accept="image/*"
-                multiple
-                className="sr-only"
-                onChange={(e) =>
-                  setPendingFileNames(Array.from(e.target.files ?? []).map((f) => f.name))
-                }
+            <CardContent>
+              <ProductImagesField
+                value={images}
+                onChange={setImages}
+                error={fieldErrors.images}
               />
-              {pendingFileNames.length > 0 ? (
-                <ul className="space-y-1 text-xs text-neutral-500">
-                  {pendingFileNames.map((name) => (
-                    <li key={name} className="truncate">
-                      + {name}
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
             </CardContent>
           </Card>
         </div>
@@ -260,11 +295,16 @@ export default function ProductForm({ product, categoryOptions }) {
       ) : null}
 
       <div className="flex items-center gap-2">
-        <Button type="submit" disabled={isPending}>
-          {isPending ? <Loader2 className="size-4 animate-spin" /> : null}
+        <Button type="submit" className="rounded-sm px-3 text-xs" disabled={isPending}>
+          {isPending ? <Loader2 className="size-3.5 animate-spin" /> : null}
           {isEdit ? "Save Changes" : "Create Product"}
         </Button>
-        <Button type="button" variant="outline" onClick={() => router.push("/admin/products")}>
+        <Button
+          type="button"
+          variant="outline"
+          className="rounded-sm px-3 text-xs"
+          onClick={() => router.push("/admin/products")}
+        >
           Cancel
         </Button>
       </div>

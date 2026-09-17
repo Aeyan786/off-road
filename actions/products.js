@@ -1,142 +1,70 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createClient } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/server/requireAdmin";
+import { parseProductForm } from "@/lib/validation/product";
 
-const IMAGE_BUCKET = "product_bucket";
-
-function toNumberOrNull(value) {
-  if (value === undefined || value === null || value === "") return null;
-  const n = Number(value);
-  return Number.isFinite(n) ? n : null;
-}
-
-function toStringOrNull(value) {
-  const trimmed = value?.toString().trim();
-  return trimmed ? trimmed : null;
-}
-
-async function uploadImageFiles(supabase, files) {
-  const urls = [];
-  for (const file of files) {
-    if (!file || typeof file === "string" || file.size === 0) continue;
-
-    const ext = file.name?.split(".").pop() || "jpg";
-    const path = `${crypto.randomUUID()}.${ext}`;
-
-    const { error } = await supabase.storage
-      .from(IMAGE_BUCKET)
-      .upload(path, file, { contentType: file.type, upsert: false });
-
-    if (error) throw new Error(`Image upload failed: ${error.message}`);
-
-    const { data } = supabase.storage.from(IMAGE_BUCKET).getPublicUrl(path);
-    urls.push(data.publicUrl);
-  }
-  return urls;
+function revalidateProductViews() {
+  revalidatePath("/admin/products");
+  revalidatePath("/");
 }
 
 /**
- * Builds the products row payload from a <form> FormData. Shared by create
- * and update so both stay in sync with the schema.
+ * Creates a product from a validated form submission. Images are already
+ * public URLs by this point — files picked in the form are uploaded into the
+ * media library first (see ProductImagesField), so this action only writes
+ * the product row.
  */
-async function buildProductPayload(supabase, formData) {
-  const newImageFiles = formData.getAll("imageFiles");
-  const uploadedUrls = await uploadImageFiles(supabase, newImageFiles);
-
-  const keptImages = formData.get("existingImages");
-  const existingUrls = keptImages ? JSON.parse(keptImages) : [];
-
-  return {
-    product: formData.get("product")?.toString().trim(),
-    sku: formData.get("sku")?.toString().trim(),
-    categories: toStringOrNull(formData.get("categories")),
-    supplier: toStringOrNull(formData.get("supplier")),
-    manufacturer: toStringOrNull(formData.get("manufacturer")),
-    model: toStringOrNull(formData.get("model")),
-    year: toStringOrNull(formData.get("year")),
-    description: toStringOrNull(formData.get("description")),
-    small_description: toStringOrNull(formData.get("small_description")),
-    additional_information: toStringOrNull(
-      formData.get("additional_information"),
-    ),
-    price: toNumberOrNull(formData.get("price")) ?? 0,
-    quantity: toNumberOrNull(formData.get("quantity")) ?? 0,
-    width: toNumberOrNull(formData.get("width")),
-    length: toNumberOrNull(formData.get("length")),
-    height: toNumberOrNull(formData.get("height")),
-    weight_grams: toNumberOrNull(formData.get("weight_grams")),
-    images: [...existingUrls, ...uploadedUrls],
-  };
-}
-
 export async function createProduct(formData) {
-  const supabase = await createClient();
+  const { supabase, error: authError } = await requireAdmin();
+  if (authError) return { error: authError };
 
-  try {
-    const payload = await buildProductPayload(supabase, formData);
+  const parsed = parseProductForm(formData);
+  if (parsed.fieldErrors) return { fieldErrors: parsed.fieldErrors };
 
-    if (!payload.product || !payload.sku) {
-      return { error: "Product name and SKU are required." };
+  const { error } = await supabase.from("products").insert(parsed.data);
+  if (error) {
+    if (error.code === "23505") {
+      return { fieldErrors: { sku: "A product with this SKU already exists." } };
     }
-
-    const { error } = await supabase.from("products").insert(payload);
-    if (error) return { error: error.message };
-  } catch (err) {
-    return { error: err.message };
+    return { error: error.message };
   }
 
-  revalidatePath("/admin/products");
-  revalidatePath("/");
+  revalidateProductViews();
   return { success: true };
 }
 
 export async function updateProduct(id, formData) {
-  const supabase = await createClient();
+  const { supabase, error: authError } = await requireAdmin();
+  if (authError) return { error: authError };
 
-  try {
-    const payload = await buildProductPayload(supabase, formData);
+  const parsed = parseProductForm(formData);
+  if (parsed.fieldErrors) return { fieldErrors: parsed.fieldErrors };
 
-    if (!payload.product || !payload.sku) {
-      return { error: "Product name and SKU are required." };
+  const { error } = await supabase
+    .from("products")
+    .update(parsed.data)
+    .eq("id", id);
+
+  if (error) {
+    if (error.code === "23505") {
+      return { fieldErrors: { sku: "A product with this SKU already exists." } };
     }
-
-    const { error } = await supabase
-      .from("products")
-      .update(payload)
-      .eq("id", id);
-    if (error) return { error: error.message };
-  } catch (err) {
-    return { error: err.message };
+    return { error: error.message };
   }
 
-  revalidatePath("/admin/products");
-  revalidatePath("/");
+  revalidateProductViews();
   return { success: true };
 }
 
 export async function deleteProduct(id) {
-  const supabase = await createClient();
+  const { supabase, error: authError } = await requireAdmin();
+  if (authError) return { error: authError };
+
   const { error } = await supabase.from("products").delete().eq("id", id);
   if (error) return { error: error.message };
 
-  revalidatePath("/admin/products");
-  revalidatePath("/");
-  return { success: true };
-}
-
-export async function deleteBulk() {
-  const supabase = await createClient();
-  const { error } = await supabase
-    .from("categories")
-    .delete()
-    .not("id", "is", null);
-  if (error) {
-    return { error: error.message };
-  }
-
-  revalidatePath("/admin/products");
-  revalidatePath("/");
+  revalidateProductViews();
   return { success: true };
 }
 

@@ -13,6 +13,13 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    // Media/product image uploads and ZIP imports post their files through
+    // Server Actions, which cap request bodies at 1MB by default.
+    serverActions: {
+      bodySizeLimit: "50mb",
+    },
+  },
 };
 
 export default nextConfig;

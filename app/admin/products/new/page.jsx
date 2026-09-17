@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { getCategoryOptions } from "@/lib/data/categories";
 import { safeQuery } from "@/lib/data/safe";
+import Breadcrumbs from "@/components/admin/Breadcrumbs";
 import ProductForm from "@/components/admin/products/ProductForm";
 
 export const metadata = {
@@ -13,9 +14,12 @@ export default async function NewProductPage() {
 
   return (
     <div className="space-y-6">
-      <div>
+      <div className="space-y-2">
+        <Breadcrumbs
+          items={[{ label: "Products", href: "/admin/products" }, { label: "New" }]}
+        />
         <h1 className="text-2xl font-bold text-neutral-900">Add Product</h1>
-        <p className="mt-1 text-sm text-neutral-500">
+        <p className="text-sm text-neutral-500">
           Create a new product in your catalog.
         </p>
       </div>

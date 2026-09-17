@@ -1,7 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
 import { getProducts } from "@/lib/data/products";
-import ProductsToolbar from "@/components/admin/products/ProductsToolbar";
-import ProductsTable from "@/components/admin/products/ProductsTable";
+import { getCategoryOptions } from "@/lib/data/categories";
+import { safeQuery } from "@/lib/data/safe";
+import Breadcrumbs from "@/components/admin/Breadcrumbs";
+import ProductsDataTable from "@/components/admin/products/ProductsDataTable";
 import SetupRequiredBanner from "@/components/admin/SetupRequiredBanner";
 
 export const metadata = {
@@ -17,26 +19,30 @@ export default async function ManageProductsPage({ searchParams }) {
   let products = [];
   let setupError = null;
   try {
-    products = await getProducts(supabase, { search: params?.search });
+    products = await getProducts(supabase);
   } catch (err) {
     setupError = err.message;
   }
 
+  const categoryOptions = await safeQuery(getCategoryOptions(supabase), []);
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-neutral-900">
-          Manage Products
-        </h1>
-        <p className="mt-1 text-sm text-neutral-500">
-          View, search, and import products.
+      <div className="space-y-2">
+        <Breadcrumbs items={[{ label: "Products" }]} />
+        <h1 className="text-2xl font-bold text-neutral-900">Manage Products</h1>
+        <p className="text-sm text-neutral-500">
+          View, filter, and import products.
         </p>
       </div>
 
       {setupError ? <SetupRequiredBanner message={setupError} /> : null}
 
-      <ProductsToolbar initialUploadOpen={initialUploadOpen} />
-      <ProductsTable products={products} />
+      <ProductsDataTable
+        products={products}
+        categoryOptions={categoryOptions}
+        initialUploadOpen={initialUploadOpen}
+      />
     </div>
   );
 }
