@@ -1,10 +1,12 @@
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 
 /**
- * Intentionally rendered with no data yet — categories will come from
- * Supabase once the schema is confirmed. `categories` defaults to an empty
- * array so the grid is ready to receive real records without further
- * layout changes.
+ * Second-level categories, each shown with the first image of its first
+ * product (see lib/data/categories.js#withCategoryImages). Categories with
+ * no imaged products fall back to the placeholder.
  */
 export default function ShopByCategory({ categories = [] }) {
   return (
@@ -19,12 +21,34 @@ export default function ShopByCategory({ categories = [] }) {
       {categories.length > 0 ? (
         <div className="mt-12 grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-6">
           {categories.map((category) => (
-            <div key={category.id} className="flex flex-col items-center gap-4">
-              <ImagePlaceholder className="size-28 rounded-full" />
-              <p className="text-sm font-medium text-neutral-800">
+            <Link
+              key={category.id}
+              href={`/products?category=${category.slug}`}
+              className="group flex flex-col items-center gap-4"
+            >
+              <div className="relative aspect-square w-full max-w-48 overflow-hidden rounded-sm bg-neutral-100">
+                {category.image ? (
+                  <Image
+                    src={category.image}
+                    alt={category.name}
+                    fill
+                    sizes="192px"
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                  />
+                ) : (
+                  <ImagePlaceholder className="h-full w-full" />
+                )}
+
+                <div className="absolute inset-0 flex items-center justify-center bg-neutral-900/0 transition-colors duration-300 group-hover:bg-neutral-900/35">
+                  <span className="flex size-12 scale-75 items-center justify-center rounded-full bg-brand text-white opacity-0 shadow-lg transition-all duration-300 ease-out group-hover:scale-100 group-hover:opacity-100">
+                    <ArrowUpRight className="size-5" />
+                  </span>
+                </div>
+              </div>
+              <p className="text-sm font-medium text-neutral-800 transition-colors group-hover:text-brand">
                 {category.name}
               </p>
-            </div>
+            </Link>
           ))}
         </div>
       ) : (

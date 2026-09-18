@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { Loader2, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -12,9 +13,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { deleteMedia } from "@/actions/media";
+import { deleteBlog } from "@/actions/blogs";
 
-export default function DeleteMediaDialog({ item }) {
+export default function DeleteBlogDialog({ blog }) {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(null);
   const [isPending, startTransition] = useTransition();
@@ -22,12 +23,14 @@ export default function DeleteMediaDialog({ item }) {
   function handleDelete() {
     setError(null);
     startTransition(async () => {
-      const result = await deleteMedia(item.id);
+      const result = await deleteBlog(blog.id);
       if (result?.error) {
         setError(result.error);
         return;
       }
       setOpen(false);
+      toast.success(`"${blog.title}" was deleted.`);
+      if (result.warning) toast.warning(result.warning);
     });
   }
 
@@ -35,22 +38,24 @@ export default function DeleteMediaDialog({ item }) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
         render={
-          <button
+          <Button
             type="button"
-            aria-label={`Delete ${item.file_name}`}
-            className="absolute right-1.5 top-1.5 flex size-6 cursor-pointer items-center justify-center rounded-sm bg-black/70 text-white opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
+            size="icon-sm"
+            variant="ghost"
+            aria-label={`Delete ${blog.title}`}
+            className="text-destructive hover:bg-destructive/10 cursor-pointer rounded-sm"
           >
-            <Trash2 className="size-3" />
-          </button>
+            <Trash2 className="size-3.5" />
+          </Button>
         }
       />
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete &quot;{item.file_name}&quot;?</DialogTitle>
+          <DialogTitle>Delete &quot;{blog.title}&quot;?</DialogTitle>
           <DialogDescription>
-            This removes the file from storage and the media library. Any
-            product or blog already using this image will lose it. This cannot be
-            undone.
+            This permanently removes the article. Its image is also deleted
+            from the media library, unless a product or another blog is still
+            using it. This cannot be undone.
           </DialogDescription>
         </DialogHeader>
 
@@ -61,22 +66,16 @@ export default function DeleteMediaDialog({ item }) {
         ) : null}
 
         <DialogFooter>
-          <Button
-            type="button"
-            variant="outline"
-            className="rounded-sm px-3 text-xs cursor-pointer"
-            onClick={() => setOpen(false)}
-          >
+          <Button className="cursor-pointer rounded-sm px-3" type="button" variant="outline" onClick={() => setOpen(false)}>
             Cancel
           </Button>
-          <Button
+          <Button className="cursor-pointer rounded-sm px-3"
             type="button"
             variant="destructive"
-            className="rounded-sm px-3 text-xs cursor-pointer"
             onClick={handleDelete}
             disabled={isPending}
           >
-            {isPending ? <Loader2 className="size-3.5 animate-spin" /> : null}
+            {isPending ? <Loader2 className="size-4 animate-spin" /> : null}
             Delete
           </Button>
         </DialogFooter>

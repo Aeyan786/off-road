@@ -3,7 +3,10 @@
 import { revalidatePath } from "next/cache";
 import JSZip from "jszip";
 import { requireAdmin } from "@/lib/server/requireAdmin";
-import { detachMediaUrlsFromProducts } from "@/lib/server/detachMediaUrls";
+import {
+  detachMediaUrlsFromBlogs,
+  detachMediaUrlsFromProducts,
+} from "@/lib/server/detachMediaUrls";
 import { getMedia, getMediaByFileNames } from "@/lib/data/media";
 
 // Media files live alongside product images in the existing bucket, under a
@@ -23,11 +26,19 @@ const MIME_BY_EXTENSION = {
   bmp: "image/bmp",
 };
 
-/** Also refreshes product views when a delete rewrote any product's images. */
-function revalidateMediaViews(productsUpdated = 0) {
+/**
+ * Also refreshes product/blog views when a delete rewrote any product's
+ * images or cleared a blog's image.
+ */
+function revalidateMediaViews(productsUpdated = 0, blogsUpdated = 0) {
   revalidatePath("/admin/media");
   if (productsUpdated > 0) {
     revalidatePath("/admin/products");
+    revalidatePath("/");
+  }
+  if (blogsUpdated > 0) {
+    revalidatePath("/admin/blogs");
+    revalidatePath("/blogs", "layout");
     revalidatePath("/");
   }
 }
@@ -288,10 +299,12 @@ export async function deleteMedia(id) {
 
   // Detach first: if this fails nothing has been destroyed yet.
   let productsUpdated = 0;
+  let blogsUpdated = 0;
   try {
     ({ productsUpdated } = await detachMediaUrlsFromProducts(supabase, [item.file_url]));
+    ({ blogsUpdated } = await detachMediaUrlsFromBlogs(supabase, [item.file_url]));
   } catch (err) {
-    return { error: `Could not update products using this image: ${err.message}` };
+    return { error: `Could not update products or blogs using this image: ${err.message}` };
   }
 
   const { error: storageError } = await supabase.storage
@@ -302,8 +315,8 @@ export async function deleteMedia(id) {
   const { error: deleteError } = await supabase.from("media").delete().eq("id", id);
   if (deleteError) return { error: deleteError.message };
 
-  revalidateMediaViews(productsUpdated);
-  return { success: true, productsUpdated };
+  revalidateMediaViews(productsUpdated, blogsUpdated);
+  return { success: true, productsUpdated, blogsUpdated };
 }
 
 /**
@@ -328,13 +341,13 @@ export async function deleteMediaItems(ids) {
 
   // Detach first: if this fails nothing has been destroyed yet.
   let productsUpdated = 0;
+  let blogsUpdated = 0;
+  const urls = items.map((item) => item.file_url);
   try {
-    ({ productsUpdated } = await detachMediaUrlsFromProducts(
-      supabase,
-      items.map((item) => item.file_url)
-    ));
+    ({ productsUpdated } = await detachMediaUrlsFromProducts(supabase, urls));
+    ({ blogsUpdated } = await detachMediaUrlsFromBlogs(supabase, urls));
   } catch (err) {
-    return { error: `Could not update products using these images: ${err.message}` };
+    return { error: `Could not update products or blogs using these images: ${err.message}` };
   }
 
   const { error: storageError } = await supabase.storage
@@ -353,8 +366,8 @@ export async function deleteMediaItems(ids) {
     );
   if (deleteError) return { error: deleteError.message };
 
-  revalidateMediaViews(productsUpdated);
-  return { success: true, deleted: items.length, productsUpdated };
+  revalidateMediaViews(productsUpdated, blogsUpdated);
+  return { success: true, deleted: items.length, productsUpdated, blogsUpdated };
 }
 
 /** Used by the media picker dialog to search the library on demand. */

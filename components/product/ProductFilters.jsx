@@ -73,8 +73,10 @@ export default function ProductFilters({ facets, activeCategory, basePath = "/pr
     </label>
   );
 
+  const searchTerm = searchParams.get("q")?.trim();
+
   const hasFilters =
-    ["category", "manufacturer", "model", "year", "min", "max"].some((key) =>
+    ["q", "category", "supplier", "manufacturer", "model", "year", "min", "max"].some((key) =>
       searchParams.get(key)
     );
 
@@ -105,6 +107,23 @@ export default function ProductFilters({ facets, activeCategory, basePath = "/pr
         ) : null}
       </div>
 
+      {searchTerm ? (
+        <div className="space-y-1.5">
+          <span className="text-xs font-medium text-neutral-600">Search</span>
+          <span className="flex items-center justify-between gap-2 rounded-sm border bg-white px-2 py-1.5 text-sm text-neutral-800">
+            <span className="truncate">&ldquo;{searchTerm}&rdquo;</span>
+            <button
+              type="button"
+              onClick={() => apply({ q: "" })}
+              aria-label="Clear search"
+              className="cursor-pointer text-neutral-400 hover:text-neutral-700"
+            >
+              <X className="size-3.5" />
+            </button>
+          </span>
+        </div>
+      ) : null}
+
       {activeCategory ? (
         <div className="space-y-1.5">
           <span className="text-xs font-medium text-neutral-600">Category</span>
@@ -122,6 +141,7 @@ export default function ProductFilters({ facets, activeCategory, basePath = "/pr
         </div>
       ) : null}
 
+      {select("supplier", "Supplier", facets.suppliers)}
       {select("manufacturer", "Manufacturer", facets.manufacturers)}
       {select("model", "Model", facets.models)}
       {select("year", "Year", facets.years)}

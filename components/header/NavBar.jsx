@@ -7,9 +7,6 @@ import {
 } from "@/components/icons/SocialIcons";
 import { NAV_LINKS } from "@/components/header/nav-links";
 import ShopMenu from "@/components/header/ShopMenu";
-import { createClient } from "@/lib/supabase/server";
-import { getCategoryTree } from "@/lib/data/categories";
-import { safeQuery } from "@/lib/data/safe";
 
 const SOCIALS = [
   { label: "X", Icon: XIcon },
@@ -18,10 +15,7 @@ const SOCIALS = [
   { label: "YouTube", Icon: YoutubeIcon },
 ];
 
-export default async function NavBar() {
-  const supabase = await createClient();
-  const categories = await safeQuery(getCategoryTree(supabase), []);
-
+export default function NavBar({ categories = [] }) {
   return (
     <nav className="hidden bg-brand text-white lg:block">
       {/* relative: the Shop mega-menu positions itself against this container

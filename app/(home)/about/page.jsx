@@ -134,7 +134,7 @@ const page = () => {
               largest fitment-verified catalog in the industry.
             </p>
             <Link
-              href="/shop"
+              href="/products"
               className="mt-8 inline-flex items-center gap-2 rounded-lg bg-[#1B9DDB] px-6 py-3 font-semibold text-white transition hover:bg-[#1685bb]"
             >
               Shop All Parts

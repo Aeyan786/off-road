@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
-import { getSecondLevelCategories } from "@/lib/data/categories";
+import { getSecondLevelCategories, withCategoryImages } from "@/lib/data/categories";
 import { getProducts, toStorefrontProduct } from "@/lib/data/products";
+import { getBlogs } from "@/lib/data/blogs";
 import { safeQuery } from "@/lib/data/safe";
 import Hero from "@/components/home/Hero";
 import ShopByCategory from "@/components/home/ShopByCategory";
@@ -18,9 +19,11 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const supabase = await createClient();
-  const [subcategories, products] = await Promise.all([
+  const [subcategories, products, recentBlogs] = await Promise.all([
     safeQuery(getSecondLevelCategories(supabase), []),
     safeQuery(getProducts(supabase), []),
+    // Published only — getBlogs() leaves drafts out in the query.
+    safeQuery(getBlogs(supabase, { limit: 6 }), []),
   ]);
 
   const storefrontProducts = products.slice(0,9).map(toStorefrontProduct);
@@ -30,12 +33,12 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
-      <ShopByCategory categories={subcategories} />
+      <ShopByCategory categories={withCategoryImages(subcategories, products)} />
       <OurProducts products={storefrontProducts} />
       <SuggestedForYou products={suggestedProducts}/>
       <NewArrivals products={newArrival} />
       <Features />
-      <RecentUpdates />
+      <RecentUpdates blogs={recentBlogs} />
       <Newsletter />
       {/* <Marquee /> */}
     </>

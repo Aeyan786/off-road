@@ -1,35 +1,68 @@
-import { ArrowLeft, ArrowRight, CircleUserRound } from "lucide-react";
-import ImagePlaceholder from "@/components/ui/image-placeholder";
-import Image from "next/image";
+"use client";
 
-const POSTS = [
-  {
-    id: 1,
-    date: "12 Aug",
-    author: "Ali Raza",
-    title: "Why Care Spare Parts Are More Important",
-    excerpt:
-      "Aeas congue, sapien sed mollis accumsan, justo orci pulvinar nisl, ut fermentum ante velit in ante. Vivamus blandit urna urna,......",
-  },
-  {
-    id: 2,
-    date: "12 Aug",
-    author: "Ali Raza",
-    title: "Why Care Spare Parts Are More Important",
-    excerpt:
-      "Aeas congue, sapien sed mollis accumsan, justo orci pulvinar nisl, ut fermentum ante velit in ante. Vivamus blandit urna urna,......",
-  },
-  {
-    id: 3,
-    date: "12 Aug",
-    author: "Ali Raza",
-    title: "Why Care Spare Parts Are More Important",
-    excerpt:
-      "Aeas congue, sapien sed mollis accumsan, justo orci pulvinar nisl, ut fermentum ante velit in ante. Vivamus blandit urna urna,......",
-  },
-];
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import BlogCard from "@/components/blog/BlogCard";
 
-export default function RecentUpdates() {
+/**
+ * Latest published blogs as a carousel. The row is a native scroll-snap
+ * container (so it swipes on touch devices); the arrows scroll it by one
+ * card and disable themselves at either end.
+ *
+ * @param {object[]} blogs latest published blogs, newest first
+ */
+export default function RecentUpdates({ blogs = [] }) {
+  const trackRef = useRef(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(false);
+
+  // Where the arrows are heading. Rapid clicks step from here rather than
+  // from the mid-animation scroll position, so each click moves one card.
+  // Cleared once scrolling settles, so swipes stay in sync.
+  const targetRef = useRef(null);
+  const settleTimer = useRef(null);
+
+  const updateArrows = useCallback(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    setCanPrev(track.scrollLeft > 4);
+    setCanNext(track.scrollLeft + track.clientWidth < track.scrollWidth - 4);
+  }, []);
+
+  useEffect(() => {
+    updateArrows();
+    window.addEventListener("resize", updateArrows);
+    return () => {
+      window.removeEventListener("resize", updateArrows);
+      clearTimeout(settleTimer.current);
+    };
+  }, [updateArrows, blogs.length]);
+
+  function handleScroll() {
+    updateArrows();
+    clearTimeout(settleTimer.current);
+    settleTimer.current = setTimeout(() => {
+      targetRef.current = null;
+    }, 150);
+  }
+
+  function scrollByCard(direction) {
+    const track = trackRef.current;
+    const card = track?.firstElementChild;
+    if (!card) return;
+    const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+    const step = card.getBoundingClientRect().width + gap;
+    const max = track.scrollWidth - track.clientWidth;
+
+    const from = targetRef.current ?? track.scrollLeft;
+    const next = Math.min(max, Math.max(0, Math.round(from / step) * step + direction * step));
+    targetRef.current = next;
+    track.scrollTo({ left: next, behavior: "smooth" });
+  }
+
+  const arrowClass =
+    "flex size-9 cursor-pointer items-center justify-center rounded-md bg-brand text-white transition-opacity hover:bg-brand/90 disabled:cursor-default disabled:opacity-40";
+
   return (
     <section className="mx-auto max-w-[1400px] px-6 py-16">
       <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -41,49 +74,49 @@ export default function RecentUpdates() {
             Stay updated with the latest news, improvements, features, and important changes.
           </p>
         </div>
-        <div className="flex shrink-0 gap-2">
-          <button
-            type="button"
-            aria-label="Previous"
-            className="flex size-9 items-center justify-center rounded-md bg-brand text-white hover:bg-brand/90"
-          >
-            <ArrowLeft className="size-4" />
-          </button>
-          <button
-            type="button"
-            aria-label="Next"
-            className="flex size-9 items-center justify-center rounded-md bg-brand text-white hover:bg-brand/90"
-          >
-            <ArrowRight className="size-4" />
-          </button>
+        {blogs.length > 0 ? (
+          <div className="flex shrink-0 gap-2">
+            <button
+              type="button"
+              aria-label="Previous"
+              onClick={() => scrollByCard(-1)}
+              disabled={!canPrev}
+              className={arrowClass}
+            >
+              <ArrowLeft className="size-4" />
+            </button>
+            <button
+              type="button"
+              aria-label="Next"
+              onClick={() => scrollByCard(1)}
+              disabled={!canNext}
+              className={arrowClass}
+            >
+              <ArrowRight className="size-4" />
+            </button>
+          </div>
+        ) : null}
+      </div>
+
+      {blogs.length > 0 ? (
+        <div
+          ref={trackRef}
+          onScroll={handleScroll}
+          className="flex snap-x snap-mandatory gap-8 overflow-x-auto scroll-smooth pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {blogs.map((blog) => (
+            <BlogCard
+              key={blog.id}
+              blog={blog}
+              className="w-full shrink-0 snap-start sm:w-[calc((100%-2rem)/2)] lg:w-[calc((100%-4rem)/3)]"
+            />
+          ))}
         </div>
-      </div>
-
-      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {POSTS.map((post) => (
-          <article key={post.id}>
-            <div className="relative aspect-[4/3] overflow-hidden bg-neutral-200">
-              <Image fill src='/blog-1.webp' alt="blog"/>
-              <span className="absolute right-3 top-3 rounded-md bg-black/80 px-2.5 py-1.5 text-center text-xs font-semibold leading-tight text-white">
-                {post.date.split(" ")[0]}
-                <br />
-                {post.date.split(" ")[1]}
-              </span>
-            </div>
-            <div className="mt-4 space-y-2">
-              <div className="flex items-center gap-1.5 text-xs text-neutral-500">
-                <CircleUserRound className="size-3.5" />
-                {post.author}
-              </div>
-              <h3 className="font-semibold text-neutral-900">{post.title}</h3>
-              <p className="text-sm leading-relaxed text-neutral-500">
-                Car spare parts play an essential role in keeping vehicles safe, reliable, and performing at their best. From brakes and filters to engine components and electrical parts, quality spare parts help maintain the vehicle’s efficiency and extend its lifespan. Choosing the right replacement parts can also prevent costly repairs, improve driving performance, and ensure your car continues to run smoothly on the road.
-
-              </p>
-            </div>
-          </article>
-        ))}
-      </div>
+      ) : (
+        <div className="rounded-lg border border-dashed border-neutral-300 py-16 text-center text-sm text-neutral-400">
+          New articles will appear here once they&apos;re published.
+        </div>
+      )}
     </section>
   );
 }

@@ -37,6 +37,14 @@ export default async function AllProductsPage({ searchParams }) {
     ),
   ]);
 
+  const { search } = readCatalogFilters(params);
+  const countNoun = [
+    branch ? "in this category" : "available",
+    search ? `matching “${search}”` : null,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <ProductCatalog
       title={branch ? branch.category.name : "All Products"}
@@ -44,7 +52,7 @@ export default async function AllProductsPage({ searchParams }) {
       facets={facets}
       activeCategory={branch?.category ?? null}
       basePath="/products"
-      countNoun={branch ? "in this category" : "available"}
+      countNoun={countNoun}
     />
   );
 }

@@ -72,7 +72,7 @@ export default function BulkDeleteMediaDialog({ items, onDeleted }) {
           </AlertDialogTitle>
           <AlertDialogDescription>
             This removes {count === 1 ? "the file" : "these files"} from storage and the
-            media library. Any product already using{" "}
+            media library. Any product or blog already using{" "}
             {count === 1 ? "it" : "them"} will lose the image. This cannot be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>

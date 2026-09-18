@@ -54,7 +54,7 @@ export default function OurProducts({ products = [] }) {
         )}
 
         <div className="mt-10 text-center">
-          <ButtonLink href="/">View All</ButtonLink>
+          <ButtonLink href="/products">View All</ButtonLink>
         </div>
       </div>
     </section>

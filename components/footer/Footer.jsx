@@ -10,15 +10,31 @@ import Image from "next/image";
 const LINK_COLUMNS = [
   {
     heading: "Shop",
-    links: ["Home", "Products", "Collections", "Sale", "Blog"],
+    links: [
+      { label: "Home", href: "/" },
+      { label: "Products", href: "/products" },
+      { label: "Shop", href: "/products" },
+      { label: "New Arrival", href: "/new_arrivals" },
+    ],
   },
   {
     heading: "Support",
-    links: ["Privacy", "Terms", "Help", "FAQ", "Contact"],
+    links: [
+      { label: "Privacy", href: "/privacy" },
+      { label: "Terms", href: "/terms" },
+      { label: "service", href: "/service" },
+      { label: "Contact", href: "/contact" },
+    ],
   },
   {
-    heading: "Locations",
-links: ["London", "Manchester", "Birmingham", "Glasgow", "Edinburgh"],  },
+    heading: "Company",
+    links: [
+      { label: "About Us", href: "/about" },
+      { label: "Our Blog", href: "/blog" },
+       { label: "Refunds", href: "/refunds" },
+      { label: "Shipping", href: "/shipping" },
+    ],
+  },
 ];
 
 const SOCIALS = [
@@ -59,8 +75,10 @@ export default function Footer() {
           <div className="flex items-center justify-center gap-3 py-4 sm:py-0">
             <MapPin className="size-5 shrink-0" />
             <p className="text-sm leading-tight">
-              58A Sauchiehall Street, <br />
-              Street, Glasgow, Scotland
+              59 Hawthorn Road, 
+              Little Sutton, <br />
+              Ellesmere Port, Cheshire, 
+              CH66 1PS
             </p>
           </div>
         </div>
@@ -101,10 +119,10 @@ export default function Footer() {
             {LINK_COLUMNS.map((col) => (
               <div key={col.heading}>
                 <ul className="space-y-3 text-sm text-white/70">
-                  {col.links.map((label) => (
-                    <li key={label}>
-                      <Link href="/" className="hover:text-white">
-                        {label}
+                  {col.links.map((e) => (
+                    <li key={e.label}>
+                      <Link href={e.href} className="hover:text-white">
+                        {e.label}
                       </Link>
                     </li>
                   ))}

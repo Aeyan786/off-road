@@ -98,8 +98,7 @@ const page = () => {
     <div className="w-full bg-white text-gray-900">
       {/* HERO SECTION */}
       <section className="relative overflow-hidden bg-[#1B9DDB] py-20">
-        <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-white/10" />
-        <div className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-white/10" />
+
         <div className="relative z-10 mx-auto max-w-3xl px-4 text-center">
           <span className="rounded-full bg-white/20 px-4 py-1 text-sm font-semibold uppercase tracking-wider text-white">
             Get In Touch
