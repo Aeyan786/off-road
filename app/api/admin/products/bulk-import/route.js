@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/server/requireAdmin";
 import { resolveCategoryPath } from "@/lib/server/resolveCategoryPath";
+import { resolveSupplierId } from "@/lib/server/resolveSupplier";
 import { getMediaByFileNames, toBaseName } from "@/lib/data/media";
 import { REQUIRED_PRODUCT_FIELD_KEYS, CATEGORY_FIELD_KEYS } from "@/lib/product-fields";
 
@@ -43,13 +44,12 @@ function toStringOrNull(value) {
  * in place (upsert).
  */
 export async function POST(request) {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) {
-    return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
+  // Same check as the product Server Actions (signed in + Products access),
+  // on top of proxy.js.
+  const { supabase, error: authError } = await requireAdmin("products");
+  if (authError) {
+    const status = authError === "Not authorized." ? 401 : 403;
+    return NextResponse.json({ error: authError }, { status });
   }
 
   const body = await request.json();
@@ -97,13 +97,13 @@ export async function POST(request) {
     pending.push({
       index,
       categoryNames,
+      supplierName: toStringOrNull(record.supplier),
       payload: {
         product: record.product.toString().trim(),
         sku: record.sku.toString().trim(),
         price,
         discount_price: toNumberOrNull(record.discount_price),
         quantity: toNumberOrNull(record.quantity) ?? 0,
-        supplier: toStringOrNull(record.supplier),
         manufacturer: toStringOrNull(record.manufacturer),
         model: toStringOrNull(record.model),
         year: toStringOrNull(record.year),
@@ -155,6 +155,10 @@ export async function POST(request) {
 
   const categoryCache = new Map();
   let categoriesCreated = 0;
+  // Supplier names become supplier_id: an existing supplier is reused
+  // (case-insensitive), a new name creates one — once per name per import.
+  const supplierCache = new Map();
+  let suppliersCreated = 0;
   const payloads = [];
 
   try {
@@ -169,8 +173,11 @@ export async function POST(request) {
         categoryId = resolved.id;
         categoriesCreated += resolved.created;
       }
+      const supplier = await resolveSupplierId(supabase, item.supplierName, supplierCache);
+      if (supplier?.created) suppliersCreated += 1;
       payloads.push({
         ...item.payload,
+        supplier_id: supplier?.id ?? null,
         categories: categoryId,
         images: resolveImages(item.imageTokens),
       });
@@ -182,7 +189,7 @@ export async function POST(request) {
   const unmatchedImages = [...unresolvedImages];
 
   if (payloads.length === 0) {
-    return NextResponse.json({ imported: 0, categoriesCreated, skipped, unmatchedImages });
+    return NextResponse.json({ imported: 0, categoriesCreated, suppliersCreated, skipped, unmatchedImages });
   }
 
   const { error: upsertError } = await supabase
@@ -198,6 +205,7 @@ export async function POST(request) {
   return NextResponse.json({
     imported: payloads.length,
     categoriesCreated,
+    suppliersCreated,
     skipped,
     unmatchedImages,
   });

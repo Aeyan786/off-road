@@ -53,7 +53,7 @@ function Toolbar({ table, categoryOptions, uploadOpen, setUploadOpen }) {
         <select
           value={categoryColumn.getFilterValue() ?? ""}
           onChange={(e) => categoryColumn.setFilterValue(e.target.value || undefined)}
-          className={`${FILTER_INPUT_CLASS} w-full sm:w-56`}
+          className={`${FILTER_INPUT_CLASS} w-full cursor-pointer sm:w-56`}
           aria-label="Filter by category"
         >
           <option value="">All categories</option>

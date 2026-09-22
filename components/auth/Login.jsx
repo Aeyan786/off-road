@@ -17,7 +17,11 @@ import {
 
 const initialState = { error: null };
 
-export default function Login() {
+/**
+ * @param {string} [notice] message to show before any sign-in attempt, e.g.
+ *   when proxy.js sent a signed-in non-admin back here
+ */
+export default function Login({ notice = null }) {
   const [state, formAction, isPending] = useActionState(
     async (_prevState, formData) => (await login(formData)) ?? initialState,
     initialState
@@ -65,16 +69,16 @@ export default function Login() {
             </div>
           </div>
 
-          {state?.error ? (
+          {state?.error ?? notice ? (
             <p
               role="alert"
               className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive"
             >
-              {state.error}
+              {state?.error ?? notice}
             </p>
           ) : null}
 
-          <Button type="submit" className="w-full" disabled={isPending}>
+          <Button type="submit" className="w-full cursor-pointer" disabled={isPending}>
             {isPending ? (
               <>
                 <Loader2 className="size-4 animate-spin" />

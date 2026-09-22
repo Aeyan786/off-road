@@ -2,6 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -14,35 +15,45 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { createCategory } from "@/actions/categories";
+import { createCategory, updateCategory } from "@/actions/categories";
 
 const initialState = { error: null };
 
-export default function CategoryFormDialog({ trigger, parentId, parentName }) {
+/**
+ * Add a category (top-level, or under `parentId`), or — when `category` is
+ * passed — rename that existing category in place.
+ */
+export default function CategoryFormDialog({ trigger, parentId, parentName, category }) {
   const [open, setOpen] = useState(false);
+  const isEdit = Boolean(category?.id);
 
   const [state, formAction, isPending] = useActionState(async (_prev, formData) => {
-    const result = await createCategory({
-      name: formData.get("name")?.toString() ?? "",
-      parentId: parentId || null,
-    });
-    if (result?.success) setOpen(false);
+    const name = formData.get("name")?.toString() ?? "";
+    const result = isEdit
+      ? await updateCategory({ id: category.id, name })
+      : await createCategory({ name, parentId: parentId || null });
+
+    if (result?.success) {
+      setOpen(false);
+      if (isEdit) toast.success(`Renamed to "${name.trim()}".`);
+    }
     return result ?? initialState;
   }, initialState);
+
+  const title = isEdit ? "Rename Category" : parentId ? "Add Subcategory" : "Add Category";
+  const description = isEdit
+    ? `Currently "${category.name}". Products and subcategories stay attached, and existing links keep working.`
+    : parentId
+      ? `This will be added under "${parentName}".`
+      : "Top-level categories group subcategories, e.g. \"ATV\".";
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger render={trigger} />
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>
-            {parentId ? `Add Subcategory` : "Add Category"}
-          </DialogTitle>
-          <DialogDescription>
-            {parentId
-              ? `This will be added under "${parentName}".`
-              : "Top-level categories group subcategories, e.g. \"ATV\"."}
-          </DialogDescription>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
 
         <form action={formAction} className="space-y-4">
@@ -52,6 +63,7 @@ export default function CategoryFormDialog({ trigger, parentId, parentName }) {
               id="name"
               name="name"
               required
+              defaultValue={isEdit ? category.name : undefined}
               placeholder={parentId ? "e.g. ATV Exhaust" : "e.g. ATV"}
               autoFocus
             />

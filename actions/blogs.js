@@ -53,7 +53,7 @@ async function cleanUpImage(supabase, url) {
  * (uploaded or picked in BlogImageField), so this only writes the row.
  */
 export async function createBlog(formData) {
-  const { supabase, error: authError } = await requireAdmin();
+  const { supabase, error: authError } = await requireAdmin("blogs");
   if (authError) return { error: authError };
 
   const parsed = parseBlogForm(formData);
@@ -92,7 +92,7 @@ export async function createBlog(formData) {
  * library unless a product or another blog still uses it.
  */
 export async function updateBlog(id, formData) {
-  const { supabase, error: authError } = await requireAdmin();
+  const { supabase, error: authError } = await requireAdmin("blogs");
   if (authError) return { error: authError };
 
   const parsed = parseBlogForm(formData);
@@ -128,7 +128,7 @@ export async function updateBlog(id, formData) {
 
 /** Deletes the blog, then its image if nothing else uses it. */
 export async function deleteBlog(id) {
-  const { supabase, error: authError } = await requireAdmin();
+  const { supabase, error: authError } = await requireAdmin("blogs");
   if (authError) return { error: authError };
 
   const { data: deleted, error } = await supabase

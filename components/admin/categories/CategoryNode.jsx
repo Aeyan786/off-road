@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, Trash2 } from "lucide-react";
+import { Pencil, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CategoryFormDialog from "@/components/admin/categories/CategoryFormDialog";
 import DeleteCategoryDialog from "@/components/admin/categories/DeleteCategoryDialog";
@@ -16,6 +16,14 @@ export default function CategoryNode({ category, depth = 0 }) {
           {category.name}
         </span>
         <div className="flex items-center gap-1.5">
+          <CategoryFormDialog
+            category={category}
+            trigger={
+              <Button className="cursor-pointer rounded-sm" type="button" size="icon-xs" variant="ghost" aria-label={`Rename ${category.name}`}>
+                <Pencil className="size-3" />
+              </Button>
+            }
+          />
           <CategoryFormDialog
             parentId={category.id}
             parentName={category.name}

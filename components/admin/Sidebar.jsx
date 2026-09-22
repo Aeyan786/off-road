@@ -9,7 +9,8 @@ import {
   ExternalLink,
   LogOut,
 } from "lucide-react";
-import { ADMIN_NAV_LINKS } from "@/components/admin/nav-links";
+import { ADMIN_NAV_GROUPS } from "@/components/admin/nav-links";
+import { canAccessPath } from "@/lib/admin-modules";
 import {
   Tooltip,
   TooltipContent,
@@ -23,8 +24,16 @@ export default function Sidebar({
   className,
   collapsed = false,
   onToggle,
+  access = null,
 }) {
   const pathname = usePathname();
+
+  // Only the pages this user may open (same rules proxy.js enforces); a
+  // group with nothing left is hidden entirely.
+  const navGroups = ADMIN_NAV_GROUPS.map((group) => ({
+    ...group,
+    items: group.items.filter((link) => canAccessPath(access, link.href)),
+  })).filter((group) => group.items.length > 0);
 
   return (
     <div
@@ -40,9 +49,7 @@ export default function Sidebar({
         className={cn(
           "flex h-16 shrink-0 items-center",
           "transition-all duration-300 ease-in-out",
-          collapsed
-            ? "justify-center px-2"
-            : "justify-between gap-2 px-6"
+          collapsed ? "justify-center px-2" : "justify-between gap-2 px-6"
         )}
       >
         <Link
@@ -94,68 +101,90 @@ export default function Sidebar({
       {/* Navigation */}
       <nav
         className={cn(
-          "mt-5 flex-1 space-y-2 py-4",
+          "mt-2 flex-1 space-y-1 overflow-y-auto py-4",
+          "scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent",
           "transition-all duration-300 ease-in-out",
           collapsed ? "px-2" : "px-3"
         )}
       >
-        {ADMIN_NAV_LINKS.map((link) => {
-          const isActive =
-            link.href === "/admin"
-              ? pathname === "/admin"
-              : pathname.startsWith(link.href);
+        {navGroups.map((group, groupIndex) => (
+          <div
+            key={group.title ?? `group-${groupIndex}`}
+            className={groupIndex !== 0 ? "pt-4" : ""}
+          >
+            {/* Group Label */}
+            {group.title ? (
+              collapsed ? (
+                <div className="my-3 border-t border-white/20" />
+              ) : (
+                <p className="px-3 pb-2 text-[11px] font-bold uppercase tracking-wider text-white/50">
+                  {group.title}
+                </p>
+              )
+            ) : null}
 
-          const Icon = link.icon;
+            {/* Group Items */}
+            <div className="space-y-1">
+              {group.items.map((link) => {
+                const isActive =
+                  link.href === "/admin"
+                    ? pathname === "/admin"
+                    : pathname.startsWith(link.href);
 
-          const item = (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={onNavigate}
-              aria-label={collapsed ? link.label : undefined}
-              className={cn(
-                "group flex cursor-pointer items-center rounded-md py-2.5 text-sm font-medium",
-                "transition-all duration-300 ease-in-out",
-                collapsed ? "justify-center px-0" : "gap-3 px-3",
-                isActive
-                  ? "bg-white text-black"
-                  : "text-white hover:bg-neutral-100 hover:text-neutral-900"
-              )}
-            >
-              <Icon className="size-4 shrink-0" />
+                const Icon = link.icon;
 
-              <span
-                className={cn(
-                  "overflow-hidden whitespace-nowrap",
-                  "transition-all duration-300 ease-in-out",
-                  collapsed
-                    ? "w-0 translate-x-[-8px] opacity-0"
-                    : "w-auto translate-x-0 opacity-100"
-                )}
-              >
-                {link.label}
-              </span>
-            </Link>
-          );
+                const item = (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={onNavigate}
+                    aria-label={collapsed ? link.label : undefined}
+                    className={cn(
+                      "group flex cursor-pointer items-center rounded-md py-2.5 text-sm font-medium",
+                      "transition-all duration-300 ease-in-out",
+                      collapsed ? "justify-center px-0" : "gap-3 px-3",
+                      isActive
+                        ? "bg-white text-black"
+                        : "text-white hover:bg-neutral-100 hover:text-neutral-900"
+                    )}
+                  >
+                    <Icon className="size-4 shrink-0" />
 
-          return (
-            <Tooltip key={link.href}>
-              <TooltipTrigger render={item} />
+                    <span
+                      className={cn(
+                        "overflow-hidden whitespace-nowrap",
+                        "transition-all duration-300 ease-in-out",
+                        collapsed
+                          ? "w-0 translate-x-[-8px] opacity-0"
+                          : "w-auto translate-x-0 opacity-100"
+                      )}
+                    >
+                      {link.label}
+                    </span>
+                  </Link>
+                );
 
-              <TooltipContent
-                side="right"
-                className={cn(
-                  "transition-opacity duration-200",
-                  collapsed
-                    ? "opacity-100"
-                    : "pointer-events-none opacity-0"
-                )}
-              >
-                {link.label}
-              </TooltipContent>
-            </Tooltip>
-          );
-        })}
+                return (
+                  <Tooltip key={link.href}>
+                    <TooltipTrigger render={item} />
+
+                    <TooltipContent
+                      side="right"
+                      className={cn(
+                        "transition-opacity duration-200",
+                        collapsed
+                          ? "opacity-100"
+                          : "pointer-events-none opacity-0"
+                      )}
+                    >
+                      {link.label}
+                    </TooltipContent>
+                  </Tooltip>
+                );
+              })}
+            </div>
+          </div>
+        ))}
       </nav>
 
       {/* Footer */}
@@ -176,9 +205,7 @@ export default function Sidebar({
                 className={cn(
                   "flex cursor-pointer items-center rounded-sm py-2.5 text-sm font-medium text-white",
                   "transition-all duration-200 hover:bg-neutral-100 hover:text-neutral-900",
-                  collapsed
-                    ? "justify-center px-0"
-                    : "gap-3 px-3"
+                  collapsed ? "justify-center px-0" : "gap-3 px-3"
                 )}
               >
                 <ExternalLink className="size-4 shrink-0" />
@@ -186,9 +213,7 @@ export default function Sidebar({
                 <span
                   className={cn(
                     "overflow-hidden whitespace-nowrap transition-all duration-300",
-                    collapsed
-                      ? "w-0 opacity-0"
-                      : "w-auto opacity-100"
+                    collapsed ? "w-0 opacity-0" : "w-auto opacity-100"
                   )}
                 >
                   Visit Website
@@ -198,9 +223,7 @@ export default function Sidebar({
           />
 
           {collapsed && (
-            <TooltipContent side="right">
-              Visit Website
-            </TooltipContent>
+            <TooltipContent side="right">Visit Website</TooltipContent>
           )}
         </Tooltip>
 
@@ -210,14 +233,12 @@ export default function Sidebar({
             render={
               <button
                 type="button"
-                onClick={()=>logout()}
+                onClick={() => logout()}
                 aria-label={collapsed ? "Logout" : undefined}
                 className={cn(
                   "flex w-full cursor-pointer items-center rounded-sm py-2.5 text-sm font-medium text-white",
                   "transition-all duration-200 hover:bg-neutral-100 hover:text-neutral-900",
-                  collapsed
-                    ? "justify-center px-0"
-                    : "gap-3 px-3"
+                  collapsed ? "justify-center px-0" : "gap-3 px-3"
                 )}
               >
                 <LogOut className="size-4 shrink-0" />
@@ -225,9 +246,7 @@ export default function Sidebar({
                 <span
                   className={cn(
                     "overflow-hidden whitespace-nowrap transition-all duration-300",
-                    collapsed
-                      ? "w-0 opacity-0"
-                      : "w-auto opacity-100"
+                    collapsed ? "w-0 opacity-0" : "w-auto opacity-100"
                   )}
                 >
                   Logout
@@ -236,11 +255,7 @@ export default function Sidebar({
             }
           />
 
-          {collapsed && (
-            <TooltipContent side="right">
-              Logout
-            </TooltipContent>
-          )}
+          {collapsed && <TooltipContent side="right">Logout</TooltipContent>}
         </Tooltip>
       </div>
     </div>

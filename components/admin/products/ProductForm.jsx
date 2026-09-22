@@ -14,6 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import ProductImagesField from "@/components/admin/products/ProductImagesField";
+import SupplierField from "@/components/admin/products/SupplierField";
 import { createProduct, updateProduct } from "@/actions/products";
 import { cn } from "@/lib/utils";
 
@@ -46,7 +47,7 @@ function Field({ label, htmlFor, error, children, className }) {
   );
 }
 
-export default function ProductForm({ product, categoryOptions }) {
+export default function ProductForm({ product, categoryOptions, supplierOptions = [] }) {
   const router = useRouter();
   const isEdit = Boolean(product?.id);
 
@@ -168,7 +169,7 @@ export default function ProductForm({ product, categoryOptions }) {
                     "categories",
                     product?.categories?.id ?? ""
                   )}
-                  className={cn(INPUT_CLASS, "h-9 py-0")}
+                  className={cn(INPUT_CLASS, "h-9 cursor-pointer py-0")}
                   {...errorProps("categories")}
                 >
                   <option value="">Select a category</option>
@@ -183,17 +184,18 @@ export default function ProductForm({ product, categoryOptions }) {
 
               <Field
                 label="Supplier"
-                htmlFor="supplier"
+                htmlFor="supplier_id"
                 error={fieldErrors.supplier}
               >
-                <Input
-                  id="supplier"
-                  name="supplier"
-                  defaultValue={getValue(
-                    "supplier",
-                    product?.supplier ?? ""
+                <SupplierField
+                  options={supplierOptions}
+                  defaultSupplierId={getValue(
+                    "supplier_id",
+                    product?.supplier_id ?? ""
                   )}
-                  {...errorProps("supplier")}
+                  defaultNewName={getValue("supplier_new", "")}
+                  selectClassName={cn(INPUT_CLASS, "h-9 py-0")}
+                  error={fieldErrors.supplier}
                 />
               </Field>
 

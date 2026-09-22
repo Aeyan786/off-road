@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 import { GUEST_CART_COOKIE, GUEST_CART_COOKIE_OPTIONS } from "@/lib/guest-cart";
+import { loadAdminAccess } from "@/lib/server/adminAccess";
+import { canAccessPath, firstAllowedPath } from "@/lib/admin-modules";
 
 const PROTECTED_PREFIXES = ["/admin", "/api/admin"];
 const AUTH_ONLY_PATHS = ["/login"];
@@ -32,7 +34,10 @@ function ensureGuestCart(request, response) {
  *  - enforces auth server-side:
  *      /admin/*      requires a signed-in Supabase session, otherwise -> /login
  *      /api/admin/*  same, but answers 401 JSON instead of redirecting
- *      /login        redirects an already-signed-in user -> /admin
+ *      /login        redirects an already-signed-in admin -> their first page
+ *  - enforces admin permissions (lib/admin-modules.js): the user needs an
+ *    admin_users row, and the module the path belongs to. Otherwise pages
+ *    redirect to a page they can open and /api/admin answers 403.
  *
  * This is the server-side source of truth for route protection. Client-side
  * checks alone are not sufficient since they can be bypassed.
@@ -85,10 +90,57 @@ export async function proxy(request) {
     return ensureGuestCart(request, NextResponse.redirect(redirectUrl));
   }
 
-  if (isAuthOnly && user) {
+  // Permissions are read on every admin request, so granting or revoking a
+  // module takes effect on the user's very next click.
+  let access = null;
+  if (user) {
+    try {
+      access = await loadAdminAccess(user.id);
+    } catch (err) {
+      console.error("[proxy] could not load admin access:", err.message);
+      if (isProtected) {
+        return ensureGuestCart(
+          request,
+          NextResponse.json({ error: "Could not check permissions." }, { status: 503 })
+        );
+      }
+    }
+  }
+
+  if (isProtected) {
+    const denied = !access
+      ? "no-access"
+      : !canAccessPath(access, pathname)
+        ? "forbidden"
+        : null;
+
+    if (denied && pathname.startsWith("/api/")) {
+      return ensureGuestCart(
+        request,
+        NextResponse.json({ error: "You don't have permission to do this." }, { status: 403 })
+      );
+    }
+    if (denied === "no-access") {
+      // Signed in, but not an admin user: back to the login page with a
+      // message (it won't bounce back here, see the /login branch below).
+      const loginUrl = new URL("/login", request.url);
+      loginUrl.searchParams.set("error", "no-access");
+      return ensureGuestCart(request, NextResponse.redirect(loginUrl));
+    }
+    if (denied === "forbidden") {
+      return ensureGuestCart(
+        request,
+        NextResponse.redirect(new URL(firstAllowedPath(access), request.url))
+      );
+    }
+  }
+
+  // Only real admin users skip the login page; anyone else can still see it
+  // (and switch accounts).
+  if (isAuthOnly && access) {
     return ensureGuestCart(
       request,
-      NextResponse.redirect(new URL("/admin", request.url))
+      NextResponse.redirect(new URL(firstAllowedPath(access), request.url))
     );
   }
 

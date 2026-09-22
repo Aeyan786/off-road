@@ -10,6 +10,7 @@ export const SIDEBAR_COOKIE = "admin-sidebar-collapsed";
 
 export default function AdminShell({
   userEmail,
+  access = null,
   defaultCollapsed = false,
   children,
 }) {
@@ -35,6 +36,7 @@ export default function AdminShell({
           )}
         >
           <Sidebar
+            access={access}
             className="h-full w-full"
             collapsed={collapsed}
             onToggle={toggleCollapsed}
@@ -45,7 +47,7 @@ export default function AdminShell({
         <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
           {/* Header */}
           <div className="shrink-0">
-            <AdminHeader userEmail={userEmail} />
+            <AdminHeader userEmail={userEmail} access={access} />
           </div>
 
           {/* ONLY scrollbar in the admin shell */}

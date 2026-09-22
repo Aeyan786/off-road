@@ -33,7 +33,7 @@ export default function ProductCatalog({
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[260px_1fr]">
+      <div className="grid grid-cols-1 gap-12 lg:grid-cols-[260px_1fr]">
         <div className="self-start lg:sticky lg:top-46">
           <ProductFilters
             facets={facets}

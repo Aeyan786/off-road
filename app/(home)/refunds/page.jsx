@@ -62,9 +62,7 @@ const page = () => {
       {/* HERO SECTION */}
       <section className="relative overflow-hidden bg-[#1B9DDB] py-16">
         <div className="mx-auto max-w-4xl px-4 text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-white/20">
-            <RotateCcw className="h-7 w-7 text-white" />
-          </div>
+   
           <h1 className="mt-6 text-4xl font-extrabold text-white sm:text-5xl">
             Returns & Refunds
           </h1>
@@ -80,7 +78,7 @@ const page = () => {
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-4">
           {/* TABLE OF CONTENTS */}
           <aside className="lg:col-span-1">
-            <div className="sticky top-24">
+            <div className="sticky top-44">
               <h3 className="text-sm font-bold uppercase tracking-wider text-gray-500">
                 On This Page
               </h3>

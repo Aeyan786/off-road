@@ -1,150 +1,103 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import {
-  Wrench,
-  Truck,
-  ShieldCheck,
-  Users,
-  Award,
-  Zap,
-  MapPin,
-  ArrowRight,
-  Star,
-} from 'lucide-react'
+import { ArrowRight, ArrowUpRight } from 'lucide-react'
 
 const page = () => {
-  const stats = [
-    { label: 'Parts in Catalog', value: '250K+' },
-    { label: 'Brands Carried', value: '500+' },
-    { label: 'Vehicles Supported', value: '10K+' },
-    { label: 'Happy Customers', value: '1M+' },
-  ]
-
-  const values = [
-    {
-      icon: <Wrench className="w-8 h-8" />,
-      title: 'Fitment First',
-      description:
-        'Every part we sell is matched to your exact make, model, and year — no guesswork, no returns.',
-    },
-    {
-      icon: <ShieldCheck className="w-8 h-8" />,
-      title: 'Trusted Quality',
-      description:
-        'We only stock parts from manufacturers we trust, backed by warranties and real customer reviews.',
-    },
-    {
-      icon: <Zap className="w-8 h-8" />,
-      title: 'Built for Speed',
-      description:
-        'Fast shipping, real-time inventory, and a checkout process built for people who want to get back on the trail.',
-    },
-    {
-      icon: <Users className="w-8 h-8" />,
-      title: 'By Enthusiasts',
-      description:
-        'Our team is made up of off-roaders and gearheads who use the same parts we sell — every day.',
-    },
-  ]
-
-  const timeline = [
-    {
-      year: '2015',
-      title: 'The Idea',
-      description:
-        'Founded in a garage by a group of off-road enthusiasts tired of guessing whether parts would fit their rigs.',
-    },
-    {
-      year: '2018',
-      title: 'Fitment Engine Launch',
-      description:
-        'Built our proprietary Year/Make/Model search engine, changing how customers shop for parts online.',
-    },
-    {
-      year: '2021',
-      title: 'Nationwide Distribution',
-      description:
-        'Expanded to multiple warehouses, enabling 2-day shipping across the entire country.',
-    },
-    {
-      year: '2024',
-      title: '1 Million Customers',
-      description:
-        'Crossed a major milestone, becoming a go-to destination for car and bike parts nationwide.',
-    },
-  ]
-
   return (
-    <div className="w-full bg-white text-gray-900">
-      {/* HERO SECTION */}
-      <section className="relative h-[70vh] min-h-[500px] w-full overflow-hidden">
-       
-        <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-center">
-          <span className="mb-4 rounded-full bg-[#1B9DDB] px-4 py-1 text-sm font-semibold uppercase tracking-wider text-white">
-            Our Story
-          </span>
-          <h1 className="max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl">
-            Built By Riders & Drivers,{' '}
-            <span className="text-[#1B9DDB]">For Riders & Drivers</span>
+    <div className="w-full bg-white text-neutral-900">
+      {/* HERO */}
+      <section className="relative flex min-h-[85vh] w-full items-end overflow-hidden bg-neutral-900">
+        <Image
+          src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=1600&q=80"
+          alt="Off-road truck tackling rough terrain"
+          fill
+          className="object-cover opacity-70"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent" />
+
+        <div className="relative z-10 w-full px-6 pb-16 sm:px-10 lg:px-16">
+          <p className="mb-6 text-xs font-semibold uppercase tracking-[0.3em] text-white/70">
+            Off Road Performance — ORP
+          </p>
+          <h1 className="max-w-4xl text-4xl font-black leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
+            Building world-class rides
+            <br />
+            from the ground up.
           </h1>
-          <p className="mt-6 max-w-2xl text-lg text-gray-900">
-            OffRoad Performance is on a mission to make finding the right car
-            and bike parts effortless — no matter your make, model, or year.
+        </div>
+      </section>
+
+      {/* WELCOME / REDESIGN INTRO */}
+      <section className="border-b border-neutral-100 px-6 py-20 sm:px-10 lg:px-16">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-3">
+            <span className="text-sm font-semibold uppercase tracking-widest text-[#1B9DDB]">
+              01 — New Website
+            </span>
+          </div>
+          <div className="lg:col-span-9">
+            <p className="text-xl leading-relaxed text-neutral-800 sm:text-2xl">
+              Welcome to Off Road Performance's new website. We've had a
+              complete re-design — one that not only celebrates our rich
+              history in the powersports industry, but represents all the
+              qualities that make us a world-class parts distributor.
+            </p>
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-neutral-500">
+              Over a decade later, we continue to deliver the most powerful
+              and reliable aftermarket performance parts to the powersports
+              industry.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* TAGLINE STATEMENT */}
+      <section className="bg-[#1B9DDB] px-6 py-24 sm:px-10 lg:px-16">
+        <div className="mx-auto max-w-5xl text-center">
+          <p className="text-2xl font-bold leading-snug text-white sm:text-4xl lg:text-5xl">
+            Where marquee brands meet{' '}
+            <span className="italic font-serif font-medium">
+              world-class distribution.
+            </span>
           </p>
         </div>
       </section>
 
-      {/* STATS BAR */}
-      <section className="bg-[#1B9DDB]">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 px-4 py-12 text-center sm:grid-cols-4">
-          {stats.map((stat) => (
-            <div key={stat.label}>
-              <p className="text-3xl font-extrabold text-white sm:text-4xl">
-                {stat.value}
-              </p>
-              <p className="mt-2 text-sm font-medium text-white/90">
-                {stat.label}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* OUR STORY */}
-      <section className="mx-auto max-w-6xl px-4 py-20">
-        <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-          <div>
-            <span className="text-sm font-semibold uppercase tracking-wider text-[#1B9DDB]">
-              Who We Are
+      {/* TRUSTED DESTINATION */}
+      <section className="px-6 py-24 sm:px-10 lg:px-16">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <span className="text-sm font-semibold uppercase tracking-widest text-[#1B9DDB]">
+              02 — Who We Are
             </span>
-            <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
-              More Than a Parts Store
+            <h2 className="mt-4 text-3xl font-black leading-tight tracking-tight sm:text-4xl">
+              Your trusted destination for off-road excellence.
             </h2>
-            <p className="mt-6 text-gray-600 leading-relaxed">
-              OffRoad Performance started with a simple frustration: buying
-              car and bike parts online was confusing, slow, and full of
-              guesswork. We built a platform where every part is matched
-              precisely to your vehicle's manufacturer, model, and year —
-              eliminating returns and wasted time.
+            <p className="mt-6 leading-relaxed text-neutral-600">
+              Off Road Performance was created for those who live life
+              outside of work. We understand the thrill of racing or the
+              need for some weekend leisure time — we know your ride needs
+              to be just as tough as the journey ahead.
             </p>
-            <p className="mt-4 text-gray-600 leading-relaxed">
-              Today, we're proud to serve off-road enthusiasts, daily
-              commuters, and weekend warriors across the country with the
-              largest fitment-verified catalog in the industry.
+            <p className="mt-4 leading-relaxed text-neutral-600">
+              Our store offers a carefully selected range of high-quality
+              parts and accessories designed to enhance your ride, give you
+              ultimate control and reliable performance.
             </p>
             <Link
               href="/products"
-              className="mt-8 inline-flex items-center gap-2 rounded-lg bg-[#1B9DDB] px-6 py-3 font-semibold text-white transition hover:bg-[#1685bb]"
+              className="mt-8 inline-flex items-center gap-2 border-b-2 border-neutral-900 pb-1 text-sm font-semibold text-neutral-900 transition hover:border-[#1B9DDB] hover:text-[#1B9DDB]"
             >
-              Shop All Parts
+              Explore the catalog
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <div className="relative h-80 w-full overflow-hidden rounded-2xl sm:h-96">
+          <div className="relative h-80 w-full overflow-hidden rounded-sm sm:h-[28rem] lg:col-span-7">
             <Image
-              src="/foot2.webp"
-              alt="Team working on a vehicle"
+              src="https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?w=1200&q=80"
+              alt="Off-road motorbike on a dirt trail"
               fill
               className="object-cover"
             />
@@ -152,136 +105,121 @@ const page = () => {
         </div>
       </section>
 
-      {/* VALUES SECTION */}
-      <section className="bg-gray-50 py-20">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <span className="text-sm font-semibold uppercase tracking-wider text-[#1B9DDB]">
-              What Drives Us
-            </span>
-            <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
-              Our Core Values
-            </h2>
+      {/* BUILT FOR EVERY TERRAIN */}
+      <section className="bg-neutral-50 px-6 py-24 sm:px-10 lg:px-16">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 lg:grid-cols-12">
+          <div className="relative order-2 h-80 w-full overflow-hidden rounded-sm sm:h-[28rem] lg:order-1 lg:col-span-7">
+            <Image
+              src="https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?w=1200&q=80"
+              alt="4x4 vehicle driving through mud"
+              fill
+              className="object-cover"
+            />
           </div>
-          <div className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((value) => (
-              <div
-                key={value.title}
-                className="group rounded-2xl border border-gray-200 bg-white p-8 transition hover:border-[#1B9DDB] hover:shadow-lg"
-              >
-                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-[#1B9DDB]/10 text-[#1B9DDB] transition group-hover:bg-[#1B9DDB] group-hover:text-white">
-                  {value.icon}
-                </div>
-                <h3 className="mt-6 text-lg font-bold">{value.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-gray-600">
-                  {value.description}
-                </p>
-              </div>
-            ))}
+          <div className="order-1 lg:order-2 lg:col-span-5">
+            <span className="text-sm font-semibold uppercase tracking-widest text-[#1B9DDB]">
+              03 — Our Standard
+            </span>
+            <h2 className="mt-4 text-3xl font-black leading-tight tracking-tight sm:text-4xl">
+              Built for every terrain.
+            </h2>
+            <p className="mt-6 leading-relaxed text-neutral-600">
+              Off Road Performance is built around the idea that no terrain
+              should limit your journey. We know that the parts we recommend
+              need to perform consistently while under pressure.
+            </p>
+            <p className="mt-4 leading-relaxed text-neutral-600">
+              That's why we focus on providing parts designed to handle
+              extreme conditions while offering more performance, control,
+              and exceptional durability. Every product we offer is selected
+              with real-world performance in mind — we understand that
+              riding isn't just a hobby, it's an experience that demands
+              reliability.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* TIMELINE SECTION */}
-      <section className="mx-auto max-w-6xl px-4 py-20">
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="text-sm font-semibold uppercase tracking-wider text-[#1B9DDB]">
-            Our Journey
+      {/* OUR MISSION */}
+      <section className="border-t border-neutral-100 px-6 py-24 sm:px-10 lg:px-16">
+        <div className="mx-auto max-w-4xl">
+          <span className="text-sm font-semibold uppercase tracking-widest text-[#1B9DDB]">
+            04 — Our Mission
           </span>
-          <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
-            From Garage to Nationwide
-          </h2>
-        </div>
-
-        <div className="relative mt-16">
-          <div className="absolute left-1/2 top-0 hidden h-full w-0.5 -translate-x-1/2 bg-gray-200 md:block" />
-          <div className="space-y-12">
-            {timeline.map((item, index) => (
-              <div
-                key={item.year}
-                className={`flex flex-col items-center gap-6 md:flex-row ${
-                  index % 2 === 1 ? 'md:flex-row-reverse' : ''
-                }`}
-              >
-                <div className="flex-1 md:text-right">
-                  <div
-                    className={`${
-                      index % 2 === 1 ? 'md:text-left' : ''
-                    } rounded-xl bg-gray-50 p-6`}
-                  >
-                    <span className="text-2xl font-extrabold text-[#1B9DDB]">
-                      {item.year}
-                    </span>
-                    <h3 className="mt-2 text-xl font-bold">{item.title}</h3>
-                    <p className="mt-2 text-gray-600">{item.description}</p>
-                  </div>
-                </div>
-                <div className="z-10 hidden h-4 w-4 flex-shrink-0 rounded-full border-4 border-white bg-[#1B9DDB] shadow md:block" />
-                <div className="flex-1" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* WHY CHOOSE US / FITMENT HIGHLIGHT */}
-      <section className="bg-gray-900 py-20">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-4 md:grid-cols-2">
-          <div className="relative h-80 w-full overflow-hidden rounded-2xl sm:h-96">
-            <Image
-              src="/foot1.webp"
-              alt="Fitment search in action"
-              fill
-              className="object-cover"
-            />
-          </div>
-          <div>
-            <span className="text-sm font-semibold uppercase tracking-wider text-[#1B9DDB]">
-              Why OffRoad Performance
-            </span>
-            <h2 className="mt-3 text-3xl font-bold text-white sm:text-4xl">
-              Guaranteed Fitment, Every Time
-            </h2>
-            <ul className="mt-8 space-y-5">
-              {[
-                'Search by Year, Make & Model for guaranteed compatibility',
-                'Verified reviews from real off-road enthusiasts',
-                'Fast, reliable shipping from warehouses nationwide',
-                'Dedicated support team of gearheads, not call centers',
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <div className="mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[#1B9DDB]">
-                    <Star className="h-3.5 w-3.5 text-white" fill="white" />
-                  </div>
-                  <span className="text-gray-200">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA SECTION */}
-      <section className="relative overflow-hidden  py-20">
-        <div className="mx-auto max-w-3xl px-4 text-center">
-          <MapPin className="mx-auto h-10 w-10 " />
-          <h2 className="mt-4 text-3xl font-bold  sm:text-4xl">
-            Ready to Find Your Perfect Part?
-          </h2>
-          <p className="mt-4 text-lg ">
-            Search our catalog by your vehicle's year, make, and model — and
-            get parts you know will fit, delivered fast.
+          <p className="mt-6 text-2xl font-medium leading-snug text-neutral-900 sm:text-3xl">
+            We're committed to helping our customers build and upgrade their
+            rides with parts they can depend on, no matter how demanding the
+            environment becomes.
           </p>
-          <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+          <p className="mt-8 leading-relaxed text-neutral-600">
+            We strive to create a platform where quality meets trust,
+            ensuring every customer receives not only the right products but
+            also a seamless and reliable shopping experience.
+          </p>
+          <p className="mt-4 leading-relaxed text-neutral-600">
+            At Off Road Performance, our mission goes beyond selling — it's
+            about enabling every ride with confidence and peace of mind.
+          </p>
+        </div>
+      </section>
+
+      {/* WHY CHOOSE US */}
+      <section className="bg-neutral-900 px-6 py-24 sm:px-10 lg:px-16">
+        <div className="mx-auto max-w-6xl">
+          <span className="text-sm font-semibold uppercase tracking-widest text-[#1B9DDB]">
+            05 — Why Off Road Performance
+          </span>
+          <h2 className="mt-4 max-w-3xl text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl">
+            Reliability, passion, and a commitment to excellence.
+          </h2>
+          <p className="mt-6 max-w-3xl leading-relaxed text-neutral-300">
+            We focus on delivering products that meet the real demands of
+            riding, ensuring every item in our store performs when it
+            matters most. We understand the needs of riding enthusiasts
+            because we share the same passion — pushing the limits,
+            exploring further, and never settling for average.
+          </p>
+          <p className="mt-4 max-w-3xl leading-relaxed text-neutral-300">
+            That's why we prioritize quality, consistency, and customer
+            satisfaction in everything we do, making us a trusted partner
+            for your journey.
+          </p>
+
+          <div className="mt-14 grid grid-cols-1 divide-y divide-white/10 border-t border-white/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+            {['Quality', 'Consistency', 'Customer Satisfaction'].map(
+              (word) => (
+                <div key={word} className="py-6 sm:px-8 sm:py-8">
+                  <p className="text-lg font-semibold text-white">{word}</p>
+                </div>
+              )
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="px-6 py-24 sm:px-10 lg:px-16">
+        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 border-t border-neutral-100 pt-16 sm:flex-row sm:items-end">
+          <div>
+            <h2 className="max-w-md text-3xl font-black leading-tight tracking-tight sm:text-4xl">
+              Ready to find your perfect part?
+            </h2>
+            <p className="mt-4 max-w-md leading-relaxed text-neutral-500">
+              Search our catalog by your vehicle's year, make, and model —
+              and get parts you know will fit, delivered fast.
+            </p>
+          </div>
+          <div className="flex flex-shrink-0 flex-col gap-3 sm:flex-row">
             <Link
               href="/products"
-              className="rounded-lg bg-gray-100 px-8 py-3 font-semibold hover:text-[#1B9DDB] transition hover:bg-gray-200"
+              className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#1B9DDB] px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-[#1685bb]"
             >
               Shop Now
+              <ArrowUpRight className="h-4 w-4" />
             </Link>
             <Link
               href="/contact"
-              className="rounded-lg bg-gray-100 border-2 border-white px-8 py-3 font-semibold  transition hover:bg-gray-200 hover:text-[#1B9DDB]"
+              className="inline-flex items-center justify-center gap-2 rounded-sm border border-neutral-300 px-7 py-3.5 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900"
             >
               Contact Us
             </Link>

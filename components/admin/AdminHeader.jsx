@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowDown, LogOut, Menu } from "lucide-react";
+import Link from "next/link";
+import { ArrowDown, LogOut, Menu, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import {
@@ -17,9 +18,10 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Sidebar from "@/components/admin/Sidebar";
 import { logout } from "@/actions/auth";
 
-export default function AdminHeader({ userEmail }) {
+export default function AdminHeader({ userEmail, access = null }) {
   const [open, setOpen] = useState(false);
-  const initial = userEmail?.[0]?.toUpperCase() ?? "A";
+  const displayName = access?.fullName || userEmail;
+  const initial = displayName?.[0]?.toUpperCase() ?? "A";
 
   return (
     <header className="sticky top-0 z-30 flex h-16 shrink-0 items-center justify-between border-b bg-white px-4 sm:px-6">
@@ -56,10 +58,20 @@ export default function AdminHeader({ userEmail }) {
         <DropdownMenuContent align="end">
           <DropdownMenuGroup>
 
-          <DropdownMenuLabel className="truncate">
-            {userEmail ?? "Signed in"}
+          <DropdownMenuLabel className="max-w-64 space-y-0.5">
+            <span className="block truncate">{displayName ?? "Signed in"}</span>
+            {access?.fullName && userEmail ? (
+              <span className="block truncate text-xs font-normal text-muted-foreground">{userEmail}</span>
+            ) : null}
+            <span className="block text-xs font-normal text-muted-foreground">
+              {access?.isSuperAdmin ? "Super admin" : "Staff"}
+            </span>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
+          <DropdownMenuItem render={<Link href="/admin/settings" />} className="gap-2 cursor-pointer">
+            <Settings className="size-4" />
+            Account settings
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={() => logout()} className="gap-2 cursor-pointer">
             <LogOut className="size-4" />
             Log out
@@ -71,7 +83,7 @@ export default function AdminHeader({ userEmail }) {
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent side="left" className="w-72 p-0">
           <SheetTitle className="sr-only">Admin navigation</SheetTitle>
-          <Sidebar onNavigate={() => setOpen(false)} />
+          <Sidebar access={access} onNavigate={() => setOpen(false)} />
         </SheetContent>
       </Sheet>
     </header>

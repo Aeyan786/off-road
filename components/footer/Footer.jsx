@@ -13,8 +13,8 @@ const LINK_COLUMNS = [
     links: [
       { label: "Home", href: "/" },
       { label: "Products", href: "/products" },
-      { label: "Shop", href: "/products" },
       { label: "New Arrival", href: "/new_arrivals" },
+      { label: "Blogs", href: "/blog" },
     ],
   },
   {
@@ -22,7 +22,7 @@ const LINK_COLUMNS = [
     links: [
       { label: "Privacy", href: "/privacy" },
       { label: "Terms", href: "/terms" },
-      { label: "service", href: "/service" },
+      { label: "Service", href: "/service" },
       { label: "Contact", href: "/contact" },
     ],
   },
@@ -30,7 +30,7 @@ const LINK_COLUMNS = [
     heading: "Company",
     links: [
       { label: "About Us", href: "/about" },
-      { label: "Our Blog", href: "/blog" },
+      { label: "Cookies", href: "/cookies" },
        { label: "Refunds", href: "/refunds" },
       { label: "Shipping", href: "/shipping" },
     ],
@@ -154,7 +154,6 @@ export default function Footer() {
               </Link>
             ))}
           </div>
-          <p>We Accept</p>
         </div>
       </div>
     </footer>

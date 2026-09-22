@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { getCategoryOptions } from "@/lib/data/categories";
+import { getSupplierOptions } from "@/lib/data/suppliers";
 import { safeQuery } from "@/lib/data/safe";
 import Breadcrumbs from "@/components/admin/Breadcrumbs";
 import ProductForm from "@/components/admin/products/ProductForm";
@@ -10,7 +11,10 @@ export const metadata = {
 
 export default async function NewProductPage() {
   const supabase = await createClient();
-  const categoryOptions = await safeQuery(getCategoryOptions(supabase), []);
+  const [categoryOptions, supplierOptions] = await Promise.all([
+    safeQuery(getCategoryOptions(supabase), []),
+    safeQuery(getSupplierOptions(supabase), []),
+  ]);
 
   return (
     <div className="space-y-6">
@@ -24,7 +28,7 @@ export default async function NewProductPage() {
         </p>
       </div>
 
-      <ProductForm categoryOptions={categoryOptions} />
+      <ProductForm categoryOptions={categoryOptions} supplierOptions={supplierOptions} />
     </div>
   );
 }

@@ -68,7 +68,7 @@ const page = () => {
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-4">
           {/* TABLE OF CONTENTS */}
           <aside className="lg:col-span-1">
-            <div className="sticky top-24">
+            <div className="sticky top-44">
               <h3 className="text-sm font-bold uppercase tracking-wider text-gray-500">
                 On This Page
               </h3>
@@ -242,7 +242,6 @@ const page = () => {
               </p>
 
               <div className="mt-5 flex items-start gap-3 rounded-lg border border-gray-200 p-4">
-                <Zap className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#1B9DDB]" />
                 <p className="text-sm text-gray-700">
                   Need it fast? Reach out to our team before ordering and
                   we'll do everything we can to help you meet your deadline.

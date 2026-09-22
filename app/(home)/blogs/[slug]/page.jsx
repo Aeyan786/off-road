@@ -50,7 +50,7 @@ export default async function BlogDetailsPage({ params }) {
         <span className="text-neutral-700">{blog.title}</span>
       </nav>
 
-      <article className="mx-auto max-w-3xl">
+      <article className=" max-w-4xl mt-10">
         <header className="space-y-4">
           <h1 className="text-3xl font-bold leading-tight text-neutral-900 sm:text-4xl">
             {blog.title}

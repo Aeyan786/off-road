@@ -10,7 +10,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
+import ButtonLink from "@/components/ui/button-link";
 import { useStore } from "@/components/cart/StoreProvider";
 import { formatPrice } from "@/lib/format";
 
@@ -123,10 +123,13 @@ export default function CartPanel({ open, onOpenChange }) {
             <p className="text-xs text-neutral-500">
               Taxes and shipping calculated at checkout
             </p>
-            {/* Checkout and a dedicated cart page don't exist yet. */}
-            <Button type="button" className="w-full cursor-pointer rounded-sm px-3">
+            <ButtonLink
+              href="/checkout"
+              onClick={() => onOpenChange(false)}
+              className="w-full cursor-pointer"
+            >
               Check Out
-            </Button>
+            </ButtonLink>
       
           </SheetFooter>
         ) : null}

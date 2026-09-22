@@ -14,6 +14,11 @@ import { getMedia, getMediaByFileNames } from "@/lib/data/media";
 const MEDIA_BUCKET = "product_bucket";
 const MEDIA_PREFIX = "media";
 
+// Product and blog forms upload images and open the library picker too, so
+// those actions are open to any of these modules. ZIP imports and deletes
+// stay Media-only.
+const MEDIA_PICKER_MODULES = ["media", "products", "blogs"];
+
 const IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "gif", "webp", "avif", "svg", "bmp"];
 const MIME_BY_EXTENSION = {
   jpg: "image/jpeg",
@@ -135,7 +140,7 @@ async function insertMediaRows(supabase, rows) {
  * FormData field: `files` (repeatable).
  */
 export async function uploadMediaFiles(formData) {
-  const { supabase, error: authError } = await requireAdmin();
+  const { supabase, error: authError } = await requireAdmin(MEDIA_PICKER_MODULES);
   if (authError) return { error: authError };
 
   const files = formData.getAll("files").filter((f) => f && typeof f !== "string" && f.size > 0);
@@ -202,7 +207,7 @@ export async function uploadMediaFiles(formData) {
  * FormData field: `file` (a single .zip).
  */
 export async function uploadMediaZip(formData) {
-  const { supabase, error: authError } = await requireAdmin();
+  const { supabase, error: authError } = await requireAdmin("media");
   if (authError) return { error: authError };
 
   const file = formData.get("file");
@@ -285,7 +290,7 @@ export async function uploadMediaZip(formData) {
  * product that was using it.
  */
 export async function deleteMedia(id) {
-  const { supabase, error: authError } = await requireAdmin();
+  const { supabase, error: authError } = await requireAdmin("media");
   if (authError) return { error: authError };
 
   const { data: item, error: findError } = await supabase
@@ -325,7 +330,7 @@ export async function deleteMedia(id) {
  * selected are touched.
  */
 export async function deleteMediaItems(ids) {
-  const { supabase, error: authError } = await requireAdmin();
+  const { supabase, error: authError } = await requireAdmin("media");
   if (authError) return { error: authError };
 
   const mediaIds = (Array.isArray(ids) ? ids : []).filter(Boolean);
@@ -372,7 +377,7 @@ export async function deleteMediaItems(ids) {
 
 /** Used by the media picker dialog to search the library on demand. */
 export async function listMedia({ search } = {}) {
-  const { supabase, error: authError } = await requireAdmin();
+  const { supabase, error: authError } = await requireAdmin(MEDIA_PICKER_MODULES);
   if (authError) return { error: authError };
 
   try {

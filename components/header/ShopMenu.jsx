@@ -102,10 +102,10 @@ export default function ShopMenu({ link, categories = [] }) {
    {hasCategories ? (
   <div
     className={cn(
-      "absolute left-0 right-0 top-full z-50 bg-neutral-100 px-6 py-8 shadow-lg",
-      "transform transition-all duration-300 ease-out",
+      "absolute left-0 right-0 mt-0.5 top-full z-50 bg-white px-6 py-5 shadow-lg",
+      "transform transition-all duration-300 ease-out rounded-2xl",
       open
-        ? "translate-y-0 opacity-100"
+        ? "translate-y-0 opacity-100 "
         : "-translate-y-3 pointer-events-none opacity-0"
     )}
   >

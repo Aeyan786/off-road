@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getProductById } from "@/lib/data/products";
 import { getCategoryOptions } from "@/lib/data/categories";
+import { getSupplierOptions } from "@/lib/data/suppliers";
 import Breadcrumbs from "@/components/admin/Breadcrumbs";
 import ProductForm from "@/components/admin/products/ProductForm";
 
@@ -13,9 +14,10 @@ export default async function EditProductPage({ params }) {
   const { id } = await params;
   const supabase = await createClient();
 
-  const [product, categoryOptions] = await Promise.all([
+  const [product, categoryOptions, supplierOptions] = await Promise.all([
     getProductById(supabase, id, { includeAllStatuses: true }),
     getCategoryOptions(supabase),
+    getSupplierOptions(supabase),
   ]);
 
   if (!product) notFound();
@@ -34,7 +36,11 @@ export default async function EditProductPage({ params }) {
         <p className="text-sm text-neutral-500">{product.product}</p>
       </div>
 
-      <ProductForm product={product} categoryOptions={categoryOptions} />
+      <ProductForm
+        product={product}
+        categoryOptions={categoryOptions}
+        supplierOptions={supplierOptions}
+      />
     </div>
   );
 }

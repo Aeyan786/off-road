@@ -157,7 +157,7 @@ export function DataTable({
             <select
               value={pageSize}
               onChange={(e) => table.setPageSize(Number(e.target.value))}
-              className="h-7 rounded-sm border border-neutral-300 bg-background px-1.5 text-xs outline-none focus-visible:border-ring"
+              className="h-7 cursor-pointer rounded-sm border border-neutral-300 bg-background px-1.5 text-xs outline-none focus-visible:border-ring"
             >
               {PAGE_SIZES.map((size) => (
                 <option key={size} value={size}>
