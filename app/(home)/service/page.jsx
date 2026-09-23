@@ -20,7 +20,12 @@ import {
   Banknote,
 } from 'lucide-react'
 
-const page = () => {
+export const metadata = {
+  title: "Workshop Services",
+  description: "Cylinder re-plating, carburettor cleaning, vapour blasting, dyno tuning, rebuilds and repairs.",
+};
+
+const ServicePage = () => {
   const otherServices = [
     'Complete engine strip, casing cleaning & rebuild',
     'Complete rebuilds',
@@ -681,4 +686,4 @@ const page = () => {
   )
 }
 
-export default page
+export default ServicePage;

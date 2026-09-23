@@ -1,7 +1,12 @@
 import React from 'react'
 import { Cookie, Settings, ShieldCheck, Mail, MousePointerClick } from 'lucide-react'
 
-const page = () => {
+export const metadata = {
+  title: "Cookie Policy",
+  description: "The cookies we use and how to control them.",
+};
+
+const CookiesPage = () => {
   const sections = [
     { id: 'cookies-we-use', title: 'Cookies We Use' },
     { id: 'managing-cookies', title: 'Managing Cookies' },
@@ -171,4 +176,4 @@ const page = () => {
   )
 }
 
-export default page
+export default CookiesPage;

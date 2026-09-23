@@ -164,11 +164,11 @@ export default function MobileMenu({ categories = [], suppliers = [] }) {
           </ul>
 
           <Link
-            href="/"
+            href="/contact"
             onClick={close}
             className="rounded-sm bg-brand px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-brand/90"
           >
-            Appointments
+            Make an Inquiry
           </Link>
 
           <div className="space-y-1 text-sm text-neutral-700">

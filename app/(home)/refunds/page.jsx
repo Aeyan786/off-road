@@ -12,7 +12,12 @@ import {
   Phone,
 } from 'lucide-react'
 
-const page = () => {
+export const metadata = {
+  title: "Returns & Refunds",
+  description: "Our returns window, refund process and what can be returned.",
+};
+
+const RefundsPage = () => {
   const sections = [
     { id: 'standard-returns', title: 'Standard Returns' },
     { id: 'cannot-return', title: 'Items That Cannot Be Returned' },
@@ -320,4 +325,4 @@ const page = () => {
   )
 }
 
-export default page
+export default RefundsPage;

@@ -8,7 +8,7 @@ import { EMPTY_FACETS, readCatalogFilters } from "@/lib/catalog-filters";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "All Products | Off Road Performance",
+  title: "All Products",
   description: "Browse every part in the catalog and filter by manufacturer, model, year and price.",
 };
 

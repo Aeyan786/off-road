@@ -1,9 +1,9 @@
 "use server";
 
-import { headers } from "next/headers";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/server/requireAdmin";
+import { siteUrl } from "@/lib/site";
 
 /**
  * The signed-in user's own account (Settings). Everything goes through
@@ -17,13 +17,6 @@ const passwordSchema = z
   .min(8, "Password must be at least 8 characters.")
   .max(72, "Password must be 72 characters or fewer.");
 
-/** Absolute URL of this site, for links in Supabase emails. */
-async function siteOrigin() {
-  const h = await headers();
-  const host = h.get("x-forwarded-host") ?? h.get("host");
-  const proto = h.get("x-forwarded-proto") ?? (host?.startsWith("localhost") ? "http" : "https");
-  return `${proto}://${host}`;
-}
 
 /**
  * Checks a password without touching the user's real session: a throwaway
@@ -60,7 +53,7 @@ export async function changeEmail(formData) {
 
   const { data, error } = await supabase.auth.updateUser(
     { email },
-    { emailRedirectTo: `${await siteOrigin()}/admin/settings` }
+    { emailRedirectTo: `${siteUrl()}/admin/settings` }
   );
   if (error) return { error: error.message };
 

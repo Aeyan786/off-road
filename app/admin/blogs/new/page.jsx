@@ -2,7 +2,7 @@ import Breadcrumbs from "@/components/admin/Breadcrumbs";
 import BlogForm from "@/components/admin/blogs/BlogForm";
 
 export const metadata = {
-  title: "Add Blog | Off Road Performance",
+  title: "Add Blog",
 };
 
 export default function NewBlogPage() {

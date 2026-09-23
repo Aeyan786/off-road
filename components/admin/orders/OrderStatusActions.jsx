@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Ban, CheckCheck, Loader2, Lock, Truck } from "lucide-react";
+import { Ban, CheckCheck, Loader2, Lock, Truck, Undo2 } from "lucide-react";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -26,7 +26,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { cancelOrder, deliverOrder, shipOrder } from "@/actions/orders";
+import { cancelOrder, deliverOrder, refundOrder, shipOrder } from "@/actions/orders";
 import { allowedActions, formatOrderNumber } from "@/lib/order-status";
 import { cn } from "@/lib/utils";
 
@@ -55,6 +55,7 @@ function ShipDialog({ order, compact }) {
       setOpen(false);
       setTracking("");
       toast.success(`Order ${formatOrderNumber(order.order_number)} marked as shipped.`);
+      if (result.warning) toast.warning(result.warning);
     });
   }
 
@@ -120,18 +121,24 @@ function ConfirmFinalDialog({ order, kind, compact }) {
   const [error, setError] = useState(null);
   const [isPending, startTransition] = useTransition();
   const cancel = kind === "cancel";
+  const refund = kind === "refund";
   const number = formatOrderNumber(order.order_number);
 
   function confirm() {
     setError(null);
     startTransition(async () => {
-      const result = cancel ? await cancelOrder(order.id) : await deliverOrder(order.id);
+      const result = cancel
+        ? await cancelOrder(order.id)
+        : refund
+          ? await refundOrder(order.id)
+          : await deliverOrder(order.id);
       if (result?.error) {
         setError(result.error);
         return;
       }
       setOpen(false);
-      toast.success(`Order ${number} ${cancel ? "cancelled" : "marked as delivered"}.`);
+      toast.success(`Order ${number} ${cancel ? "cancelled" : refund ? "refunded" : "marked as delivered"}.`);
+      if (result.warning) toast.warning(result.warning);
     });
   }
 
@@ -148,23 +155,25 @@ function ConfirmFinalDialog({ order, kind, compact }) {
           <Button
             type="button"
             size="sm"
-            variant={cancel ? "outline" : "default"}
+            variant={cancel || refund ? "outline" : "default"}
             className={cn(ACTION_BUTTON, cancel && "text-destructive hover:bg-destructive/10 hover:text-destructive")}
           >
-            {cancel ? <Ban className="size-3.5" /> : <CheckCheck className="size-3.5" />}
-            {cancel ? "Cancel" : compact ? "Delivered" : "Mark as delivered"}
+            {cancel ? <Ban className="size-3.5" /> : refund ? <Undo2 className="size-3.5" /> : <CheckCheck className="size-3.5" />}
+            {cancel ? "Cancel" : refund ? "Refund" : compact ? "Delivered" : "Mark as delivered"}
           </Button>
         }
       />
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            {cancel ? `Cancel order ${number}?` : `Mark order ${number} as delivered?`}
+            {cancel ? `Cancel order ${number}?` : refund ? `Mark order ${number} as refunded?` : `Mark order ${number} as delivered?`}
           </AlertDialogTitle>
           <AlertDialogDescription>
             {cancel
               ? "The order will be marked as cancelled and its items returned to stock. The payment is not refunded automatically — issue any refund from your Stripe dashboard."
-              : `Confirm that the customer has received this order (tracking ${order.tracking_number}).`}{" "}
+              : refund
+                ? "The order will be marked as refunded and the customer emailed. Refund the payment itself in your Stripe dashboard — this doesn't move any money."
+                : `Confirm that the customer has received this order (tracking ${order.tracking_number}).`}{" "}
             <strong>This is final — the order&apos;s status can&apos;t be changed afterwards.</strong>
           </AlertDialogDescription>
         </AlertDialogHeader>
@@ -185,7 +194,7 @@ function ConfirmFinalDialog({ order, kind, compact }) {
             disabled={isPending}
           >
             {isPending ? <Loader2 className="size-3.5 animate-spin" /> : null}
-            {cancel ? "Cancel order" : "Mark as delivered"}
+            {cancel ? "Cancel order" : refund ? "Mark as refunded" : "Mark as delivered"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -194,13 +203,14 @@ function ConfirmFinalDialog({ order, kind, compact }) {
 }
 
 /**
- * The next steps an order allows; delivered/cancelled orders are locked and
- * show no actions (the database refuses changes to them anyway).
+ * The next steps an order allows. A delivered order still offers Refund;
+ * cancelled and refunded orders are locked and show no actions. The server
+ * actions re-check the current status, so this is presentation only.
  */
 export default function OrderStatusActions({ order, compact = false }) {
   const actions = allowedActions(order.status);
 
-  if (actions.isFinal) {
+  if (actions.isFinal && !actions.refund) {
     return (
       <span className="inline-flex items-center gap-1 text-xs text-neutral-400" title="Final status — no further changes">
         <Lock className="size-3" />
@@ -214,6 +224,7 @@ export default function OrderStatusActions({ order, compact = false }) {
       {actions.ship ? <ShipDialog order={order} compact={compact} /> : null}
       {actions.deliver ? <ConfirmFinalDialog order={order} kind="deliver" compact={compact} /> : null}
       {actions.cancel ? <ConfirmFinalDialog order={order} kind="cancel" compact={compact} /> : null}
+      {actions.refund ? <ConfirmFinalDialog order={order} kind="refund" compact={compact} /> : null}
     </div>
   );
 }

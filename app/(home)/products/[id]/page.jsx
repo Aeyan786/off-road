@@ -12,6 +12,8 @@ import { safeQuery } from "@/lib/data/safe";
 import ProductGallery from "@/components/product/ProductGallery";
 import ProductGrid from "@/components/home/ProductGrid";
 import ProductActions from "@/components/cart/ProductActions";
+import ProductReviews from "@/components/product/ProductReviews";
+import { getProductReviews } from "@/lib/data/reviews";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const dynamic = "force-dynamic";
@@ -27,7 +29,7 @@ export async function generateMetadata({ params }) {
   const product = await safeQuery(getProductById(supabase, id), null);
 
   return {
-    title: product ? `${product.product} | Off Road Performance` : "Product | Off Road Performance",
+    title: product ? `${product.product}` : "Product",
     description: product?.small_description ?? undefined,
   };
 }
@@ -88,6 +90,12 @@ export default async function ProductDetailsPage({ params }) {
     }),
     []
   );
+
+  const reviews = await safeQuery(getProductReviews(supabase, product.id), {
+    reviews: [],
+    count: 0,
+    average: 0,
+  });
 
   const hasDiscount =
     product.discount_price !== null && product.discount_price !== undefined;
@@ -266,6 +274,14 @@ export default async function ProductDetailsPage({ params }) {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* REVIEWS */}
+      <ProductReviews
+        productId={product.id}
+        reviews={reviews.reviews}
+        count={reviews.count}
+        average={reviews.average}
+      />
 
       {/* RELATED PRODUCTS */}
       {related.length > 0 ? (

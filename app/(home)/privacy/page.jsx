@@ -1,7 +1,12 @@
 import React from 'react'
 import { Shield, Lock, FileText, Mail } from 'lucide-react'
 
-const page = () => {
+export const metadata = {
+  title: "Privacy Policy",
+  description: "How we collect, use and protect your personal data.",
+};
+
+const PrivacyPage = () => {
   const lastUpdated = 'January 15, 2025'
 
   const sections = [
@@ -262,4 +267,4 @@ const page = () => {
   )
 }
 
-export default page
+export default PrivacyPage;

@@ -54,10 +54,10 @@ export default function NavBar({ categories = [] }) {
             ))}
           </div>
           <Link
-            href="/"
+            href="/contact"
             className="rounded-sm bg-white px-4 py-1.5 text-sm font-semibold text-brand hover:bg-white/90"
           >
-            Appointments
+            Make an Inquiry
           </Link>
         </div>
       </div>

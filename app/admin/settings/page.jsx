@@ -3,7 +3,7 @@ import Breadcrumbs from "@/components/admin/Breadcrumbs";
 import AccountForms from "@/components/admin/settings/AccountForms";
 
 export const metadata = {
-  title: "Settings | Off Road Performance",
+  title: "Settings",
 };
 
 // Open to every admin user — it only ever changes their own account.

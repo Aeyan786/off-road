@@ -1,7 +1,12 @@
 import React from 'react'
 import { FileText, Mail } from 'lucide-react'
 
-const page = () => {
+export const metadata = {
+  title: "Terms & Conditions",
+  description: "The terms that apply when you buy from Off Road Performance.",
+};
+
+const TermsPage = () => {
   const lastUpdated = 'January 15, 2025'
 
   const sections = [
@@ -323,4 +328,4 @@ const page = () => {
   )
 }
 
-export default page
+export default TermsPage;

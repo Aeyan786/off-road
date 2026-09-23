@@ -6,7 +6,7 @@ import SetupRequiredBanner from "@/components/admin/SetupRequiredBanner";
 import CustomersDataTable from "@/components/admin/customers/CustomersDataTable";
 
 export const metadata = {
-  title: "Customers | Off Road Performance",
+  title: "Customers",
 };
 
 export default async function CustomersPage() {

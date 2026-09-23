@@ -1,7 +1,7 @@
 import Login from "@/components/auth/Login";
 
 export const metadata = {
-  title: "Sign In | Off Road Performance",
+  title: "Sign In",
 };
 
 const NOTICES = {

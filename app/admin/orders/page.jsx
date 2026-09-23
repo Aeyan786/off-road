@@ -7,7 +7,7 @@ import OrdersDataTable from "@/components/admin/orders/OrdersDataTable";
 import { formatPrice } from "@/lib/format";
 
 export const metadata = {
-  title: "Orders | Off Road Performance",
+  title: "Orders",
 };
 
 export default async function OrdersPage() {
@@ -21,7 +21,7 @@ export default async function OrdersPage() {
 
   const count = (status) => orders.filter((o) => o.status === status).length;
   const revenue = orders
-    .filter((o) => o.status !== "cancelled")
+    .filter((o) => !["cancelled", "refunded"].includes(o.status))
     .reduce((sum, o) => sum + Number(o.amount_paid), 0);
 
   return (

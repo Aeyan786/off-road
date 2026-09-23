@@ -3,7 +3,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 
-const page = () => {
+export const metadata = {
+  title: "About Us",
+  description: "Who we are: an off-road parts specialist with a workshop team that knows performance inside and out.",
+};
+
+const AboutPage = () => {
   return (
     <div className="w-full bg-white text-neutral-900">
       {/* HERO */}
@@ -230,4 +235,4 @@ const page = () => {
   )
 }
 
-export default page
+export default AboutPage;

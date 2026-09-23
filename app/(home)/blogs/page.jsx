@@ -7,7 +7,7 @@ import BlogCard from "@/components/blog/BlogCard";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Blogs | Off Road Performance",
+  title: "Blogs",
   description: "News, guides and updates from Off Road Performance.",
 };
 

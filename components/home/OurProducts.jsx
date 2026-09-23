@@ -33,7 +33,7 @@ export default function OurProducts({ products = [] }) {
               vehicle.
             </p>
 
-            <ButtonLink href="/" className="w-fit">
+            <ButtonLink href="/contact" className="w-fit">
               Get New Plans
             </ButtonLink>
           </div>

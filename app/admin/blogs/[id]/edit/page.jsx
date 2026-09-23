@@ -5,7 +5,7 @@ import Breadcrumbs from "@/components/admin/Breadcrumbs";
 import BlogForm from "@/components/admin/blogs/BlogForm";
 
 export const metadata = {
-  title: "Edit Blog | Off Road Performance",
+  title: "Edit Blog",
 };
 
 export default async function EditBlogPage({ params }) {

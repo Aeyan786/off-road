@@ -18,7 +18,7 @@ import {
 } from "@/components/icons/SocialIcons";
 import { XIcon } from "lucide-react";
 
-const page = () => {
+const ContactPage = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -368,4 +368,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ContactPage;

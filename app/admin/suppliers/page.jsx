@@ -7,7 +7,7 @@ import SetupRequiredBanner from "@/components/admin/SetupRequiredBanner";
 import SuppliersDataTable from "@/components/admin/suppliers/SuppliersDataTable";
 
 export const metadata = {
-  title: "Manage Suppliers | Off Road Performance",
+  title: "Manage Suppliers",
 };
 
 export default async function ManageSuppliersPage() {

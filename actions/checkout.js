@@ -1,6 +1,6 @@
 "use server";
 
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -9,14 +9,7 @@ import { parseCheckoutForm } from "@/lib/validation/checkout";
 import { priceCart, quoteShipping } from "@/lib/server/checkout";
 import { getStripe, toPence } from "@/lib/stripe";
 import { shippingCountry } from "@/lib/shipping-countries";
-
-/** Absolute URL of this site, for Stripe's return links. */
-async function siteOrigin() {
-  const h = await headers();
-  const host = h.get("x-forwarded-host") ?? h.get("host");
-  const proto = h.get("x-forwarded-proto") ?? (host?.startsWith("localhost") ? "http" : "https");
-  return `${proto}://${host}`;
-}
+import { siteUrl } from "@/lib/site";
 
 const addressLine = (a) =>
   [a.line1, a.city, a.county, a.postcode, shippingCountry(a.country)?.name ?? a.country]
@@ -68,7 +61,7 @@ export async function startCheckout(_prev, formData) {
       .single();
     if (insertError) throw new Error(insertError.message);
 
-    const origin = await siteOrigin();
+    const origin = siteUrl();
     const { shipping: ship } = customer;
     const metadata = {
       checkout_id: checkout.id,

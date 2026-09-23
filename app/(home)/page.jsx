@@ -15,6 +15,11 @@ import RecentUpdates from "@/components/home/RecentUpdates";
 import Newsletter from "@/components/home/Newsletter";
 import Marquee from "@/components/home/Marquee";
 
+export const metadata = {
+  title: "Car & ATV Performance Parts",
+  description: "Quality exhausts, silencers and ATV parts from trusted manufacturers, with UK, EU and US delivery.",
+};
+
 // Product/category data is admin-managed and should reflect changes
 // immediately rather than being cached at build time.
 export const dynamic = "force-dynamic";

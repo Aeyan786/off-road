@@ -7,7 +7,7 @@ import SetupRequiredBanner from "@/components/admin/SetupRequiredBanner";
 import UsersDataTable from "@/components/admin/users/UsersDataTable";
 
 export const metadata = {
-  title: "Admin Users | Off Road Performance",
+  title: "Admin Users",
 };
 
 // Super admins only — enforced by proxy.js (lib/admin-modules.js).

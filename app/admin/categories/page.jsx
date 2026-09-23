@@ -7,7 +7,7 @@ import Breadcrumbs from "@/components/admin/Breadcrumbs";
 import StatCard from "@/components/admin/StatCard";
 
 export const metadata = {
-  title: "Manage Categories | Off Road Performance",
+  title: "Manage Categories",
 };
 
 export default async function ManageCategoriesPage() {

@@ -7,7 +7,7 @@ import AutoRefresh from "@/components/checkout/AutoRefresh";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Order confirmation | Off Road Performance",
+  title: "Order confirmation",
 };
 
 /**

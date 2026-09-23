@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { sendOrderEmail } from "@/lib/server/orderEmails";
 
 /**
  * Stripe webhook — the only thing that turns a checkout into an order.
@@ -55,6 +56,16 @@ export async function POST(request) {
         console.info(
           `[stripe webhook] ${event.type}: order ${data.order_number} ${data.created ? "created" : "already existed"}`
         );
+
+        // Also runs on retries: it only sends if the confirmation hasn't
+        // gone out yet. An email failure is logged, never fails the webhook
+        // (the order itself is already safely stored).
+        // Both are claimed in the database first, so a webhook retry can't
+        // re-send them.
+        const adminEmail = await sendOrderEmail(data.order_id, "received");
+        if (adminEmail.error) console.error("[stripe webhook] admin order email:", adminEmail.error);
+        const email = await sendOrderEmail(data.order_id, "placed");
+        if (email.error) console.error(`[stripe webhook] order ${data.order_number} confirmation email:`, email.error);
         break;
       }
 

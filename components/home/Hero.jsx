@@ -3,49 +3,61 @@ import ImagePlaceholder from "@/components/ui/image-placeholder";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-function HeroPanel({ eyebrow, title, src, description, cta = true, className }) {
+function HeroPanel({
+  eyebrow,
+  title,
+  src,
+  description,
+  cta = true,
+  className,
+}) {
   return (
-    <div
+    <Link
+      href={"/products"}
       className={`group relative flex min-h-[340px] flex-col cursor-pointer justify-end overflow-hidden bg-neutral-900 p-8 text-white ${className ?? ""}`}
     >
-      <Image
-        src={src}
-        fill
-        alt="hero"
-        className="object-cover transition-all duration-800  ease-out group-hover:scale-102 group-hover:blur-xs"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/80 to-transparent transition-opacity duration-500 group-hover:from-black/90 group-hover:via-black/85" />
-      <div className="relative max-w-md space-y-3">
-        <p className="text-sm text-white/80">{eyebrow}</p>
-        <h2 className="text-2xl font-bold leading-tight sm:text-3xl transition-transform duration-500 group-hover:translate-y-[-2px]">
-          {title}
-        </h2>
-        <p className="text-sm leading-relaxed text-white/75">{description}</p>
-        {cta ? (
-          <Button className="mt-2">
-            <Link href="/">Shop Now</Link>
-          </Button>
-        ) : null}
+      <div>
+        <Image
+          src={src}
+          fill
+          alt="hero"
+          className="object-cover transition-all duration-800  ease-out group-hover:scale-102 group-hover:blur-xs"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/80 to-transparent transition-opacity duration-500 group-hover:from-black/90 group-hover:via-black/85" />
+        <div className="relative max-w-md space-y-3">
+          <p className="text-sm text-white/80">{eyebrow}</p>
+          <h2 className="text-2xl font-bold leading-tight sm:text-3xl transition-transform duration-500 group-hover:translate-y-[-2px]">
+            {title}
+          </h2>
+          <p className="text-sm leading-relaxed text-white/75">{description}</p>
+          {cta ? (
+            <Button className="mt-2">
+              <span >Shop Now</span>
+            </Button>
+          ) : null}
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
 function HeroTile({ title, src }) {
   return (
-    <div className="group relative flex min-h-[280px] flex-1 items-end overflow-hidden bg-neutral-900 p-6 text-white cursor-pointer ">
-      <Image
-        src={src}
-        fill
-        alt="hero"
-        className="object-cover transition-all duration-800 ease-out group-hover:scale-102 group-hover:blur-xs"
-      />
+    <Link href={"/products"}>
+      <div className="group relative flex min-h-[280px] flex-1 items-end overflow-hidden bg-neutral-900 p-6 text-white cursor-pointer ">
+        <Image
+          src={src}
+          fill
+          alt="hero"
+          className="object-cover transition-all duration-800 ease-out group-hover:scale-102 group-hover:blur-xs"
+        />
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/80 to-transparent transition-opacity duration-500 group-hover:from-black/90 group-hover:via-black/85" />
-      <h3 className="relative text-xl font-bold leading-snug transition-transform duration-500 group-hover:translate-y-[-2px]">
-        {title}
-      </h3>
-    </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/80 to-transparent transition-opacity duration-500 group-hover:from-black/90 group-hover:via-black/85" />
+        <h3 className="relative text-xl font-bold leading-snug transition-transform duration-500 group-hover:translate-y-[-2px]">
+          {title}
+        </h3>
+      </div>
+    </Link>
   );
 }
 

@@ -57,22 +57,7 @@ const columns = [
       </ul>
     ),
   },
-  {
-    id: "ship_to",
-    header: "Ship to",
-    enableSorting: false,
-    cell: ({ row }) => {
-      const o = row.original;
-      return (
-        <div className="max-w-[200px] text-xs text-neutral-600">
-          <p className="truncate">{addressLines(o.shipping_address).join(", ")}</p>
-          <p className="truncate text-neutral-400">
-            Billing: {sameAddress(o.shipping_address, o.billing_address) ? "same" : addressLines(o.billing_address).join(", ")}
-          </p>
-        </div>
-      );
-    },
-  },
+ 
   {
     accessorKey: "total",
     header: "Total",

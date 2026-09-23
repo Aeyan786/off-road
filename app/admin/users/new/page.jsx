@@ -3,7 +3,7 @@ import Breadcrumbs from "@/components/admin/Breadcrumbs";
 import UserForm from "@/components/admin/users/UserForm";
 
 export const metadata = {
-  title: "Create User | Off Road Performance",
+  title: "Create User",
 };
 
 export default async function NewAdminUserPage() {

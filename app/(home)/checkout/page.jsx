@@ -13,7 +13,7 @@ import { SHIPPING_COUNTRIES } from "@/lib/shipping-countries";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Checkout | Off Road Performance",
+  title: "Checkout",
 };
 
 export default async function CheckoutPage({ searchParams }) {

@@ -7,7 +7,7 @@ import ButtonLink from "@/components/ui/button-link";
 import UserForm from "@/components/admin/users/UserForm";
 
 export const metadata = {
-  title: "Edit User | Off Road Performance",
+  title: "Edit User",
 };
 
 export default async function EditAdminUserPage({ params }) {

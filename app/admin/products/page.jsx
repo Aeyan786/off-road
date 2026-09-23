@@ -11,7 +11,7 @@ import { formatPrice } from "@/lib/format";
 import { Package, PackageX, PoundSterling, TriangleAlert } from "lucide-react";
 
 export const metadata = {
-  title: "Manage Products | Off Road Performance",
+  title: "Manage Products",
 };
 
 export default async function ManageProductsPage({ searchParams }) {

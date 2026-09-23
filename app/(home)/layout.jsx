@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getCartItems, getWishlistItems } from "@/lib/data/cart";
 import { safeQuery } from "@/lib/data/safe";
 import { GUEST_CART_COOKIE } from "@/lib/guest-cart";
+import PageViewTracker from "@/components/analytics/PageViewTracker";
 
 export default async function HomeLayout({ children }) {
   // proxy.js guarantees this cookie exists by the time anything renders.
@@ -20,6 +21,7 @@ export default async function HomeLayout({ children }) {
 
   return (
     <StoreProvider initialCart={cart} initialWishlist={wishlist}>
+      <PageViewTracker />
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />

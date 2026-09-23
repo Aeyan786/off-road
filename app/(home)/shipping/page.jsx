@@ -10,7 +10,12 @@ import {
   Zap,
 } from 'lucide-react'
 
-const page = () => {
+export const metadata = {
+  title: "Shipping & Delivery",
+  description: "Dispatch times, couriers and delivery estimates for your order.",
+};
+
+const ShippingPage = () => {
   const sections = [
     { id: 'processing', title: 'Order Processing & Dispatch' },
     { id: 'shipping-costs', title: 'Shipping Costs' },
@@ -276,4 +281,4 @@ const page = () => {
   )
 }
 
-export default page
+export default ShippingPage;

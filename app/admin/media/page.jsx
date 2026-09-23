@@ -6,7 +6,7 @@ import MediaGrid from "@/components/admin/media/MediaGrid";
 import MediaSearch from "@/components/admin/media/MediaSearch";
 
 export const metadata = {
-  title: "Media | Off Road Performance",
+  title: "Media",
 };
 
 export default async function MediaPage({ searchParams }) {

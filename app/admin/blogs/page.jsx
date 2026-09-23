@@ -5,7 +5,7 @@ import BlogsDataTable from "@/components/admin/blogs/BlogsDataTable";
 import SetupRequiredBanner from "@/components/admin/SetupRequiredBanner";
 
 export const metadata = {
-  title: "Manage Blogs | Off Road Performance",
+  title: "Manage Blogs",
 };
 
 export default async function ManageBlogsPage() {

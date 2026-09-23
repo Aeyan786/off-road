@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/server/requireAdmin";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { ORDER_STATUSES } from "@/lib/order-status";
+import { sendOrderEmail } from "@/lib/server/orderEmails";
 
 /**
  * Order status changes. Each update is conditional on the order's current
@@ -42,8 +43,9 @@ async function transition(id, from, to, fields = {}) {
   if (!data?.length) {
     const { data: current } = await admin.from("orders").select("status").eq("id", id).maybeSingle();
     if (!current) return { error: "This order no longer exists." };
+    const label = (status) => ORDER_STATUSES[status]?.label.toLowerCase() ?? status;
     return {
-      error: `This order is already ${ORDER_STATUSES[current.status]?.label.toLowerCase() ?? current.status}; refresh to see its latest status.`,
+      error: `This order is ${label(current.status)}, so it can't be marked ${label(to)}. Refresh to see its latest status.`,
     };
   }
 
@@ -51,20 +53,44 @@ async function transition(id, from, to, fields = {}) {
   return { success: true, order: data[0] };
 }
 
+/**
+ * After a successful transition, emails the customer. The status change
+ * stands either way; a failed email comes back as a warning for the admin.
+ */
+async function withEmail(result, kind) {
+  if (!result.success) return result;
+  const email = await sendOrderEmail(result.order.id, kind);
+  return {
+    ...result,
+    emailSent: email.sent,
+    warning: email.error ? `Status saved, but the customer email couldn't be sent: ${email.error}` : null,
+  };
+}
+
 /** Pending -> Shipped. The tracking number is required and stored. */
 export async function shipOrder(id, trackingNumber) {
   const tracking = String(trackingNumber ?? "").trim();
   if (!tracking) return { error: "Enter the tracking number." };
   if (tracking.length > 100) return { error: "Tracking number must be 100 characters or fewer." };
-  return transition(id, "pending", "shipped", { tracking_number: tracking });
+  return withEmail(await transition(id, "pending", "shipped", { tracking_number: tracking }), "shipped");
 }
 
 /** Shipped -> Delivered (final). */
 export async function deliverOrder(id) {
-  return transition(id, "shipped", "delivered");
+  return withEmail(await transition(id, "shipped", "delivered"), "delivered");
 }
 
 /** Pending -> Cancelled (final). Stock is restored by a database trigger. */
 export async function cancelOrder(id) {
-  return transition(id, "pending", "cancelled");
+  return withEmail(await transition(id, "pending", "cancelled"), "cancelled");
+}
+
+/**
+ * Delivered -> Refunded (final). Only a delivered order can be refunded:
+ * the conditional update below is the enforcement point, so calling this
+ * action directly for a pending, shipped, cancelled or already-refunded
+ * order changes nothing and comes back as an error.
+ */
+export async function refundOrder(id) {
+  return withEmail(await transition(id, "delivered", "refunded"), "refunded");
 }

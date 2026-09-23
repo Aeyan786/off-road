@@ -20,6 +20,9 @@ import {
   ClipboardList,
   UserCog,
   Settings,
+  Mail,
+  ChartNoAxesCombined,
+  StarPlus,
 } from "lucide-react";
 
 export const ADMIN_NAV_GROUPS = [
@@ -27,6 +30,7 @@ export const ADMIN_NAV_GROUPS = [
     title: null,
     items: [
       { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
+      { label: "Analytics", href: "/admin/analytics", icon: ChartNoAxesCombined },
     ],
   },
   {
@@ -49,6 +53,8 @@ export const ADMIN_NAV_GROUPS = [
     title: "Content",
     items: [
       { label: "Blogs / Articles", href: "/admin/blogs", icon: Newspaper },
+      { label: "Email Templates", href: "/admin/templates", icon: Mail },
+      { label: "Product Reviews", href: "/admin/reviews", icon: StarPlus },
     ],
   },
   {

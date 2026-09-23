@@ -6,7 +6,7 @@ import Breadcrumbs from "@/components/admin/Breadcrumbs";
 import ProductForm from "@/components/admin/products/ProductForm";
 
 export const metadata = {
-  title: "Add Product | Off Road Performance",
+  title: "Add Product",
 };
 
 export default async function NewProductPage() {

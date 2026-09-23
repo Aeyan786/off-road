@@ -1,6 +1,7 @@
 import { Bai_Jamjuree } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import { siteUrl, STORE_NAME } from "@/lib/site";
 
 const baiJamjuree = Bai_Jamjuree({
   subsets: ["latin"],
@@ -8,8 +9,11 @@ const baiJamjuree = Bai_Jamjuree({
 });
 
 export const metadata = {
-  title: "Off Road Performance",
+  metadataBase: new URL(siteUrl()),
+  // Pages set just their own title; "| Off Road Performance" is added here.
+  title: { default: STORE_NAME, template: `%s | ${STORE_NAME}` },
   description: "High quality auto and ATV parts at an affordable price.",
+  openGraph: { siteName: STORE_NAME, type: "website", locale: "en_GB" },
 };
 
 export default function RootLayout({ children }) {

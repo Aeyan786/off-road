@@ -16,7 +16,7 @@ export async function generateMetadata({ params }) {
   const blog = await safeQuery(getPublishedBlogBySlug(supabase, slug), null);
 
   return {
-    title: blog ? `${blog.title} | Off Road Performance` : "Blog | Off Road Performance",
+    title: blog ? `${blog.title}` : "Blog",
     description: blog ? toExcerpt(blog.content) : undefined,
   };
 }
