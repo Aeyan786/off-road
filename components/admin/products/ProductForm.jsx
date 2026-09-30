@@ -92,19 +92,6 @@ export default function ProductForm({ product, categoryOptions, supplierOptions 
     return fallback;
   };
 
-  const getSubmittedImages = () => {
-    if (!values?.images) {
-      return product?.images ?? [];
-    }
-
-    try {
-      const parsed = JSON.parse(values.images);
-      return Array.isArray(parsed) ? parsed : [];
-    } catch {
-      return product?.images ?? [];
-    }
-  };
-
   const errorProps = (name) =>
     fieldErrors[name]
       ? {
@@ -115,13 +102,13 @@ export default function ProductForm({ product, categoryOptions, supplierOptions 
 
   return (
     <form action={formAction} className="space-y-6">
-      <input
-        type="hidden"
-        name="images"
-        value={JSON.stringify(
-          values?.images ? getSubmittedImages() : images
-        )}
-      />
+      {/*
+        `images` is the only source of truth for this field. Reading it back
+        from the submitted values instead would freeze the list at whatever
+        was posted, so picking or uploading an image after a validation
+        error would appear to do nothing.
+      */}
+      <input type="hidden" name="images" value={JSON.stringify(images)} />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
@@ -510,7 +497,7 @@ export default function ProductForm({ product, categoryOptions, supplierOptions 
 
             <CardContent>
               <ProductImagesField
-                value={values?.images ? getSubmittedImages() : images}
+                value={images}
                 onChange={setImages}
                 error={fieldErrors.images}
               />

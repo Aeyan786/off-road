@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Loader2, Lock } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -190,8 +190,8 @@ export default function CheckoutForm({ countries, disabled = false }) {
         disabled={disabled || isPending}
         className="w-full cursor-pointer rounded-sm px-6 sm:w-auto"
       >
-        {isPending ? <Loader2 className="size-4 animate-spin" /> : <Lock className="size-4" />}
-        {isPending ? "Redirecting to payment…" : "Proceed to Pay"}
+        {isPending ? <Loader2 className="size-4 animate-spin" /> : <ArrowRight className="size-4" />}
+        {isPending ? "Saving your details…" : "Proceed to Checkout"}
       </Button>
     </form>
   );

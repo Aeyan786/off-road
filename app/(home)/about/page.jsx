@@ -14,7 +14,7 @@ const AboutPage = () => {
       {/* HERO */}
       <section className="relative flex min-h-[85vh] w-full items-end overflow-hidden bg-neutral-900">
         <Image
-          src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=1600&q=80"
+          src="https://images.unsplash.com/photo-1771340012319-0b4fca008b54?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Off-road truck tackling rough terrain"
           fill
           className="object-cover opacity-70"
@@ -101,7 +101,7 @@ const AboutPage = () => {
           </div>
           <div className="relative h-80 w-full overflow-hidden rounded-sm sm:h-[28rem] lg:col-span-7">
             <Image
-              src="https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?w=1200&q=80"
+              src="/foot1.webp"
               alt="Off-road motorbike on a dirt trail"
               fill
               className="object-cover"
@@ -115,7 +115,7 @@ const AboutPage = () => {
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 lg:grid-cols-12">
           <div className="relative order-2 h-80 w-full overflow-hidden rounded-sm sm:h-[28rem] lg:order-1 lg:col-span-7">
             <Image
-              src="https://images.unsplash.com/photo-1626668893632-6f3a4466d22f?w=1200&q=80"
+              src="/foot2.webp"
               alt="4x4 vehicle driving through mud"
               fill
               className="object-cover"

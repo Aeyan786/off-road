@@ -14,16 +14,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { uploadMediaFiles, uploadMediaZip } from "@/actions/media";
+import {
+  MAX_IMAGE_BYTES,
+  MAX_ZIP_BYTES,
+  checkImageFiles,
+  checkZipFile,
+  formatBytes,
+} from "@/lib/upload-limits";
 import { cn } from "@/lib/utils";
 
 const IMAGE_ACCEPT = "image/*";
 const ZIP_ACCEPT = ".zip";
-
-function formatBytes(bytes) {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-}
 
 function Dropzone({ id, accept, multiple, icon: Icon, title, hint, files, onFiles, onClear }) {
   const inputRef = useRef(null);
@@ -135,16 +136,37 @@ export default function MediaUploader() {
   const [result, setResult] = useState(null);
   const [isPending, startTransition] = useTransition();
 
+  /** Rejects oversized files before the request is built. */
+  function pickImages(files) {
+    const tooLarge = checkImageFiles(files);
+    setResult(tooLarge ? { error: tooLarge } : null);
+    setImageFiles(tooLarge ? [] : files);
+  }
+
+  function pickZip(file) {
+    const tooLarge = checkZipFile(file);
+    setResult(tooLarge ? { error: tooLarge } : null);
+    setZipFile(tooLarge ? null : file);
+  }
+
   function runUpload(action, buildFormData, onDone) {
     setResult(null);
     startTransition(async () => {
-      const formData = new FormData();
-      buildFormData(formData);
-      const response = await action(formData);
-      setResult(response);
-      if (!response?.error) {
-        onDone();
-        router.refresh();
+      try {
+        const formData = new FormData();
+        buildFormData(formData);
+        const response = await action(formData);
+        setResult(response);
+        if (!response?.error) {
+          onDone();
+          router.refresh();
+        }
+      } catch {
+        // A rejected request (oversized body, network drop) must not take
+        // the page down with it.
+        setResult({
+          error: "The upload failed. The file may be too large — please try a smaller one.",
+        });
       }
     });
   }
@@ -162,9 +184,9 @@ export default function MediaUploader() {
             multiple
             icon={ImageIcon}
             title="Upload images"
-            hint="Select or drop one or more images"
+            hint={`Select or drop one or more images (up to ${formatBytes(MAX_IMAGE_BYTES)} each)`}
             files={imageFiles}
-            onFiles={(files) => setImageFiles(files)}
+            onFiles={pickImages}
             onClear={() => setImageFiles([])}
           />
           <Button
@@ -191,9 +213,9 @@ export default function MediaUploader() {
             multiple={false}
             icon={FileArchive}
             title="Bulk upload from ZIP"
-            hint="Every image inside the archive is added to the library"
+            hint={`Every image inside the archive is added to the library (up to ${formatBytes(MAX_ZIP_BYTES)})`}
             files={zipFile ? [zipFile] : []}
-            onFiles={(files) => setZipFile(files[0] ?? null)}
+            onFiles={(files) => pickZip(files[0] ?? null)}
             onClear={() => setZipFile(null)}
           />
           <Button

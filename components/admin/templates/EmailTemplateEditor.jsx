@@ -293,7 +293,7 @@ export default function   EmailTemplateEditor({ initialTemplates, initialTheme }
               <Palette className="size-4 text-brand" />
               Brand &amp; colours
             </CardTitle>
-            <CardDescription>Shared by all three emails.</CardDescription>
+            <CardDescription>Shared by all six emails.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-1.5">

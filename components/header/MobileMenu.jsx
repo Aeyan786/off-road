@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ChevronDown, Menu, X as XIcon } from "lucide-react";
+import { ChevronDown, Menu } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -11,20 +11,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import {
-  FacebookIcon,
-  InstagramIcon,
-  YoutubeIcon,
-} from "@/components/icons/SocialIcons";
+import { SOCIAL_LINKS } from "@/components/social-links";
 import { NAV_LINKS } from "@/components/header/nav-links";
 import { cn } from "@/lib/utils";
-
-const SOCIALS = [
-  { label: "X", Icon: XIcon },
-  { label: "Facebook", Icon: FacebookIcon },
-  { label: "Instagram", Icon: InstagramIcon },
-  { label: "YouTube", Icon: YoutubeIcon },
-];
 
 const ROW_CLASS =
   "block rounded-md px-2 py-2.5 text-neutral-800 hover:bg-neutral-100";
@@ -177,15 +166,17 @@ export default function MobileMenu({ categories = [], suppliers = [] }) {
           </div>
 
           <div className="mt-auto flex items-center gap-4 border-t pt-5">
-            {SOCIALS.map(({ label, Icon }) => (
-              <Link
+            {SOCIAL_LINKS.map(({ label, href, Icon }) => (
+              <a
                 key={label}
-                href="/"
+                href={href}
+                target="_blank"
+                rel="noreferrer"
                 aria-label={label}
-                className="text-neutral-700 hover:text-brand"
+                className="cursor-pointer text-neutral-700 hover:text-brand"
               >
                 <Icon className="size-4" />
-              </Link>
+              </a>
             ))}
           </div>
         </div>

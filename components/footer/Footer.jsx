@@ -1,10 +1,6 @@
 import Link from "next/link";
-import { Mail, MapPin, Phone, Wrench, X as XIcon } from "lucide-react";
-import {
-  FacebookIcon,
-  InstagramIcon,
-  YoutubeIcon,
-} from "@/components/icons/SocialIcons";
+import { Mail, MapPin, Phone, Wrench } from "lucide-react";
+import { SOCIAL_LINKS } from "@/components/social-links";
 import Image from "next/image";
 
 const LINK_COLUMNS = [
@@ -35,13 +31,6 @@ const LINK_COLUMNS = [
       { label: "Shipping", href: "/shipping" },
     ],
   },
-];
-
-const SOCIALS = [
-  { label: "X", Icon: XIcon },
-  { label: "Facebook", Icon: FacebookIcon },
-  { label: "Instagram", Icon: InstagramIcon },
-  { label: "YouTube", Icon: YoutubeIcon },
 ];
 
 const image = [
@@ -101,15 +90,17 @@ export default function Footer() {
             <div className="mt-6">
               <p className="text-sm font-medium text-white/80">Follow Us:</p>
               <div className="mt-3 flex items-center gap-4">
-                {SOCIALS.map(({ label, Icon }) => (
-                  <Link
+                {SOCIAL_LINKS.map(({ label, href, Icon }) => (
+                  <a
                     key={label}
-                    href="/"
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
                     aria-label={label}
-                    className="text-white/70 hover:text-white"
+                    className="cursor-pointer text-white/70 hover:text-white"
                   >
                     <Icon className="size-4" />
-                  </Link>
+                  </a>
                 ))}
               </div>
             </div>
@@ -143,15 +134,17 @@ export default function Footer() {
         <div className="mx-auto flex max-w-[1400px] flex-col items-center gap-3 px-6 py-3 text-xs sm:flex-row sm:justify-between">
           <p>All Right Reserved &copy; 2025 Design Concept By Vebryx Ltd.</p>
           <div className="flex items-center gap-4">
-            {SOCIALS.map(({ label, Icon }) => (
-              <Link
+            {SOCIAL_LINKS.map(({ label, href, Icon }) => (
+              <a
                 key={label}
-                href="/"
+                href={href}
+                target="_blank"
+                rel="noreferrer"
                 aria-label={label}
-                className="text-white/90 hover:text-white"
+                className="cursor-pointer text-white/90 hover:text-white"
               >
                 <Icon className="size-3.5" />
-              </Link>
+              </a>
             ))}
           </div>
         </div>

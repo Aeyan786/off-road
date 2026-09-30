@@ -4,6 +4,7 @@ import { resolveCategoryPath } from "@/lib/server/resolveCategoryPath";
 import { resolveSupplierId } from "@/lib/server/resolveSupplier";
 import { getMediaByFileNames, toBaseName } from "@/lib/data/media";
 import { REQUIRED_PRODUCT_FIELD_KEYS, CATEGORY_FIELD_KEYS } from "@/lib/product-fields";
+import { checkImportRows } from "@/lib/upload-limits";
 
 function isUrl(value) {
   return /^https?:\/\//i.test(value);
@@ -61,6 +62,13 @@ export async function POST(request) {
       { error: "Request must include `rows` (array) and `mapping` (object)." },
       { status: 400 }
     );
+  }
+
+  // The browser caps the file size before parsing; this caps the batch
+  // however the endpoint is called.
+  const tooManyRows = checkImportRows(rows.length);
+  if (tooManyRows) {
+    return NextResponse.json({ error: tooManyRows }, { status: 413 });
   }
 
   const mappedFields = Object.entries(mapping).filter(([, field]) => field);
@@ -197,7 +205,6 @@ export async function POST(request) {
     .upsert(payloads, { onConflict: "sku" });
 
   if (upsertError) {
-    console.log(upsertError);
     
     return NextResponse.json({ error: upsertError.message }, { status: 500 });
   }

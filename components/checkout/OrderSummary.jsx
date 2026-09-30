@@ -6,8 +6,10 @@ import { formatPrice } from "@/lib/format";
  * Checkout sidebar. Everything here was priced on the server from the
  * database (lib/server/checkout.js), not from the browser's cart state.
  */
-export default function OrderSummary({ items, subtotal, shipping }) {
-  const total = subtotal + shipping;
+export default function OrderSummary({ items, subtotal, shipping, shippingNote }) {
+  // `shipping` is null until the customer has chosen a UPS service.
+  const chosen = typeof shipping === "number";
+  const total = subtotal + (chosen ? shipping : 0);
 
   return (
     <aside className="rounded-sm border bg-neutral-50 p-5 lg:sticky lg:top-46">
@@ -47,9 +49,15 @@ export default function OrderSummary({ items, subtotal, shipping }) {
           <dt>Subtotal</dt>
           <dd>{formatPrice(subtotal)}</dd>
         </div>
-        <div className="flex justify-between text-neutral-600">
+        <div className="flex justify-between gap-4 text-neutral-600">
           <dt>Shipping</dt>
-          <dd>{shipping > 0 ? formatPrice(shipping) : "Free"}</dd>
+          <dd className={chosen ? "" : "text-right text-xs text-neutral-500"}>
+            {chosen
+              ? shipping > 0
+                ? formatPrice(shipping)
+                : "Free"
+              : (shippingNote ?? "Calculated at the next step")}
+          </dd>
         </div>
         <div className="flex justify-between border-t pt-3 text-base font-bold text-neutral-900">
           <dt>Total</dt>

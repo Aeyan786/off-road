@@ -29,16 +29,16 @@ import {
 import { PRODUCT_FIELDS, REQUIRED_PRODUCT_FIELD_KEYS } from "@/lib/product-fields";
 import { guessColumnMapping } from "@/lib/guess-column-mapping";
 import { cn } from "@/lib/utils";
+import {
+  MAX_SPREADSHEET_BYTES,
+  checkImportRows,
+  checkSpreadsheetFile,
+  formatBytes,
+} from "@/lib/upload-limits";
 
 const BULK_IMPORT_ENDPOINT = "/api/admin/products/bulk-import";
 
 const ACCEPT_ATTR = ".csv,.xlsx";
-
-function formatBytes(bytes) {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-}
 
 export default function BulkUploadDialog({ trigger, open: openProp, onOpenChange }) {
   const router = useRouter();
@@ -89,6 +89,15 @@ export default function BulkUploadDialog({ trigger, open: openProp, onOpenChange
       return;
     }
 
+    // Checked before the file is read: parsing happens in the browser, so an
+    // oversized spreadsheet would lock up the tab.
+    const tooLarge = checkSpreadsheetFile(selected);
+    if (tooLarge) {
+      setFile(selected);
+      setError(tooLarge);
+      return;
+    }
+
     setFile(selected);
   }
 
@@ -99,6 +108,13 @@ export default function BulkUploadDialog({ trigger, open: openProp, onOpenChange
 
     try {
       const parsedFile = await parseSpreadsheetFile(file);
+
+      const tooManyRows = checkImportRows(parsedFile.rows.length);
+      if (tooManyRows) {
+        setError(tooManyRows);
+        return;
+      }
+
       setParsed(parsedFile);
       setMapping(guessColumnMapping(parsedFile.headers));
       setPhase("mapping");
@@ -188,7 +204,8 @@ export default function BulkUploadDialog({ trigger, open: openProp, onOpenChange
                 Click to browse or drag a file here
               </p>
               <p className="text-xs text-neutral-400">
-                Supported formats: {ACCEPTED_EXTENSIONS.join(", ")}
+                Supported formats: {ACCEPTED_EXTENSIONS.join(", ")} · up to{" "}
+                {formatBytes(MAX_SPREADSHEET_BYTES)}
               </p>
               <input
                 ref={inputRef}

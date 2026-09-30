@@ -11,12 +11,7 @@ import {
   Minus,
   X,
 } from "lucide-react";
-import {
-  FacebookIcon,
-  InstagramIcon,
-  YoutubeIcon,
-} from "@/components/icons/SocialIcons";
-import { XIcon } from "lucide-react";
+import { SOCIAL_LINKS } from "@/components/social-links";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -29,20 +24,12 @@ const ContactPage = () => {
 
   const [openFaq, setOpenFaq] = useState(0);
 
-  const SOCIALS = [
-    { label: "X", Icon: XIcon, link: "/" },
-    { label: "Facebook", Icon: FacebookIcon, link: "/" },
-    { label: "Instagram", Icon: InstagramIcon, link: "/" },
-    { label: "YouTube", Icon: YoutubeIcon, link: "/" },
-  ];
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
     alert("Thanks! This is a dummy form — no data was actually sent.");
   };
 
@@ -82,7 +69,7 @@ const ContactPage = () => {
     {
       question: "What is your return policy?",
       answer:
-        "We offer a 30-day hassle-free return policy on all unused parts in original packaging.",
+        "We are happy to accept returns on most new, unused items within 7 days of delivery, provided they are in their original packaging",
     },
     {
       question: "Do you ship internationally?",
@@ -283,14 +270,16 @@ const ContactPage = () => {
                 Follow Us
               </p>
               <div className="mt-4 flex gap-4">
-                {SOCIALS.map((s, i) => (
+                {SOCIAL_LINKS.map(({ label, href, Icon }) => (
                   <a
-                    key={i}
-                    href={s.link}
-                    aria-label={s.label}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 text-neutral-600 transition hover:border-[#1B9DDB] hover:text-[#1B9DDB]"
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={label}
+                    className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-neutral-200 text-neutral-600 transition hover:border-[#1B9DDB] hover:text-[#1B9DDB]"
                   >
-                    <s.Icon className="h-4 w-4" />
+                    <Icon className="h-4 w-4" />
                   </a>
                 ))}
               </div>

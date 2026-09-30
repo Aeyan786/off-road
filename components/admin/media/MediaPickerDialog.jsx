@@ -31,7 +31,7 @@ import { cn } from "@/lib/utils";
 export default function MediaPickerDialog({
   trigger,
   multiple = true,
-  alreadySelected = [],
+  alreadySelected = [], 
   onSelect,
 }) {
   const [open, setOpen] = useState(false);
@@ -79,7 +79,9 @@ export default function MediaPickerDialog({
   }
 
   function handleConfirm() {
+    
     const chosen = media.filter((item) => selectedIds.includes(item.id));
+    
     onSelect?.(chosen);
     handleOpenChange(false);
   }

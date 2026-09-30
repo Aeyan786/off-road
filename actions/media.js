@@ -8,6 +8,7 @@ import {
   detachMediaUrlsFromProducts,
 } from "@/lib/server/detachMediaUrls";
 import { getMedia, getMediaByFileNames } from "@/lib/data/media";
+import { checkImageFiles, checkZipFile } from "@/lib/upload-limits";
 
 // Media files live alongside product images in the existing bucket, under a
 // `media/` prefix. Do not point this at a new bucket.
@@ -135,16 +136,18 @@ async function insertMediaRows(supabase, rows) {
   return { data };
 }
 
-/**
- * Uploads one or many images picked from the admin's computer.
- * FormData field: `files` (repeatable).
- */
+
 export async function uploadMediaFiles(formData) {
   const { supabase, error: authError } = await requireAdmin(MEDIA_PICKER_MODULES);
   if (authError) return { error: authError };
 
   const files = formData.getAll("files").filter((f) => f && typeof f !== "string" && f.size > 0);
   if (files.length === 0) return { error: "No files were selected." };
+
+  // The browser checks this too; enforced again here so the limit holds
+  // however the action is called.
+  const oversized = checkImageFiles(files);
+  if (oversized) return { error: oversized };
 
   const rows = [];
   const failed = [];
@@ -217,6 +220,10 @@ export async function uploadMediaZip(formData) {
   if (extensionOf(file.name) !== "zip") {
     return { error: `"${file.name}" is not a .zip file.` };
   }
+
+  // Checked before the archive is read into memory.
+  const oversized = checkZipFile(file);
+  if (oversized) return { error: oversized };
 
   let zip;
   try {

@@ -6,6 +6,7 @@ import { Images, Loader2, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MediaPickerDialog from "@/components/admin/media/MediaPickerDialog";
 import { uploadMediaFiles } from "@/actions/media";
+import { MAX_IMAGE_BYTES, checkImageFiles, formatBytes } from "@/lib/upload-limits";
 
 /**
  * Product image manager, shared by the new and edit product pages.
@@ -38,27 +39,39 @@ export default function ProductImagesField({ value = [], onChange, error }) {
 
   function handleFilesPicked(event) {
     const files = Array.from(event.target.files ?? []);
+    if (fileInputRef.current) fileInputRef.current.value = "";
     if (files.length === 0) return;
+
+    // Checked before anything is sent: an oversized request is rejected by
+    // the framework itself, which would surface as an error page.
+    const tooLarge = checkImageFiles(files);
+    if (tooLarge) {
+      setUploadError(tooLarge);
+      return;
+    }
 
     setUploadError(null);
     startUpload(async () => {
       const formData = new FormData();
       files.forEach((file) => formData.append("files", file));
 
-      const result = await uploadMediaFiles(formData);
-      if (fileInputRef.current) fileInputRef.current.value = "";
+      try {
+        const result = await uploadMediaFiles(formData);
 
-      if (result?.error) {
-        setUploadError(result.error);
-        return;
-      }
+        if (result?.error) {
+          setUploadError(result.error);
+          return;
+        }
 
-      addUrls((result.media ?? []).map((item) => item.file_url));
+        addUrls((result.media ?? []).map((item) => item.file_url));
 
-      if (result.failed?.length > 0) {
-        setUploadError(
-          result.failed.map((f) => `${f.name}: ${f.reason}`).join(" · ")
-        );
+        if (result.failed?.length > 0) {
+          setUploadError(
+            result.failed.map((f) => `${f.name}: ${f.reason}`).join(" · ")
+          );
+        }
+      } catch {
+        setUploadError("The upload failed. Please check your connection and try again.");
       }
     });
   }
@@ -105,6 +118,9 @@ export default function ProductImagesField({ value = [], onChange, error }) {
           )}
           Upload from computer
         </Button>
+        <p className="text-xs text-neutral-400">
+          Up to {formatBytes(MAX_IMAGE_BYTES)} per image.
+        </p>
         <input
           ref={fileInputRef}
           type="file"

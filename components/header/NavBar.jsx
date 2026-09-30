@@ -1,19 +1,7 @@
 import Link from "next/link";
-import { X as XIcon } from "lucide-react";
-import {
-  FacebookIcon,
-  InstagramIcon,
-  YoutubeIcon,
-} from "@/components/icons/SocialIcons";
+import { SOCIAL_LINKS } from "@/components/social-links";
 import { NAV_LINKS } from "@/components/header/nav-links";
 import ShopMenu from "@/components/header/ShopMenu";
-
-const SOCIALS = [
-  { label: "X", Icon: XIcon },
-  { label: "Facebook", Icon: FacebookIcon },
-  { label: "Instagram", Icon: InstagramIcon },
-  { label: "YouTube", Icon: YoutubeIcon },
-];
 
 export default function NavBar({ categories = [] }) {
   return (
@@ -42,15 +30,17 @@ export default function NavBar({ categories = [] }) {
 
         <div className="flex items-center gap-5">
           <div className="flex items-center gap-4">
-            {SOCIALS.map(({ label, Icon }) => (
-              <Link
+            {SOCIAL_LINKS.map(({ label, href, Icon }) => (
+              <a
                 key={label}
-                href="/"
+                href={href}
+                target="_blank"
+                rel="noreferrer"
                 aria-label={label}
-                className="text-white/90 hover:text-white"
+                className="cursor-pointer text-white/90 hover:text-white"
               >
                 <Icon className="size-4" />
-              </Link>
+              </a>
             ))}
           </div>
           <Link

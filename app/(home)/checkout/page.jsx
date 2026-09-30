@@ -3,12 +3,12 @@ import { cookies } from "next/headers";
 import { ShoppingBag } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { GUEST_CART_COOKIE } from "@/lib/guest-cart";
-import { priceCart, quoteShipping } from "@/lib/server/checkout";
+import { priceCart } from "@/lib/server/checkout";
 import { safeQuery } from "@/lib/data/safe";
 import ButtonLink from "@/components/ui/button-link";
 import CheckoutForm from "@/components/checkout/CheckoutForm";
 import OrderSummary from "@/components/checkout/OrderSummary";
-import { SHIPPING_COUNTRIES } from "@/lib/shipping-countries";
+import { CHECKOUT_COUNTRIES } from "@/lib/shipping-countries";
 
 export const dynamic = "force-dynamic";
 
@@ -24,7 +24,6 @@ export default async function CheckoutPage({ searchParams }) {
   });
 
   const empty = priced.error === "Your cart is empty.";
-  const shipping = priced.items ? await quoteShipping({ address: null, items: priced.items }) : null;
 
   return (
     <div className="mx-auto max-w-[1400px] px-6 py-10">
@@ -68,7 +67,7 @@ export default async function CheckoutPage({ searchParams }) {
               </div>
             ) : null}
             <CheckoutForm
-              countries={SHIPPING_COUNTRIES.map(({ code, name, regionLabel, regionRequired }) => ({
+              countries={CHECKOUT_COUNTRIES.map(({ code, name, regionLabel, regionRequired }) => ({
                 code,
                 name,
                 regionLabel,
@@ -79,7 +78,7 @@ export default async function CheckoutPage({ searchParams }) {
           </div>
           <div className="order-1 lg:order-2">
             {priced.items ? (
-              <OrderSummary items={priced.items} subtotal={priced.subtotal} shipping={shipping.cost} />
+              <OrderSummary items={priced.items} subtotal={priced.subtotal} shipping={null} />
             ) : null}
           </div>
         </div>
