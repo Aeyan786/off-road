@@ -2,47 +2,24 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronRight } from "lucide-react";
+import { MAX_NAV_SUBCATEGORIES } from "@/components/header/nav-links";
 import { cn } from "@/lib/utils";
 
 // Grace period so a diagonal mouse move from the trigger into the panel
 // doesn't close the menu mid-travel.
 const CLOSE_DELAY_MS = 140;
 
-/** A category link with the hollow bullet used for every level below a column heading. */
-function CategoryLink({ category, depth }) {
+/** A subcategory link with the hollow bullet used under a column heading. */
+function CategoryLink({ category }) {
   return (
     <Link
       href={`/products?category=${category.slug}`}
-      className={cn(
-        "group/cat flex cursor-pointer items-center gap-2.5 py-1 text-sm text-neutral-700 transition-colors hover:text-brand",
-        depth > 1 && "ml-4"
-      )}
+      className="group/cat flex cursor-pointer items-center gap-2.5 py-0.5 text-sm text-neutral-700 transition-colors hover:text-brand"
     >
-      <span
-        aria-hidden="true"
-        className="size-1.5 shrink-0 rounded-full border border-neutral-400 transition-colors group-hover/cat:border-brand"
-      />
+    
       {category.name}
     </Link>
-  );
-}
-
-/** Renders a category and any children beneath it, at any depth. */
-function CategoryBranch({ category, depth = 1 }) {
-  const hasChildren = category.children?.length > 0;
-
-  return (
-    <li>
-      <CategoryLink category={category} depth={depth} />
-      {hasChildren ? (
-        <ul>
-          {category.children.map((child) => (
-            <CategoryBranch key={child.id} category={child} depth={depth + 1} />
-          ))}
-        </ul>
-      ) : null}
-    </li>
   );
 }
 
@@ -109,8 +86,8 @@ export default function ShopMenu({ link, categories = [] }) {
         : "-translate-y-3 pointer-events-none opacity-0"
     )}
   >
-    <ul className="grid grid-cols-2 gap-x-8 gap-y-8 md:grid-cols-4">
-      {categories.map((category) => (
+    <ul className="grid grid-cols-2 gap-x-8 gap-y-8 md:grid-cols-6">
+      {categories.slice(0,6).map((category) => (
         <li key={category.id}>
           <Link
             href={`/products?category=${category.slug}`}
@@ -121,9 +98,24 @@ export default function ShopMenu({ link, categories = [] }) {
 
           {category.children?.length > 0 ? (
             <ul className="mt-4 space-y-2">
-              {category.children.map((child) => (
-                <CategoryBranch key={child.id} category={child} />
+              {/* Direct subcategories only — deeper levels stay out of the menu. */}
+              {category.children.slice(0, MAX_NAV_SUBCATEGORIES).map((child) => (
+                <li key={child.id}>
+                  <CategoryLink category={child} />
+                </li>
               ))}
+
+              {category.children.length > MAX_NAV_SUBCATEGORIES ? (
+                <li>
+                  <Link
+                    href={`/products?category=${category.slug}`}
+                    className="inline-flex cursor-pointer items-center gap-1 pt-2 text-sm font-semibold text-brand hover:underline"
+                  >
+                    View All
+                    <ChevronRight className="size-3.5" />
+                  </Link>
+                </li>
+              ) : null}
             </ul>
           ) : null}
         </li>

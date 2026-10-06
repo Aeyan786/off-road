@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
-  MULTI_FILTER_KEYS,
+  SELECTABLE_FILTER_KEYS,
   toValueList,
 } from "@/lib/catalog-filters";
 import { cn } from "@/lib/utils";
@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils";
 /** { supplier: [...], manufacturer: [...], ... } from the URL. */
 function readSelection(searchParams) {
   return Object.fromEntries(
-    MULTI_FILTER_KEYS.map((key) => [
+    SELECTABLE_FILTER_KEYS.map((key) => [
       key,
       toValueList(searchParams.getAll(key)),
     ])
@@ -42,9 +42,17 @@ function FilterCheckboxGroup({
 }) {
   const [open, setOpen] = useState(false);
 
+  // Options are plain strings for the value filters, or {value, label} where
+  // what's stored in the URL differs from what's shown (categories use slugs).
+  const normalized = options.map((option) =>
+    typeof option === "string" ? { value: option, label: option } : option
+  );
+
   const values = [
-    ...options,
-    ...selected.filter((v) => !options.includes(v)),
+    ...normalized,
+    ...selected
+      .filter((v) => !normalized.some((option) => option.value === v))
+      .map((v) => ({ value: v, label: v })),
   ];
 
   const headingId = `filter-${name}`;
@@ -118,7 +126,7 @@ function FilterCheckboxGroup({
                 No options
               </p>
             ) : (
-              values.map((value) => {
+              values.map(({ value, label: optionLabel }) => {
                 const checked = selected.includes(value);
 
                 return (
@@ -140,7 +148,7 @@ function FilterCheckboxGroup({
                     />
 
                     <span className="min-w-0 break-words">
-                      {value}
+                      {optionLabel}
                     </span>
                   </label>
                 );
@@ -251,7 +259,8 @@ function PriceRangeFilter({
  */
 export default function ProductFilters({
   facets,
-  activeCategory,
+  categories = [],
+  activeCategories = [],
   basePath = "/products",
 }) {
   const router = useRouter();
@@ -361,6 +370,48 @@ export default function ProductFilters({
     );
   }
 
+  /** Top-level slug a selected category belongs to (itself when top-level). */
+  function rootOf(slug) {
+    return activeCategories.find((c) => c.slug === slug)?.rootSlug ?? slug;
+  }
+
+  /*
+   * A main category counts as ticked when it is selected itself or when
+   * something beneath it is — so a subcategory deep-link still shows which
+   * main category is being filtered.
+   */
+  function isCategoryChecked(rootSlug) {
+    return selection.category.some(
+      (slug) => slug === rootSlug || rootOf(slug) === rootSlug
+    );
+  }
+
+  /*
+   * Unticking a main category also drops any deeper selection beneath it,
+   * so the ticked boxes and the results can never disagree.
+   */
+  function toggleCategory(rootSlug, checked) {
+    const current = toValueList(pendingParams.current.getAll("category"));
+
+    setValues(
+      "category",
+      checked
+        ? [...new Set([...current, rootSlug])]
+        : current.filter(
+            (slug) => slug !== rootSlug && rootOf(slug) !== rootSlug
+          )
+    );
+  }
+
+  function clearCategory(slug) {
+    setValues(
+      "category",
+      toValueList(pendingParams.current.getAll("category")).filter(
+        (value) => value !== slug
+      )
+    );
+  }
+
   /*
    * Price is typed rather than picked, so debounce it.
    */
@@ -388,6 +439,9 @@ export default function ProductFilters({
   }, [minPrice, maxPrice]);
 
   const searchTerm = searchParams.get("q")?.trim();
+
+  // Selections below the ticked main category get their own chips.
+  const subcategories = activeCategories.filter((c) => c.slug !== c.rootSlug);
 
   const hasFilters = [
     "q",
@@ -464,39 +518,81 @@ export default function ProductFilters({
         </div>
       ) : null}
 
-      {/* CATEGORY */}
-      {activeCategory ? (
+      {/* CATEGORY — top-level categories only; selecting one also matches
+          everything filed beneath it (the branch is resolved server-side). */}
+      <FilterCheckboxGroup
+        name="category"
+        label="Category"
+        options={categories.map((category) => ({
+          value: category.slug,
+          label: category.name,
+        }))}
+        selected={categories
+          .map((category) => category.slug)
+          .filter((slug) => isCategoryChecked(slug))}
+        onToggle={(slug, checked) => toggleCategory(slug, checked)}
+        onClear={() => setValues("category", [])}
+      />
+
+      {/* A selection deeper than the ticked box — e.g. a subcategory the
+          mega menu linked to — shown so the rail never understates it. */}
+      {subcategories.length > 0 ? (
         <div className="space-y-1.5">
           <span className="text-xs font-medium text-neutral-600">
-            Category
+            Subcategory
           </span>
 
-          <span className="flex items-center justify-between gap-2 rounded-sm border bg-white px-2 py-1.5 text-sm text-neutral-800">
-            {activeCategory.name}
-
-            <button
-              type="button"
-              onClick={() => apply({ category: "" })}
-              aria-label="Clear category filter"
-              className="cursor-pointer text-neutral-400 hover:text-neutral-700"
+          {subcategories.map((category) => (
+            <span
+              key={category.slug}
+              className="flex items-center justify-between gap-2 rounded-sm border bg-white px-2 py-1.5 text-sm text-neutral-800"
             >
-              <X className="size-3.5" />
-            </button>
-          </span>
+              <span className="truncate">{category.name}</span>
+
+              <button
+                type="button"
+                onClick={() => clearCategory(category.slug)}
+                aria-label={`Clear ${category.name} subcategory filter`}
+                className="cursor-pointer text-neutral-400 hover:text-neutral-700"
+              >
+                <X className="size-3.5" />
+              </button>
+            </span>
+          ))}
         </div>
       ) : null}
 
-      {/* SUPPLIER */}
-      <FilterCheckboxGroup
-        name="supplier"
-        label="Supplier"
-        options={facets.suppliers}
-        selected={selection.supplier}
-        onToggle={(value, checked) =>
-          toggle("supplier", value, checked)
-        }
-        onClear={() => setValues("supplier", [])}
-      />
+      {/* SUPPLIER — chosen from the header's vendor dropdown, not here */}
+      {selection.supplier.length > 0 ? (
+        <div className="space-y-1.5">
+          <span className="text-xs font-medium text-neutral-600">
+            Vendor
+          </span>
+
+          {selection.supplier.map((supplier) => (
+            <span
+              key={supplier}
+              className="flex items-center justify-between gap-2 rounded-sm border bg-white px-2 py-1.5 text-sm text-neutral-800"
+            >
+              <span className="truncate">{supplier}</span>
+
+              <button
+                type="button"
+                onClick={() =>
+                  setValues(
+                    "supplier",
+                    selection.supplier.filter((v) => v !== supplier)
+                  )
+                }
+                aria-label={`Clear ${supplier} vendor filter`}
+                className="cursor-pointer text-neutral-400 hover:text-neutral-700"
+              >
+                <X className="size-3.5" />
+              </button>
+            </span>
+          ))}
+        </div>
+      ) : null}
 
       {/* MANUFACTURER */}
       <FilterCheckboxGroup

@@ -20,7 +20,7 @@ export default function ShopByCategory({ categories = [] }) {
 
       {categories.length > 0 ? (
         <div className="mt-12 grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-6">
-          {categories.map((category) => (
+          {categories.slice(0,12).map((category) => (
             <Link
               key={category.id}
               href={`/products?category=${category.slug}`}

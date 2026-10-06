@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { getBlogs } from "@/lib/data/blogs";
 import { safeQuery } from "@/lib/data/safe";
 import BlogCard from "@/components/blog/BlogCard";
+import { BlogListSkeleton } from "@/components/states/Skeletons";
 
 // Blogs are admin-managed and should appear as soon as they're published.
 export const dynamic = "force-dynamic";
@@ -11,8 +13,16 @@ export const metadata = {
   description: "News, guides and updates from Off Road Performance.",
 };
 
+export default function BlogsPage() {
+  return (
+    <Suspense fallback={<BlogListSkeleton />}>
+      <BlogList />
+    </Suspense>
+  );
+}
+
 /** Published blogs only — getBlogs() filters drafts out in the query. */
-export default async function BlogsPage() {
+async function BlogList() {
   const supabase = await createClient();
   const blogs = await safeQuery(getBlogs(supabase), []);
 

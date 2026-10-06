@@ -10,7 +10,9 @@ import { toStorefrontProduct } from "@/lib/data/products";
  * @param {string} title
  * @param {object[]} products raw product rows
  * @param {object} facets filter options for this page's base set
- * @param {object} [activeCategory] shown as a clearable chip when present
+ * @param {object[]} [categories] top-level categories for the category dropdown
+ * @param {object[]} [activeCategories] categories the URL selected, at any depth,
+ *   each carrying the slug of its top-level ancestor
  * @param {string} basePath route the filters write their query string to
  * @param {string} [countNoun] trailing words after the product count
  * @param {string} [emptyMessage]
@@ -19,7 +21,8 @@ export default function ProductCatalog({
   title,
   products,
   facets,
-  activeCategory = null,
+  categories = [],
+  activeCategories = [],
   basePath,
   countNoun = "available",
   emptyMessage = "No products match these filters.",
@@ -37,7 +40,8 @@ export default function ProductCatalog({
         <div className="self-start lg:sticky lg:top-46">
           <ProductFilters
             facets={facets}
-            activeCategory={activeCategory}
+            categories={categories}
+            activeCategories={activeCategories}
             basePath={basePath}
           />
         </div>
