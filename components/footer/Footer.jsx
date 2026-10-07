@@ -50,8 +50,7 @@ export default function Footer() {
           <div className="flex items-center justify-center gap-3 py-4 sm:py-0">
             <Mail className="size-5 shrink-0" />
             <div className="text-sm leading-tight">
-              <p>info@example.com</p>
-              <p>support@example.com</p>
+              <p>support@offroadperformance.co.uk</p>
             </div>
           </div>
           <div className="flex items-center justify-center gap-3 py-4 sm:py-0">

@@ -179,7 +179,7 @@ export default function MobileMenu({ categories = [], suppliers = [] }) {
 
           <div className="space-y-1 text-sm text-neutral-700">
             <p className="font-semibold">0000 -1234 56789</p>
-            <p>info@example.com</p>
+            <p>support@offroadperformance.co.uk</p>
           </div>
 
           <div className="mt-auto flex items-center gap-4 border-t pt-5">
