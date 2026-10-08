@@ -56,8 +56,7 @@ export default function Footer() {
           <div className="flex items-center justify-center gap-3 py-4 sm:py-0">
             <Phone className="size-5 shrink-0" />
             <div className="text-sm leading-tight">
-              <p>000 - 123 - 456789</p>
-              <p>00 - 123 - 456789</p>
+              <p>07984 720499</p>
             </div>
           </div>
           <div className="flex items-center justify-center gap-3 py-4 sm:py-0">

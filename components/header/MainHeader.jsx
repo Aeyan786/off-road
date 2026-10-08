@@ -24,7 +24,7 @@ export default function MainHeader({ categories = [], suppliers = [] }) {
 
         <div className="flex shrink-0 items-center gap-4 sm:gap-8">
           <div className="hidden text-right text-sm leading-tight text-neutral-700 xl:block">
-            <p className="font-semibold">0000 -1234 56789</p>
+            <p className="font-semibold">07984 720499</p>
             <p>support@offroadperformance.co.uk</p>
           </div>
 

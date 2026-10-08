@@ -37,7 +37,7 @@ const ContactPage = () => {
     {
       icon: <Phone className="h-5 w-5" />,
       title: "Call Us",
-      detail: "1-800-555-0199",
+      detail: "07984 720499",
       subDetail: "Mon–Fri, 8am–8pm",
     },
     {
