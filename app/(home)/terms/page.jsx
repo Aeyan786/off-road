@@ -1,8 +1,9 @@
 import React from 'react'
 import { FileText, Mail } from 'lucide-react'
+import ButtonLink from '@/components/ui/button-link'
 
 export const metadata = {
-  title: "Terms & Conditions",
+  title: "Terms of service",
   description: "The terms that apply when you buy from Off Road Performance.",
 };
 
@@ -10,21 +11,21 @@ const TermsPage = () => {
   const lastUpdated = 'January 15, 2025'
 
   const sections = [
-    { id: 'agreement', title: 'Your Agreement With Us' },
-    { id: 'account', title: 'Account Responsibilities' },
-    { id: 'age-requirement', title: 'Age Requirement' },
-    { id: 'our-rights', title: 'Our Rights' },
-    { id: 'website-use', title: 'Website Use & Conduct' },
-    { id: 'user-content', title: 'User Content' },
-    { id: 'content-rights', title: 'Content Rights' },
+    { id: 'agreement', title: 'Your agreement with us' },
+    { id: 'account', title: 'Account responsibilities' },
+    { id: 'age-requirement', title: 'Age requirement' },
+    { id: 'our-rights', title: 'Our rights' },
+    { id: 'website-use', title: 'Website use & conduct' },
+    { id: 'user-content', title: 'User content' },
+    { id: 'content-rights', title: 'Content rights' },
     { id: 'copyright', title: 'Copyright' },
     { id: 'trademarks', title: 'Trademarks' },
-    { id: 'product-descriptions', title: 'Product Descriptions' },
-    { id: 'risk-of-loss', title: 'Risk of Loss' },
-    { id: 'disclaimers', title: 'Disclaimers & Limitation of Liability' },
-    { id: 'applicable-law', title: 'Applicable Law' },
+    { id: 'product-descriptions', title: 'Product descriptions' },
+    { id: 'risk-of-loss', title: 'Risk of loss' },
+    { id: 'disclaimers', title: 'Disclaimers & limitation of liability' },
+    { id: 'applicable-law', title: 'Applicable law' },
     { id: 'disputes', title: 'Disputes' },
-    { id: 'policy-changes', title: 'Policy Changes' },
+    { id: 'policy-changes', title: 'Policy changes' },
   ]
 
   return (
@@ -79,7 +80,7 @@ const TermsPage = () => {
             {/* AGREEMENT */}
             <div id="agreement" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Your Agreement With Us
+                Your agreement with us
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 These Terms of Service ("Terms") govern your use of our
@@ -97,7 +98,7 @@ const TermsPage = () => {
             {/* ACCOUNT RESPONSIBILITIES */}
             <div id="account" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Account Responsibilities
+                Account responsibilities
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 You are responsible for maintaining the confidentiality of
@@ -110,7 +111,7 @@ const TermsPage = () => {
             {/* AGE REQUIREMENT */}
             <div id="age-requirement" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Age Requirement
+                Age requirement
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 If you are under 18 years of age, you may only use this
@@ -132,7 +133,7 @@ const TermsPage = () => {
             {/* WEBSITE USE */}
             <div id="website-use" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Website Use & Conduct
+                Website use & conduct
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 Off Road Performance ('ORP') grants you a limited license to
@@ -147,7 +148,7 @@ const TermsPage = () => {
             {/* USER CONTENT */}
             <div id="user-content" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                User Content
+                User content
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 (Reviews, comments, etc.): You may post reviews, comments,
@@ -161,7 +162,7 @@ const TermsPage = () => {
             {/* CONTENT RIGHTS */}
             <div id="content-rights" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Content Rights
+                Content rights
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 By posting content on our site, you grant Off Road
@@ -205,7 +206,7 @@ const TermsPage = () => {
             {/* PRODUCT DESCRIPTIONS */}
             <div id="product-descriptions" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Product Descriptions
+                Product descriptions
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 We strive to be as accurate as possible. However, we do not
@@ -220,7 +221,7 @@ const TermsPage = () => {
             {/* RISK OF LOSS */}
             <div id="risk-of-loss" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Risk of Loss
+                Risk of loss
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 All items purchased from Off Road Performance ('ORP') are
@@ -233,7 +234,7 @@ const TermsPage = () => {
             {/* DISCLAIMERS */}
             <div id="disclaimers" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Disclaimers & Limitation of Liability
+                Disclaimers & limitation of liability
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 This site and all information, content and products included
@@ -264,7 +265,7 @@ const TermsPage = () => {
             {/* APPLICABLE LAW */}
             <div id="applicable-law" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Applicable Law
+                Applicable law
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 By visiting our website, you agree that the laws of the
@@ -289,7 +290,7 @@ const TermsPage = () => {
             {/* POLICY CHANGES */}
             <div id="policy-changes" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Policy Changes
+                Policy changes
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 We reserve the right to make changes to our site, our
@@ -305,20 +306,16 @@ const TermsPage = () => {
               <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#1B9DDB]">
                 <Mail className="h-5 w-5 text-white" />
               </div>
-              <div>
+              <div className="flex flex-col">
                 <p className="font-semibold text-gray-900">
-                  Questions about our Terms of Service?
+                  Questions about our Terms of service?
                 </p>
                 <p className="mt-1 text-sm text-gray-600">
-                  Please get in touch with our support staff through our{' '}
-                  <a
-                    href="/contact"
-                    className="font-medium text-[#1B9DDB] hover:underline"
-                  >
-                    Support page
-                  </a>
-                  .
+                  Click Support to get in touch
                 </p>
+                <ButtonLink href="/contact" className="mt-3 w-fit cursor-pointer">
+                  Support
+                </ButtonLink>
               </div>
             </div>
           </div>

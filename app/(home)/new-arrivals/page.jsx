@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
-import { getProducts, getProductFacets } from "@/lib/data/products";
+import { getProducts, getProductFacets, NEW_ARRIVAL_DAYS } from "@/lib/data/products";
 import { getCategoryBranches, getTopLevelCategories } from "@/lib/data/categories";
 import { safeQuery } from "@/lib/data/safe";
 import ProductCatalog from "@/components/product/ProductCatalog";
@@ -10,14 +10,16 @@ import { EMPTY_FACETS, readCatalogFilters } from "@/lib/catalog-filters";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "New Arrivals",
+  title: "New arrivals",
   description: "The latest parts added to the catalog.",
 };
 
 /**
- * Same catalog as /products, with `new_arrival = true` as an extra base
- * condition on top of the active-status filter every public query applies.
- * Filters, grid and card behaviour are the shared components.
+ * Same catalog as /products, narrowed to the current new arrivals: active
+ * products created in the last NEW_ARRIVAL_DAYS days, newest first. The list
+ * is automatic — a product imported or added in the admin qualifies at once,
+ * with no flag to set, and ages out on its own — and the page's own filters
+ * apply within that set.
  */
 export default async function NewArrivalsPage({ searchParams }) {
   const params = await searchParams;
@@ -38,13 +40,13 @@ async function NewArrivalsResults({ params }) {
   );
 
   const [facets, categories, products] = await Promise.all([
-    safeQuery(getProductFacets(supabase, { newArrivalOnly: true }), EMPTY_FACETS),
+    safeQuery(getProductFacets(supabase, { newArrivalsOnly: true }), EMPTY_FACETS),
     safeQuery(getTopLevelCategories(supabase), []),
     safeQuery(
       getProducts(supabase, {
         ...readCatalogFilters(params),
         categoryIds: branches?.ids,
-        newArrivalOnly: true,
+        newArrivalsOnly: true,
       }),
       []
     ),
@@ -52,14 +54,14 @@ async function NewArrivalsResults({ params }) {
 
   return (
     <ProductCatalog
-      title="New Arrivals"
+      title="New arrivals"
       products={products}
       facets={facets}
       categories={categories}
       activeCategories={branches?.categories ?? []}
       basePath="/new-arrivals"
-      countNoun="in new arrivals"
-      emptyMessage="No new arrivals match these filters."
+      countNoun={`added in the last ${NEW_ARRIVAL_DAYS} days`}
+      emptyMessage={`No products have been added in the last ${NEW_ARRIVAL_DAYS} days.`}
     />
   );
 }

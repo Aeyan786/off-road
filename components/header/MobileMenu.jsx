@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ChevronDown, ChevronRight, Menu } from "lucide-react";
+import { ChevronDown, ChevronRight, Mail, Menu, Smartphone } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -38,49 +38,106 @@ function Section({ label, children }) {
   );
 }
 
-/** Category and its children at any depth, indented per level. */
+/**
+ * Categories as a drill-down, mirroring the desktop mega menu: a discipline
+ * expands to its subcategories, and a subcategory with children of its own
+ * expands again. Native <details> means it works by tap and by keyboard
+ * without any hover. Three levels deep, as specified — nothing lower is
+ * listed here, and every level links to its own category page.
+ */
 function CategoryItems({ categories, onNavigate }) {
-  return categories.map((category) => (
-    <li key={category.id}>
-      <Link
-        href={`/products?category=${category.slug}`}
-        onClick={onNavigate}
-        className="block rounded-md px-2 py-2 text-sm font-semibold text-neutral-900 hover:bg-neutral-100 hover:text-brand"
-      >
-        {category.name}
-      </Link>
+  return categories.map((discipline) => {
+    const subcategories = discipline.children ?? [];
 
-      {category.children?.length > 0 ? (
-        <ul>
-          {/* Direct subcategories only, mirroring the desktop mega menu. */}
-          {category.children.slice(0, MAX_NAV_SUBCATEGORIES).map((child) => (
-            <li key={child.id}>
-              <Link
-                href={`/products?category=${child.slug}`}
-                onClick={onNavigate}
-                className="block rounded-md py-2 pl-5 pr-2 text-sm text-neutral-600 hover:bg-neutral-100 hover:text-brand"
-              >
-                {child.name}
-              </Link>
-            </li>
-          ))}
+    if (subcategories.length === 0) {
+      return (
+        <li key={discipline.id}>
+          <Link
+            href={`/products?category=${discipline.slug}`}
+            onClick={onNavigate}
+            className="block rounded-md px-2 py-2 text-sm font-semibold text-neutral-900 hover:bg-neutral-100 hover:text-brand"
+          >
+            {discipline.name}
+          </Link>
+        </li>
+      );
+    }
 
-          {category.children.length > MAX_NAV_SUBCATEGORIES ? (
+    return (
+      <li key={discipline.id}>
+        <Section label={discipline.name}>
+          <li>
+            <Link
+              href={`/products?category=${discipline.slug}`}
+              onClick={onNavigate}
+              className="block rounded-md px-2 py-2 text-sm font-semibold text-brand hover:bg-neutral-100"
+            >
+              All {discipline.name}
+            </Link>
+          </li>
+
+          {subcategories.slice(0, MAX_NAV_SUBCATEGORIES).map((subcategory) => {
+            const children = subcategory.children ?? [];
+
+            if (children.length === 0) {
+              return (
+                <li key={subcategory.id}>
+                  <Link
+                    href={`/products?category=${subcategory.slug}`}
+                    onClick={onNavigate}
+                    className="block rounded-md px-2 py-2 text-sm text-neutral-600 hover:bg-neutral-100 hover:text-brand"
+                  >
+                    {subcategory.name}
+                  </Link>
+                </li>
+              );
+            }
+
+            return (
+              <li key={subcategory.id}>
+                <Section label={subcategory.name}>
+                  <li>
+                    <Link
+                      href={`/products?category=${subcategory.slug}`}
+                      onClick={onNavigate}
+                      className="block rounded-md px-2 py-2 text-sm font-medium text-brand hover:bg-neutral-100"
+                    >
+                      All {subcategory.name}
+                    </Link>
+                  </li>
+
+                  {children.map((child) => (
+                    <li key={child.id}>
+                      <Link
+                        href={`/products?category=${child.slug}`}
+                        onClick={onNavigate}
+                        className="block rounded-md px-2 py-2 text-sm text-neutral-600 hover:bg-neutral-100 hover:text-brand"
+                      >
+                        {child.name}
+                      </Link>
+                    </li>
+                  ))}
+                </Section>
+              </li>
+            );
+          })}
+
+          {subcategories.length > MAX_NAV_SUBCATEGORIES ? (
             <li>
               <Link
-                href={`/products?category=${category.slug}`}
+                href={`/products?category=${discipline.slug}`}
                 onClick={onNavigate}
-                className="flex items-center gap-1 rounded-md py-2 pl-5 pr-2 text-sm font-semibold text-brand hover:bg-neutral-100"
+                className="flex items-center gap-1 rounded-md px-2 py-2 text-sm font-semibold text-brand hover:bg-neutral-100"
               >
-                View All
+                View all
                 <ChevronRight className="size-3.5" />
               </Link>
             </li>
           ) : null}
-        </ul>
-      ) : null}
-    </li>
-  ));
+        </Section>
+      </li>
+    );
+  });
 }
 
 /**
@@ -126,7 +183,7 @@ export default function MobileMenu({ categories = [], suppliers = [] }) {
                         onClick={close}
                         className="block rounded-md px-2 py-2 text-sm font-semibold text-brand hover:bg-neutral-100"
                       >
-                        All Products
+                        All products
                       </Link>
                     </li>
                     <CategoryItems categories={categories} onNavigate={close} />
@@ -150,7 +207,7 @@ export default function MobileMenu({ categories = [], suppliers = [] }) {
                       onClick={close}
                       className="block rounded-md px-2 py-2 text-sm font-semibold text-brand hover:bg-neutral-100"
                     >
-                      All Vendors
+                      All vendors
                     </Link>
                   </li>
                   {suppliers.map((supplier) => (
@@ -178,8 +235,14 @@ export default function MobileMenu({ categories = [], suppliers = [] }) {
           </Link>
 
           <div className="space-y-1 text-sm text-neutral-700">
-            <p className="font-semibold">0000 -1234 56789</p>
-            <p>support@offroadperformance.co.uk</p>
+            <p className="flex items-center gap-1.5 font-semibold">
+              <Smartphone className="size-3.5 shrink-0 text-brand" />
+              07984 720499
+            </p>
+            <p className="flex items-center gap-1.5">
+              <Mail className="size-3.5 shrink-0 text-brand" />
+              support@offroadperformance.com
+            </p>
           </div>
 
           <div className="mt-auto flex items-center gap-4 border-t pt-5">

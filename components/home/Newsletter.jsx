@@ -16,11 +16,13 @@ export default function Newsletter() {
     <section className="bg-neutral-100">
       <div className="mx-auto max-w-[1400px] px-6 py-16 text-center">
         <h2 className="text-2xl font-bold text-neutral-900 sm:text-3xl">
-          Subscribe Our News Letter And Get Exclusive Offers
+          Join our mailing list
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-sm text-neutral-500">
-          Find the right car parts with confidence, designed to deliver reliable performance, lasting durability, and excellent value for every vehicle.
-
+          Subscribe here for all the latest industry news and product releases.
+        </p>
+        <p className="mx-auto mt-2 max-w-xl text-sm text-neutral-500">
+          {"Don’t miss out on some great special offers, monthly competitions and an occasional giveaway."}
         </p>
 
         <form
@@ -35,7 +37,7 @@ export default function Newsletter() {
           />
           <Button
             type="submit"
-            className="gap-1.5 rounded-none bg-neutral-900 px-5 hover:bg-neutral-800"
+            className="gap-1.5 rounded-none px-5"
           >
             Subscribe
             <ArrowRight className="size-4" />

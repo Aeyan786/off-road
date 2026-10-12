@@ -1,50 +1,52 @@
 import Link from "next/link";
-import ImagePlaceholder from "@/components/ui/image-placeholder";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import ButtonLink from "@/components/ui/button-link";
 
-function HeroPanel({
-  eyebrow,
-  title,
-  src,
-  description,
-  cta = true,
-  className,
-}) {
+/**
+ * Hero panel. The whole panel links to its destination via an overlay link,
+ * with the call to action layered above it — that way a panel can keep its
+ * own link while its button points somewhere else (the left panel's Support
+ * button), without nesting one link inside another.
+ */
+function HeroPanel({ eyebrow, title, src, description, href = "/products", cta, className }) {
   return (
-    <Link
-      href={"/products"}
-      className={`group relative flex min-h-[340px] flex-col cursor-pointer justify-end overflow-hidden bg-neutral-900 p-8 text-white ${className ?? ""}`}
+    <div
+      className={`group relative flex min-h-[340px] flex-col justify-end overflow-hidden bg-neutral-900 p-8 text-white ${className ?? ""}`}
     >
-      <div>
-        <Image
-          src={src}
-          fill
-          alt="hero"
-          className="object-cover transition-all duration-800  ease-out group-hover:scale-102 group-hover:blur-xs"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/80 to-transparent transition-opacity duration-500 group-hover:from-black/90 group-hover:via-black/85" />
-        <div className="relative max-w-md space-y-3">
-          <p className="text-sm text-white/80">{eyebrow}</p>
-          <h2 className="text-2xl font-bold leading-tight sm:text-3xl transition-transform duration-500 group-hover:translate-y-[-2px]">
-            {title}
-          </h2>
-          <p className="text-sm leading-relaxed text-white/75">{description}</p>
-          {cta ? (
-            <Button className="mt-2">
-              <span >Shop Now</span>
-            </Button>
-          ) : null}
-        </div>
+      <Image
+        src={src}
+        fill
+        alt="hero"
+        className="object-cover transition-all duration-800 ease-out group-hover:scale-102 group-hover:blur-xs"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/80 to-transparent transition-opacity duration-500 group-hover:from-black/90 group-hover:via-black/85" />
+
+      <Link
+        href={href}
+        aria-label={title}
+        className="absolute inset-0 z-0 cursor-pointer"
+      />
+
+      <div className="relative z-10 max-w-md space-y-3">
+        <p className="text-sm text-white/80">{eyebrow}</p>
+        <h2 className="text-2xl font-bold leading-tight transition-transform duration-500 group-hover:translate-y-[-2px] sm:text-3xl">
+          {title}
+        </h2>
+        <p className="text-sm leading-relaxed text-white/75">{description}</p>
+        {cta ? (
+          <ButtonLink href={cta.href} className="mt-2 w-fit cursor-pointer">
+            {cta.label}
+          </ButtonLink>
+        ) : null}
       </div>
-    </Link>
+    </div>
   );
 }
 
 function HeroTile({ title, src }) {
   return (
     <Link href={"/products"}>
-      <div className="group relative flex min-h-[280px] flex-1 items-end overflow-hidden bg-neutral-900 p-6 text-white cursor-pointer ">
+      <div className="group relative flex min-h-[280px] flex-1 cursor-pointer items-end overflow-hidden bg-neutral-900 p-6 text-white">
         <Image
           src={src}
           fill
@@ -63,13 +65,15 @@ function HeroTile({ title, src }) {
 
 export default function Hero() {
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-12 gap-2 mt-2">
+    <section className="mt-2 grid grid-cols-1 gap-2 lg:grid-cols-12">
       <HeroPanel
         className="lg:col-span-4"
-        eyebrow="Our Services"
-        title="Quality car parts at affordable prices"
+        eyebrow="Aftermarket parts specialists"
+        title="Distributors of high-quality parts to the powersports industry"
         src="/hero3.webp"
-        description="Find reliable, high-quality spare parts for your vehicle, backed by excellent service and competitive prices."
+        description="Where marquee brands meet worldclass distribution."
+        href="/products"
+        cta={{ label: "Support", href: "/contact" }}
       />
 
       <HeroPanel
@@ -78,9 +82,11 @@ export default function Hero() {
         title="Quality parts for every vehicle"
         src="/hero.webp"
         description="We supply a wide range of genuine and reliable car parts for different makes and models, helping you keep your vehicle running smoothly."
+        href="/products"
+        cta={{ label: "Shop Now", href: "/products" }}
       />
 
-      <div className="flex flex-col gap-0 lg:col-span-3 gap-2">
+      <div className="flex flex-col gap-2 lg:col-span-3">
         <HeroTile title="Car Parts for All Models" src="/hero1.webp" />
         <HeroTile title="Professional Car Tools" src="/hero2.webp" />
       </div>

@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import BlogImageField from "@/components/admin/blogs/BlogImageField";
 import { createBlog, updateBlog } from "@/actions/blogs";
 import { countWords } from "@/lib/blog-text";
+import RichTextEditor from "@/components/admin/blogs/RichTextEditor";
 import { cn } from "@/lib/utils";
 
 const initialState = {
@@ -91,11 +92,6 @@ export default function BlogForm({ blog }) {
       ? { "aria-invalid": true, "aria-describedby": `${name}-error` }
       : {};
 
-  const autoGrow = (e) => {
-    e.currentTarget.style.height = "auto";
-    e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
-  };
-
   return (
     <form action={formAction} className="space-y-6">
       <input type="hidden" name="image" value={image ?? ""} />
@@ -126,20 +122,15 @@ export default function BlogForm({ blog }) {
                 error={fieldErrors.content}
                 hint={`${wordCount.toLocaleString("en-GB")} word${wordCount === 1 ? "" : "s"}`}
               >
-                <textarea
-                  id="content"
+                <RichTextEditor
                   name="content"
-                  rows={14}
                   defaultValue={getValue("content", blog?.content ?? "")}
-                  onInput={(e) => {
-                    autoGrow(e);
-                    setWordCount(countWords(e.currentTarget.value));
-                  }}
-                  className={`${INPUT_CLASS} min-h-72 resize-none overflow-hidden leading-relaxed`}
-                  {...errorProps("content")}
+                  onChange={(html) => setWordCount(countWords(html))}
+                  invalid={Boolean(fieldErrors.content)}
                 />
                 <p className="text-xs text-neutral-400">
-                  Plain text. Leave a blank line between paragraphs.
+                  Headings, bold, lists, quotes and links are all saved with the
+                  article.
                 </p>
               </Field>
             </CardContent>

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/server/requireAdmin";
 import { removeUnusedMedia } from "@/lib/server/removeUnusedMedia";
 import { parseBlogForm } from "@/lib/validation/blog";
+import { sanitizeRichText } from "@/lib/server/sanitize";
 import { PUBLISHED_STATUS } from "@/lib/data/blogs";
 import { slugify } from "@/lib/slug";
 
@@ -59,7 +60,7 @@ export async function createBlog(formData) {
   const parsed = parseBlogForm(formData);
   if (parsed.fieldErrors) return { fieldErrors: parsed.fieldErrors };
 
-  const blog = parsed.data;
+  const blog = { ...parsed.data, content: sanitizeRichText(parsed.data.content) };
   const published_at = blog.status === PUBLISHED_STATUS ? new Date().toISOString() : null;
 
   // A concurrent create can take the same slug between the lookup and the
@@ -106,7 +107,7 @@ export async function updateBlog(id, formData) {
   if (findError) return { error: findError.message };
   if (!existing) return { error: "This blog no longer exists." };
 
-  const blog = parsed.data;
+  const blog = { ...parsed.data, content: sanitizeRichText(parsed.data.content) };
   const update = { ...blog };
   // Stamp the first publish only — unpublishing and republishing keeps the
   // original date.

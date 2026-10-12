@@ -116,7 +116,7 @@ export default function ShippingStep({ checkout, items, subtotal, options, optio
                       </span>
                     </span>
                     <span className="shrink-0 text-sm font-semibold text-neutral-900">
-                      {formatPrice(option.cost)}
+                      {option.cost > 0 ? formatPrice(option.cost) : "Free"}
                     </span>
                   </label>
                 </li>

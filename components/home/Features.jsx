@@ -3,27 +3,26 @@ import { Gem, PackageCheck, ShieldCheck, Truck } from "lucide-react";
 const FEATURES = [
   {
     Icon: Gem,
-    title: "Premium Products",
+    title: "Premium products",
     description:
-      "High-quality car parts built for reliable performance, durability, and a perfect fit.",
+      "Our range of aftermarket parts offer reliable performance, durability and a perfect fit.",
   },
   {
     Icon: ShieldCheck,
-    title: "Secure Payments",
+    title: "Secure payments",
     description:
       "Shop with confidence using safe and secure payment options for every order.",
   },
   {
     Icon: PackageCheck,
-    title: "Easy Returns",
-    description:
-      "Enjoy a hassle-free return process if your product isn't the right fit.",
+    title: "Easy returns",
+    description: "Enjoy a hassle-free return process.",
   },
   {
     Icon: Truck,
-    title: "Free Delivery",
+    title: "Free delivery",
     description:
-      "Get your car parts delivered safely and conveniently right to your doorstep.",
+      "Get your parts delivered safely and conveniently right to your doorstep.",
   },
 ];
 

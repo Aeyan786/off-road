@@ -13,6 +13,7 @@ import {
 import ButtonLink from "@/components/ui/button-link";
 import { useStore } from "@/components/cart/StoreProvider";
 import { formatPrice } from "@/lib/format";
+import FreeDeliveryProgress from "@/components/cart/FreeDeliveryProgress";
 
 /** Slide-over cart, opened whenever a product is added. */
 export default function CartPanel({ open, onOpenChange }) {
@@ -59,7 +60,7 @@ export default function CartPanel({ open, onOpenChange }) {
                     <Link
                       href={`/products/${line.productId}`}
                       onClick={() => onOpenChange(false)}
-                      className="cursor-pointer text-sm font-semibold uppercase text-neutral-900 hover:text-brand"
+                      className="cursor-pointer break-words text-sm font-semibold text-neutral-900 hover:text-brand"
                     >
                       {line.name}
                     </Link>
@@ -120,6 +121,7 @@ export default function CartPanel({ open, onOpenChange }) {
                 {formatPrice(subtotal)}
               </span>
             </div>
+            <FreeDeliveryProgress subtotal={subtotal} />
             <p className="text-xs text-neutral-500">
               Taxes and shipping calculated at checkout
             </p>
@@ -128,7 +130,7 @@ export default function CartPanel({ open, onOpenChange }) {
               onClick={() => onOpenChange(false)}
               className="w-full cursor-pointer"
             >
-              Check Out
+              Check out
             </ButtonLink>
       
           </SheetFooter>

@@ -7,7 +7,7 @@ export default function OurProducts({ products = [] }) {
       <div className="mx-auto max-w-[1400px] px-6 py-16">
         <div className="mb-10 text-center">
           <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl">
-            Our Products
+            Our products
           </h2>
 
           <p className="mt-3 text-sm text-neutral-500">
@@ -54,7 +54,7 @@ export default function OurProducts({ products = [] }) {
         )}
 
         <div className="mt-10 text-center">
-          <ButtonLink href="/products">View All</ButtonLink>
+          <ButtonLink href="/products">View all</ButtonLink>
         </div>
       </div>
     </section>

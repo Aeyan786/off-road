@@ -18,7 +18,7 @@ export default function SuggestedForYou({ tabs = [] }) {
   const active = tabs.find((tab) => tab.key === activeKey) ?? tabs[0];
 
   return (
-    <section className="border-y border-brand/15 bg-brand/5">
+    <section className="border-y border-brand/15 bg-[#FAFAFA]">
       <div className="mx-auto max-w-[1400px] px-6 py-16">
         <div className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
@@ -66,8 +66,7 @@ export default function SuggestedForYou({ tabs = [] }) {
         <div className="mt-10 text-center">
           <ButtonLink
             href={active.key === "all" ? "/products" : `/products?category=${active.slug}`}
-            variant="outline"
-            className="cursor-pointer rounded-sm bg-white px-4"
+            className="cursor-pointer rounded-sm px-4"
           >
             {active.key === "all" ? "Browse all products" : `View all ${active.label}`}
             <ArrowRight className="size-4" />

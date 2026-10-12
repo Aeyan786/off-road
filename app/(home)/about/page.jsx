@@ -63,7 +63,7 @@ const AboutPage = () => {
         <div className="mx-auto max-w-5xl text-center">
           <p className="text-2xl font-bold leading-snug text-white sm:text-4xl lg:text-5xl">
             Where marquee brands meet{' '}
-            <span className="italic font-serif font-medium">
+            <span className="font-serif font-medium">
               world-class distribution.
             </span>
           </p>

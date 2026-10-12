@@ -6,7 +6,7 @@ import { useStore } from "@/components/cart/StoreProvider";
 import { cn } from "@/lib/utils";
 
 /**
- * Add to Cart / Add to Wishlist for the product details page. Both call the
+ * Add to cart / Add to wishlist for the product details page. Both call the
  * same store actions the product-card hover icons use.
  */
 export default function ProductActions({ productId, inStock }) {
@@ -27,7 +27,7 @@ export default function ProductActions({ productId, inStock }) {
         ) : (
           <ShoppingBag className="size-4" />
         )}
-        {inStock ? "Add to Cart" : "Out of stock"}
+        {inStock ? "Add to cart" : "Out of stock"}
       </Button>
 
       <Button
@@ -40,7 +40,7 @@ export default function ProductActions({ productId, inStock }) {
         onClick={() => toggleWishlistItem(productId)}
       >
         <Heart className={cn("size-4", saved && "fill-current text-brand")} />
-        {saved ? "In Wishlist" : "Add to Wishlist"}
+        {saved ? "In wishlist" : "Add to wishlist"}
       </Button>
     </div>
   );

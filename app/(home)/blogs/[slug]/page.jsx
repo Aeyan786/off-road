@@ -5,7 +5,8 @@ import { ArrowLeft, CalendarDays, Clock } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getBlogs, getPublishedBlogBySlug } from "@/lib/data/blogs";
 import { safeQuery } from "@/lib/data/safe";
-import { formatBlogDate, readingMinutes, toExcerpt, toParagraphs } from "@/lib/blog-text";
+import { formatBlogDate, readingMinutes, toExcerpt } from "@/lib/blog-text";
+import BlogContent from "@/components/blog/BlogContent";
 import BlogCard from "@/components/blog/BlogCard";
 
 export const dynamic = "force-dynamic";
@@ -50,7 +51,7 @@ export default async function BlogDetailsPage({ params }) {
         <span className="text-neutral-700">{blog.title}</span>
       </nav>
 
-      <article className=" max-w-4xl mt-10">
+      <article className="mt-10 min-w-0 max-w-4xl break-words">
         <header className="space-y-4">
           <h1 className="text-3xl font-bold leading-tight text-neutral-900 sm:text-4xl">
             {blog.title}
@@ -82,13 +83,7 @@ export default async function BlogDetailsPage({ params }) {
           </div>
         ) : null}
 
-        <div className="mt-8 space-y-5 text-base leading-relaxed text-neutral-700">
-          {toParagraphs(blog.content).map((paragraph, index) => (
-            <p key={index} className="whitespace-pre-line">
-              {paragraph}
-            </p>
-          ))}
-        </div>
+        <BlogContent content={blog.content} />
 
         <Link
           href="/blogs"

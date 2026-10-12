@@ -1,25 +1,20 @@
-import { Clock, Phone, Truck } from "lucide-react";
+import { Truck } from "lucide-react";
+
+/**
+ * Announcement line. The free-delivery threshold is the single source in
+ * lib/shipping-rules.js, shared with the cart, the checkout and the
+ * shipping quote, so this line can never drift from what is charged.
+ */
+import { FREE_DELIVERY_LABEL } from "@/lib/shipping-rules";
 
 export default function TopBar() {
   return (
     <div className="hidden border-b bg-white text-xs text-neutral-600 md:block">
       <div className="mx-auto flex max-w-[1400px] items-center justify-end gap-6 px-6 py-2.5">
-        {/* <p className="whitespace-nowrap">Free Shipping for all order over £100</p> */}
-        <div className="flex items-center gap-6 whitespace-nowrap">
-          {/* Tablet widths only have room for the shipping note and phone. */}
-          <span className="hidden items-center gap-1.5 lg:flex">
-            <Clock className="size-3.5" />
-            Monday To Sunday 9:00am to 9:00pm
-          </span>
-          <span className="flex items-center gap-1.5">
-            <Phone className="size-3.5" />
-            07984 720499
-          </span>
-          {/* <span className="hidden items-center gap-1.5 lg:flex">
-            <Truck className="size-3.5" />
-            Free Doorstep Pick-up &amp; Drop
-          </span> */}
-        </div>
+        <span className="flex items-center gap-1.5 whitespace-nowrap">
+          <Truck className="size-3.5" />
+          {FREE_DELIVERY_LABEL}
+        </span>
       </div>
     </div>
   );

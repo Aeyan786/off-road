@@ -97,6 +97,7 @@ export async function continueToPayment(_prev, formData) {
     const { option, error: shippingError } = await resolveShippingOption({
       address: { ...checkout.shipping_address, name: checkout.full_name },
       items: priced.items,
+      subtotal: priced.subtotal,
       code,
     });
     if (shippingError) return { error: shippingError };

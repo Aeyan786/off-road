@@ -68,10 +68,10 @@ export default function RecentUpdates({ blogs = [] }) {
       <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 className="text-2xl font-bold text-neutral-900 sm:text-3xl">
-            Recent Updations
+            Blog
           </h2>
           <p className="mt-3 max-w-xl text-sm text-neutral-500">
-            Stay updated with the latest news, improvements, features, and important changes.
+            {"What's new at Off Road Performance 'ORP'"}
           </p>
         </div>
         {blogs.length > 0 ? (

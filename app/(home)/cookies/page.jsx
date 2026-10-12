@@ -1,36 +1,37 @@
 import React from 'react'
 import { Cookie, Settings, ShieldCheck, Mail, MousePointerClick } from 'lucide-react'
+import WarningBox from '@/components/ui/warning-box'
 
 export const metadata = {
-  title: "Cookie Policy",
+  title: "Cookie policy",
   description: "The cookies we use and how to control them.",
 };
 
 const CookiesPage = () => {
   const sections = [
-    { id: 'cookies-we-use', title: 'Cookies We Use' },
-    { id: 'managing-cookies', title: 'Managing Cookies' },
-    { id: 'your-consent', title: 'Your Consent' },
+    { id: 'cookies-we-use', title: 'Cookies we use' },
+    { id: 'managing-cookies', title: 'Managing cookies' },
+    { id: 'your-consent', title: 'Your consent' },
   ]
 
   const cookieTypes = [
     {
-      title: 'Essential Cookies',
+      title: 'Essential cookies',
       description:
         'These cookies are necessary for the website to function properly, allowing you to browse products, add items to your cart, and complete purchases.',
     },
     {
-      title: 'Performance Cookies',
+      title: 'Performance cookies',
       description:
         'These cookies help us analyse how visitors use our site, so we can improve layout, speed, and usability.',
     },
     {
-      title: 'Functional Cookies',
+      title: 'Functional cookies',
       description:
         'These cookies remember your preferences, such as language settings or login details, to provide a smoother browsing experience.',
     },
     {
-      title: 'Marketing Cookies',
+      title: 'Marketing cookies',
       description:
         'These cookies help us deliver relevant advertisements and promotions based on your interests.',
     },
@@ -87,7 +88,7 @@ const CookiesPage = () => {
             {/* COOKIES WE USE */}
             <div id="cookies-we-use" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Cookies We Use
+                Cookies we use
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 We use different types of cookies on our website.
@@ -110,27 +111,26 @@ const CookiesPage = () => {
             {/* MANAGING COOKIES */}
             <div id="managing-cookies" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Managing Cookies
+                Managing cookies
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 You can manage or disable cookies through your browser
                 settings.
               </p>
 
-              <div className="mt-6 flex items-start gap-3 rounded-lg bg-[#1B9DDB]/5 p-4">
-                <Settings className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#1B9DDB]" />
-                <p className="text-sm text-gray-700">
+              <WarningBox tone="warning" className="mt-6">
+                <p>
                   Please note that turning off certain cookies may affect the
                   functionality of the website, including your ability to
                   make purchases or access certain features.
                 </p>
-              </div>
+              </WarningBox>
             </div>
 
             {/* YOUR CONSENT */}
             <div id="your-consent" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Your Consent
+                Your consent
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 By using our website, you consent to the use of cookies as
@@ -139,14 +139,13 @@ const CookiesPage = () => {
                 how it is used.
               </p>
 
-              <div className="mt-6 flex items-start gap-3 rounded-lg border border-gray-200 p-4">
-                <ShieldCheck className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#1B9DDB]" />
-                <p className="text-sm text-gray-700">
+              <WarningBox tone="warning" className="mt-6">
+                <p>
                   You can update your cookie preferences at any time through
                   your browser or by clicking the cookie settings icon at the
                   bottom of any page.
                 </p>
-              </div>
+              </WarningBox>
             </div>
 
             {/* CONTACT CALLOUT */}
@@ -161,10 +160,10 @@ const CookiesPage = () => {
                 <p className="mt-1 text-sm text-gray-600">
                   Reach out to our support team at{' '}
                   <a
-                    href="mailto:privacy@offroadperformance.com"
+                    href="mailto:support@offroadperformance.com"
                     className="font-medium text-[#1B9DDB] hover:underline"
                   >
-                    privacy@offroadperformance.com
+                    support@offroadperformance.com
                   </a>
                 </p>
               </div>

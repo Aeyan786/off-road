@@ -55,7 +55,7 @@ export default function WishlistPanel({ open, onOpenChange }) {
                     <Link
                       href={`/products/${line.productId}`}
                       onClick={() => onOpenChange(false)}
-                      className="cursor-pointer text-sm font-semibold uppercase text-neutral-900 hover:text-brand"
+                      className="cursor-pointer break-words text-sm font-semibold text-neutral-900 hover:text-brand"
                     >
                       {line.name}
                     </Link>

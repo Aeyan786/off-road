@@ -19,6 +19,7 @@ import {
   PoundSterling,
   Banknote,
 } from 'lucide-react'
+import WarningBox from '@/components/ui/warning-box'
 
 export const metadata = {
   title: "Workshop Services",
@@ -49,7 +50,7 @@ const ServicePage = () => {
   const featuredServices = [
     {
       icon: <Disc className="h-7 w-7" />,
-      title: 'Top End Rebuilds',
+      title: 'Top end rebuilds',
       description: 'Cylinder re-plating, boring & repairs',
       image:
         'https://images.unsplash.com/photo-1615906655593-ad0386982a0f?w=800&q=80',
@@ -65,7 +66,7 @@ const ServicePage = () => {
     },
     {
       icon: <Cog className="h-7 w-7" />,
-      title: 'Vapour Blasting',
+      title: 'Vapour blasting',
       description: 'Restore parts to a satin finish',
       image:
         '/about1.avif',
@@ -83,7 +84,7 @@ const ServicePage = () => {
 
   const rePlatePricing = [
     {
-      title: 'Straight Re-plates',
+      title: 'Straight re-plates',
       description:
         'A clean, straightforward re-plating service for cylinders in good base condition.',
       single: '£136.00',
@@ -91,7 +92,7 @@ const ServicePage = () => {
       icon: <Disc className="h-6 w-6" />,
     },
     {
-      title: 'Repair & Re-plate',
+      title: 'Repair & re-plate',
       description:
         'Repairs minor cylinder damage before applying a fresh re-plate finish.',
       single: '£172.00',
@@ -102,7 +103,7 @@ const ServicePage = () => {
       icon: <Wrench className="h-6 w-6" />,
     },
     {
-      title: 'Bore Out & Re-plate',
+      title: 'Bore out & re-plate',
       description:
         'Increases cylinder bore diameter followed by a precision re-plate.',
       single: '£182.00',
@@ -207,22 +208,22 @@ const ServicePage = () => {
   const whyChooseUs = [
     {
       icon: <Award className="h-6 w-6" />,
-      title: '40+ Years Experience',
+      title: '40+ years experience',
       description: 'Decades of combined expertise from our lead technicians.',
     },
     {
       icon: <Settings className="h-6 w-6" />,
-      title: '4,000 sq ft Facility',
+      title: '4,000 sq ft facility',
       description: 'A dedicated service centre built for powersports.',
     },
     {
       icon: <Banknote/>,
-      title: '10–20% Savings',
+      title: '10-20% savings',
       description: 'Better pricing than most main dealer workshops.',
     },
     {
       icon: <ShieldCheck className="h-6 w-6" />,
-      title: 'Free Estimates',
+      title: 'Free estimates',
       description: 'No obligation quotes, usually same or next day.',
     },
   ]
@@ -238,23 +239,20 @@ const ServicePage = () => {
         <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-16 md:grid-cols-2 md:py-24">
           <div>
             <span className="text-sm font-medium text-gray-500">
-              Welcome to ORP Service Centre
+              {"Off Road Performance 'ORP' service centre"}
             </span>
-            <h1 className="mt-3 text-4xl font-extrabold leading-tight sm:text-5xl">
-              <span className="text-[#1B9DDB]">THE BETTER WAY</span>
-              <br />
-              <span className="text-gray-900">TO POWERSPORTS CARE</span>
+            <h1 className="mt-3 text-4xl font-extrabold leading-tight text-gray-900 sm:text-5xl">
+              A service centre that cares about your ride
             </h1>
             <p className="mt-6 max-w-md text-gray-600 leading-relaxed">
-              Expert servicing, repairs & tuning from a team with over 40
-              years' experience — backed by a 4,000 sq ft facility built for
-              performance.
+              Offering decades of experience; building reliable performance to
+              suit your needs
             </p>
             <Link
               href="/contact"
-              className="mt-8 inline-flex items-center gap-2 rounded-lg bg-[#1B9DDB] px-8 py-3.5 font-semibold uppercase tracking-wide text-white text-sm transition hover:bg-[#1685bb]"
+              className="mt-8 inline-flex items-center gap-2 rounded-lg bg-[#1B9DDB] px-8 py-3.5 text-sm font-semibold tracking-wide text-white transition hover:bg-[#1685bb]"
             >
-              Get Free Estimate
+              Support
             </Link>
           </div>
 
@@ -275,7 +273,7 @@ const ServicePage = () => {
         <div className="flex items-end justify-between">
           <h2 className="text-2xl font-bold sm:text-3xl">
             <span className="text-[#1B9DDB]">Featured</span>{' '}
-            <span className="text-gray-900">Services</span>
+            <span className="text-gray-900">services</span>
           </h2>
           <a
             href="#other-services"
@@ -332,7 +330,7 @@ const ServicePage = () => {
           <div>
             <h2 className="text-2xl font-bold sm:text-3xl">
               <span className="text-[#1B9DDB]">Why</span>{' '}
-              <span className="text-gray-900">Choose Us</span>
+              <span className="text-gray-900">choose us</span>
             </h2>
             <p className="mt-4 text-gray-600 leading-relaxed">
               Due to customer demand, we've brought together a superb team of
@@ -363,7 +361,7 @@ const ServicePage = () => {
       {/* AFTERMARKET & OEM PARTS */}
       <section className="mx-auto max-w-4xl px-4 py-16">
         <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-          Aftermarket & OEM Parts
+          Aftermarket & OEM parts
         </h2>
         <p className="mt-4 leading-relaxed text-gray-600">
           Off Road Performance ('ORP') hold huge stocks of OEM, service and
@@ -390,7 +388,7 @@ const ServicePage = () => {
       <section className="bg-gray-50 py-16">
         <div className="mx-auto max-w-4xl px-4">
           <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-            Our Simple Business Model
+            Our simple business model
           </h2>
           <p className="mt-4 leading-relaxed text-gray-600">
             Leave your repair in our service centre for a free estimate
@@ -405,17 +403,15 @@ const ServicePage = () => {
           </p>
 
           <div className="mt-8 space-y-4">
-            <div className="flex items-start gap-3 rounded-lg border border-gray-200 bg-white p-4">
-              <Clock className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#1B9DDB]" />
-              <p className="text-sm text-gray-600">
-                <strong className="text-gray-900">Please note:</strong>{' '}
-                estimates sometimes change as work unfolds, but we will
-                always contact you and advise if this happens.
+            <WarningBox tone="warning">
+              <p>
+                <strong>Please note:</strong> estimates sometimes change as
+                work unfolds, but we will always contact you and advise if
+                this happens.
               </p>
-            </div>
-            <div className="flex items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4">
-              <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-600" />
-              <p className="text-sm text-gray-700">
+            </WarningBox>
+            <WarningBox tone="warning">
+              <p>
                 Anyone bringing in a machine for a free estimate, deciding
                 not to have us carry out the work, and then failing to
                 collect their machine will incur a{' '}
@@ -423,16 +419,14 @@ const ServicePage = () => {
                 We know this sounds harsh, but these repairs are in our way
                 and on our insurance.
               </p>
-            </div>
-            <div className="flex items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4">
-              <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-600" />
-              <p className="text-sm text-gray-700">
-                Repairs brought in and completed but not collected will also
-                incur a <strong>£30.00 per day storage fee</strong> after 48
-                hours — again, we're sorry to have to do this, but you are
-                taking up space needed for the next customer.
+            </WarningBox>
+            <WarningBox tone="warning">
+              <p>
+                {"Repairs brought in and completed but not collected will also incur a "}
+                <strong>£30.00 per day storage fee</strong>
+                {" after 48 hours — again, we're sorry to have to do this, but you are taking up space needed for the next customer."}
               </p>
-            </div>
+            </WarningBox>
           </div>
         </div>
       </section>
@@ -445,7 +439,7 @@ const ServicePage = () => {
         <div className="flex items-center gap-3">
           <Gauge className="h-7 w-7 text-[#1B9DDB]" />
           <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-            Top End Rebuilds
+            Top end rebuilds
           </h2>
         </div>
         <p className="mt-4 max-w-3xl leading-relaxed text-gray-600">
@@ -474,7 +468,7 @@ const ServicePage = () => {
               <div className="mt-6 space-y-3 border-t border-gray-100 pt-5">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-500">
-                    Single Cylinder
+                    Single cylinder
                   </span>
                   <span className="text-lg font-bold text-gray-900">
                     {service.single}
@@ -482,7 +476,7 @@ const ServicePage = () => {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-500">
-                    Twin Cylinder
+                    Twin cylinder
                     {service.twinNote && (
                       <span className="block text-xs text-gray-400">
                         ({service.twinNote})
@@ -496,7 +490,7 @@ const ServicePage = () => {
                 {service.twinAlt && (
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-500">
-                      Twin Cylinder
+                      Twin cylinder
                       <span className="block text-xs text-gray-400">
                         ({service.twinAltNote})
                       </span>
@@ -516,9 +510,7 @@ const ServicePage = () => {
             For any other prices not mentioned above please contact us for
             further details.
           </p>
-          <p className="text-xs italic text-gray-500">
-            Prices subject to change. Return delivery included.
-          </p>
+          <p className="text-xs text-gray-500">*Prices subject to change.</p>
         </div>
       </section>
 
@@ -531,7 +523,7 @@ const ServicePage = () => {
           <div className="flex items-center gap-3">
             <Gauge className="h-7 w-7 text-[#1B9DDB]" />
             <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-              Ultrasonic Carburettor Cleaning
+              Ultrasonic carburettor cleaning
             </h2>
           </div>
           <p className="mt-4 max-w-3xl leading-relaxed text-gray-600">
@@ -562,8 +554,8 @@ const ServicePage = () => {
               </div>
             ))}
           </div>
-          <p className="mt-6 text-sm italic text-gray-500">
-            Return delivery charges apply.
+          <p className="mt-6 text-sm text-gray-500">
+            *Return delivery charges apply.
           </p>
         </div>
       </section>
@@ -576,7 +568,7 @@ const ServicePage = () => {
         <div className="flex items-center gap-3">
           <Cog className="h-7 w-7 text-[#1B9DDB]" />
           <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-            Vapour Blasting
+            Vapour blasting
           </h2>
         </div>
         <p className="mt-4 max-w-3xl leading-relaxed text-gray-600">
@@ -585,11 +577,11 @@ const ServicePage = () => {
           high-quality satin finish — with no damage to gasket faces or
           bearing journals.
         </p>
-        <p className="mt-4 max-w-3xl text-sm italic text-gray-500">
-          Please note: this process is unsuitable for ferrous materials. We
-          also offer a less abrasive 'Soda blasting service' — contact us
-          for details.
-        </p>
+        <WarningBox tone="warning" className="mt-4 max-w-3xl">
+          <p>
+            {"Please note: this process is unsuitable for ferrous materials. We also offer a less abrasive 'Soda blasting service' — contact us for details."}
+          </p>
+        </WarningBox>
 
         <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-2">
           {vapourBlastingItems.map((group) => (
@@ -634,7 +626,7 @@ const ServicePage = () => {
       <section id="other-services" className="bg-gray-50 py-16 scroll-mt-24">
         <div className="mx-auto max-w-7xl px-4">
           <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-            Other Services Available
+            Other services available
           </h2>
           <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {otherServices.map((service) => (
@@ -658,26 +650,16 @@ const ServicePage = () => {
       <section className="bg-[#1B9DDB] py-16">
         <div className="mx-auto max-w-3xl px-4 text-center">
           <h2 className="text-3xl font-bold text-white sm:text-4xl">
-            A Different Level of Service
-          </h2>
-          <p className="mt-4 text-lg text-white/90">
             We look forward to showing you a different level of service than
             you have experienced before.
-          </p>
+          </h2>
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
             <a
               href="/contact"
               className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-8 py-3 font-semibold text-[#1B9DDB] transition hover:bg-gray-100"
             >
-              <Phone className="h-4 w-4" />
-              Book a Free Estimate
-            </a>
-            <a
-              href="mailto:service@offroadperformance.com"
-              className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white px-8 py-3 font-semibold text-white transition hover:bg-white hover:text-[#1B9DDB]"
-            >
               <Mail className="h-4 w-4" />
-              Email Our Team
+              Support
             </a>
           </div>
         </div>

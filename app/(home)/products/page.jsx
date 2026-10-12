@@ -10,7 +10,7 @@ import { EMPTY_FACETS, readCatalogFilters } from "@/lib/catalog-filters";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "All Products",
+  title: "All products",
   description: "Browse every part in the catalog and filter by manufacturer, model, year and price.",
 };
 
@@ -68,7 +68,7 @@ async function CatalogResults({ params }) {
 
   return (
     <ProductCatalog
-      title={onlyCategory ? onlyCategory.name : "All Products"}
+      title={onlyCategory ? onlyCategory.name : "All products"}
       products={products}
       facets={facets}
       categories={categories}

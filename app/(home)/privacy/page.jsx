@@ -2,7 +2,7 @@ import React from 'react'
 import { Shield, Lock, FileText, Mail } from 'lucide-react'
 
 export const metadata = {
-  title: "Privacy Policy",
+  title: "Privacy policy",
   description: "How we collect, use and protect your personal data.",
 };
 
@@ -10,10 +10,10 @@ const PrivacyPage = () => {
   const lastUpdated = 'January 15, 2025'
 
   const sections = [
-    { id: 'information-we-collect', title: 'Information We Collect' },
-    { id: 'how-we-use', title: 'How We Use Your Information' },
-    { id: 'how-we-share', title: 'How We Share Your Information' },
-    { id: 'data-security', title: 'Data Security' },
+    { id: 'information-we-collect', title: 'Information we collect' },
+    { id: 'how-we-use', title: 'How we use your information' },
+    { id: 'how-we-share', title: 'How we share your information' },
+    { id: 'data-security', title: 'Data security' },
   ]
 
   return (
@@ -69,7 +69,7 @@ const PrivacyPage = () => {
             {/* INFORMATION WE COLLECT */}
             <div id="information-we-collect" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Information We Collect
+                Information we collect
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 To provide you with the best possible shopping experience, we
@@ -77,7 +77,7 @@ const PrivacyPage = () => {
               </p>
 
               <h3 className="mt-8 text-lg font-semibold text-gray-900">
-                Information You Provide to Us
+                Information you provide to us
               </h3>
               <p className="mt-3 text-gray-600 leading-relaxed">
                 This includes any information you enter on our website, such
@@ -109,7 +109,7 @@ const PrivacyPage = () => {
               </div>
 
               <h3 className="mt-8 text-lg font-semibold text-gray-900">
-                Information We Collect Automatically
+                Information we collect automatically
               </h3>
               <p className="mt-3 text-gray-600 leading-relaxed">
                 When you browse our website, we automatically receive certain
@@ -140,7 +140,7 @@ const PrivacyPage = () => {
             {/* HOW WE USE INFORMATION */}
             <div id="how-we-use" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                How We Use Your Information
+                How we use your information
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 We use the information we gather to:
@@ -193,7 +193,7 @@ const PrivacyPage = () => {
             {/* HOW WE SHARE INFORMATION */}
             <div id="how-we-share" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                How We Share Your Information
+                How we share your information
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 We value your trust and do not sell, distribute, or lease
@@ -211,7 +211,7 @@ const PrivacyPage = () => {
             {/* DATA SECURITY */}
             <div id="data-security" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Data Security
+                Data security
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 We are committed to keeping your information safe.

@@ -6,6 +6,7 @@ import {
   categoryPath,
   getProductById,
   getRelatedProducts,
+  productTitle,
   toStorefrontProduct,
 } from "@/lib/data/products";
 import { safeQuery } from "@/lib/data/safe";
@@ -34,17 +35,6 @@ export async function generateMetadata({ params }) {
   };
 }
 
-/** A label/value row for the compact spec list under the buy box. */
-function Spec({ label, value }) {
-  if (value === null || value === undefined || value === "") return null;
-  return (
-    <div className="flex gap-3 py-2.5 text-sm">
-      <dt className="w-40 shrink-0 text-neutral-500">{label}</dt>
-      <dd className="font-medium text-neutral-800">{value}</dd>
-    </div>
-  );
-}
-
 /** A row inside the "Features" table (in the tabs section). */
 function FeatureRow({ label, value, index }) {
   if (value === null || value === undefined || value === "") return null;
@@ -65,7 +55,7 @@ function FeatureRow({ label, value, index }) {
 function LongText({ value, emptyMessage }) {
   if (!value) {
     return (
-      <p className="text-sm italic text-neutral-400">{emptyMessage}</p>
+      <p className="text-sm text-neutral-400">{emptyMessage}</p>
     );
   }
   return (
@@ -84,7 +74,9 @@ export default async function ProductDetailsPage({ params }) {
 
   const related = await safeQuery(
     getRelatedProducts(supabase, {
-      categoryId: product.categories?.id,
+      manufacturer: product.manufacturer,
+      model: product.model,
+      year: product.year,
       excludeId: product.id,
       limit: 4,
     }),
@@ -143,12 +135,12 @@ export default async function ProductDetailsPage({ params }) {
         <div className="space-y-5">
           <div className="space-y-2">
             {product.supplier ? (
-              <p className="text-xs font-semibold uppercase tracking-wide text-[#1B9DDB]">
+              <p className="text-xs font-semibold tracking-wide text-[#1B9DDB]">
                 {product.supplier}
               </p>
             ) : null}
             <h1 className="text-2xl font-bold text-neutral-900 sm:text-3xl">
-              {product.product}
+              {productTitle(product)}
             </h1>
             {product.small_description ? (
               <p className="text-sm leading-relaxed text-neutral-600">
@@ -199,26 +191,13 @@ export default async function ProductDetailsPage({ params }) {
             </div>
           </div>
 
-          {/* COMPACT SPEC LIST */}
-          <dl className="divide-y divide-neutral-100">
-            <Spec label="SKU" value={product.sku} />
-            <Spec label="Manufacturer" value={product.manufacturer} />
-            <Spec label="Model" value={product.model} />
-            <Spec label="Year" value={product.year} />
-          </dl>
         </div>
       </div>
 
-      {/* TABS SECTION: FEATURES / DESCRIPTION / ADDITIONAL INFO */}
+      {/* TABS SECTION: DESCRIPTION / ADDITIONAL / SPECIFICS */}
       <div className="mt-14">
-        <Tabs defaultValue="features" className="w-full">
+        <Tabs defaultValue="description" className="w-full">
           <TabsList variant="line" className="h-auto w-full justify-start gap-6 rounded-none border-b border-neutral-200 bg-transparent p-0">
-            <TabsTrigger
-              value="features"
-              className="rounded-none border-b-2 border-transparent px-1 pb-3 pt-1 text-sm font-semibold text-neutral-500 shadow-none data-[state=active]:border-[#1B9DDB] data-[state=active]:bg-transparent data-[state=active]:text-[#1B9DDB] data-[state=active]:shadow-none"
-            >
-              Features
-            </TabsTrigger>
             <TabsTrigger
               value="description"
               className="rounded-none border-b-2 border-transparent px-1 pb-3 pt-1 text-sm font-semibold text-neutral-500 shadow-none data-[state=active]:border-[#1B9DDB] data-[state=active]:bg-transparent data-[state=active]:text-[#1B9DDB] data-[state=active]:shadow-none"
@@ -229,7 +208,13 @@ export default async function ProductDetailsPage({ params }) {
               value="additional"
               className="rounded-none border-b-2 border-transparent px-1 pb-3 pt-1 text-sm font-semibold text-neutral-500 shadow-none data-[state=active]:border-[#1B9DDB] data-[state=active]:bg-transparent data-[state=active]:text-[#1B9DDB] data-[state=active]:shadow-none"
             >
-              Additional Information
+              Additional
+            </TabsTrigger>
+            <TabsTrigger
+              value="features"
+              className="rounded-none border-b-2 border-transparent px-1 pb-3 pt-1 text-sm font-semibold text-neutral-500 shadow-none data-[state=active]:border-[#1B9DDB] data-[state=active]:bg-transparent data-[state=active]:text-[#1B9DDB] data-[state=active]:shadow-none"
+            >
+              Specifics
             </TabsTrigger>
           </TabsList>
 
@@ -247,7 +232,7 @@ export default async function ProductDetailsPage({ params }) {
                 ))}
               </div>
             ) : (
-              <p className="text-sm italic text-neutral-400">
+              <p className="text-sm text-neutral-400">
                 No feature specifications available for this product.
               </p>
             )}

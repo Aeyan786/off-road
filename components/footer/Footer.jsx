@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, MapPin, Phone, Wrench } from "lucide-react";
+import { Mail, MapPin, Smartphone } from "lucide-react";
 import { SOCIAL_LINKS } from "@/components/social-links";
 import Image from "next/image";
 
@@ -9,8 +9,8 @@ const LINK_COLUMNS = [
     links: [
       { label: "Home", href: "/" },
       { label: "Products", href: "/products" },
-      { label: "New Arrival", href: "/new_arrivals" },
-      { label: "Blogs", href: "/blog" },
+      { label: "New arrivals", href: "/new-arrivals" },
+      { label: "Blog", href: "/blogs" },
     ],
   },
   {
@@ -19,7 +19,7 @@ const LINK_COLUMNS = [
       { label: "Privacy", href: "/privacy" },
       { label: "Terms", href: "/terms" },
       { label: "Service", href: "/service" },
-      { label: "Contact", href: "/contact" },
+      { label: "Support", href: "/contact" },
     ],
   },
   {
@@ -50,11 +50,11 @@ export default function Footer() {
           <div className="flex items-center justify-center gap-3 py-4 sm:py-0">
             <Mail className="size-5 shrink-0" />
             <div className="text-sm leading-tight">
-              <p>support@offroadperformance.co.uk</p>
+              <p>support@offroadperformance.com</p>
             </div>
           </div>
           <div className="flex items-center justify-center gap-3 py-4 sm:py-0">
-            <Phone className="size-5 shrink-0" />
+            <Smartphone className="size-5 shrink-0" />
             <div className="text-sm leading-tight">
               <p>07984 720499</p>
             </div>
@@ -62,10 +62,8 @@ export default function Footer() {
           <div className="flex items-center justify-center gap-3 py-4 sm:py-0">
             <MapPin className="size-5 shrink-0" />
             <p className="text-sm leading-tight">
-              59 Hawthorn Road, 
-              Little Sutton, <br />
-              Ellesmere Port, Cheshire, 
-              CH66 1PS
+              CH66 <br />
+              Appointment only
             </p>
           </div>
         </div>
@@ -78,7 +76,6 @@ export default function Footer() {
               href="/"
               className="flex items-center gap-2 text-xl font-extrabold"
             >
-              <Wrench className="size-6 text-brand" />
               Off Road<span className="text-brand"> Performance</span>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">
@@ -86,7 +83,7 @@ export default function Footer() {
               performance inside and out.
             </p>
             <div className="mt-6">
-              <p className="text-sm font-medium text-white/80">Follow Us:</p>
+              <p className="text-sm font-medium text-white/80">Socials</p>
               <div className="mt-3 flex items-center gap-4">
                 {SOCIAL_LINKS.map(({ label, href, Icon }) => (
                   <a
@@ -130,21 +127,10 @@ export default function Footer() {
 
       <div className="bg-brand text-white">
         <div className="mx-auto flex max-w-[1400px] flex-col items-center gap-3 px-6 py-3 text-xs sm:flex-row sm:justify-between">
-          <p>All Right Reserved &copy; 2025 Design Concept By Vebryx Ltd.</p>
-          <div className="flex items-center gap-4">
-            {SOCIAL_LINKS.map(({ label, href, Icon }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={label}
-                className="cursor-pointer text-white/90 hover:text-white"
-              >
-                <Icon className="size-3.5" />
-              </a>
-            ))}
-          </div>
+          <p>All Right Reserved &copy; 2025 Design Concept By Vebryx Ltd</p>
+          {/* The social buttons live in the Socials block above, leaving this
+              side for the business line. */}
+          <p>{"Off Road Performance © 2026"}</p>
         </div>
       </div>
     </footer>

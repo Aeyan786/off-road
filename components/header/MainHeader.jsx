@@ -1,3 +1,4 @@
+import { Mail, Smartphone } from "lucide-react";
 import Link from "next/link";
 import HeaderStoreActions from "@/components/cart/HeaderStoreActions";
 import HeaderSearch from "@/components/header/HeaderSearch";
@@ -23,9 +24,15 @@ export default function MainHeader({ categories = [], suppliers = [] }) {
         </div>
 
         <div className="flex shrink-0 items-center gap-4 sm:gap-8">
-          <div className="hidden text-right text-sm leading-tight text-neutral-700 xl:block">
-            <p className="font-semibold">07984 720499</p>
-            <p>support@offroadperformance.co.uk</p>
+          <div className="hidden text-sm leading-tight text-neutral-700 xl:block">
+            <p className="flex items-center justify-end gap-1.5 font-semibold">
+              <Smartphone className="size-3.5 shrink-0 text-brand" />
+              07984 720499
+            </p>
+            <p className="flex items-center justify-end gap-1.5">
+              <Mail className="size-3.5 shrink-0 text-brand" />
+              support@offroadperformance.com
+            </p>
           </div>
 
           <HeaderStoreActions />

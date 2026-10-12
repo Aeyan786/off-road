@@ -45,19 +45,18 @@ export default function Services() {
       <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 px-6 py-16 lg:grid-cols-[minmax(0,340px)_1fr] lg:items-center">
         <div className="space-y-5">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand">
-            Workshop services
+            Service
           </p>
           <h2 className="text-3xl font-bold leading-tight sm:text-4xl">
-            More than parts — we fit, rebuild &amp; tune
+            Delivering the most powerful and reliable aftermarket performance
+            parts to the powersports industry.
           </h2>
           <p className="text-sm leading-relaxed text-neutral-300">
-            From cylinder re-plating to dyno tuning, our workshop keeps your
-            machine running at its best. Complete rebuilds, servicing,
-            diagnostics and race preparation, with free doorstep pick-up &amp; drop.
+            {"We don't just sell parts, we build reliable performance in our state-of-the-art service centre"}
           </p>
-          <p className="flex items-center gap-2 text-sm text-neutral-300">
-            <Truck className="size-4 text-brand" />
-            Free doorstep pick-up &amp; drop
+          <p className="text-sm leading-relaxed text-neutral-300">
+            Everything from diagnostics, complete rebuilds, race preparation and
+            servicing - we have got you covered.
           </p>
           <ButtonLink href="/service" className="cursor-pointer rounded-sm px-4">
             Explore all services

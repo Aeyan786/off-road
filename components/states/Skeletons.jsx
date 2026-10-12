@@ -188,17 +188,18 @@ export function CatalogSkeleton() {
   );
 }
 
-/** Whole-page placeholder for the blog index, for the same reason. */
-export function BlogListSkeleton() {
+/**
+ * Just the article grid, for the blog index's results while the heading
+ * and filters above it stay on screen.
+ */
+export function BlogGridSkeleton() {
   return (
-    <div className="mx-auto max-w-[1400px] px-6 py-10">
-      <PageHeaderSkeleton />
-
+    <div className="space-y-4">
+      <Skeleton className="h-4 w-24" />
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {Array.from({ length: 6 }, (_, index) => (
           <div key={index} className="space-y-3">
-            <Skeleton className="aspect-[16/10] w-full rounded-sm" />
-            <Skeleton className="h-3 w-24" />
+            <Skeleton className="aspect-[4/3] w-full rounded-sm" />
             <Skeleton className="h-5 w-full" />
             <Skeleton className="h-4 w-full" />
             <Skeleton className="h-4 w-2/3" />

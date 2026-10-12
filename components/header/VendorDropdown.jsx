@@ -22,13 +22,13 @@ export default function VendorDropdown({ suppliers = [] }) {
             type="button"
             className="flex shrink-0 cursor-pointer items-center gap-1 px-3 text-sm text-neutral-700 hover:bg-neutral-50"
           >
-            All Vendors
+            Vendors
             <ChevronDown className="size-3.5" />
           </button>
         }
       />
       <DropdownMenuContent align="start">
-        <DropdownMenuItem render={<Link href="/products" />}>All Vendors</DropdownMenuItem>
+        <DropdownMenuItem render={<Link href="/products" />}>All vendors</DropdownMenuItem>
         {suppliers.map((supplier) => (
           <DropdownMenuItem
             key={supplier}

@@ -31,9 +31,12 @@ export default function OrderSummary({ items, subtotal, shipping, shippingNote }
               </span>
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium text-neutral-900">{item.product_name}</p>
-              <p className="truncate text-xs text-neutral-500">
-                {[item.manufacturer, item.model, item.year].filter(Boolean).join(" · ")}
+              {/* Same full title as the product cards and the cart, wrapped
+                  rather than truncated so long titles stay readable. */}
+              <p className="break-words text-sm font-medium text-neutral-900">
+                {[item.manufacturer, item.model, item.year, item.product_name]
+                  .filter(Boolean)
+                  .join(" ")}
               </p>
               <p className="mt-0.5 text-xs text-neutral-500">
                 {item.quantity} × {formatPrice(item.unit_price)}

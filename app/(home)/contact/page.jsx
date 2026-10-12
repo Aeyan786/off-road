@@ -49,8 +49,8 @@ const ContactPage = () => {
     {
       icon: <MapPin className="h-5 w-5" />,
       title: "Visit Us",
-      detail: "59 Hawthorn Road, Little Sutton",
-      subDetail: "Ellesmere Port, Cheshire, CH66 1PS",
+      detail: "CH66",
+      subDetail: "Appointment only",
     },
     {
       icon: <Clock className="h-5 w-5" />,
@@ -248,26 +248,15 @@ const ContactPage = () => {
                 Our Location
               </p>
               <p className="mt-3 text-lg font-semibold leading-snug text-neutral-900">
-                59 Hawthorn Road,
+                CH66
                 <br />
-                Little Sutton, Ellesmere Port,
-                <br />
-                Cheshire, CH66 1PS
+                Appointment only
               </p>
-              <a
-                href="https://maps.google.com/?q=59+Hawthorn+Road,+Little+Sutton,+Ellesmere+Port,+Cheshire,+CH66+1PS"
-                target="_blank"
-                rel="noreferrer"
-                className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#1B9DDB] hover:underline"
-              >
-                Get directions
-                <ArrowUpRight className="h-3.5 w-3.5" />
-              </a>
             </div>
 
             <div className="mt-10 border-t border-neutral-100 pt-8">
               <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400">
-                Follow Us
+                Socials
               </p>
               <div className="mt-4 flex gap-4">
                 {SOCIAL_LINKS.map(({ label, href, Icon }) => (

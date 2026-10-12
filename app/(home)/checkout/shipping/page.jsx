@@ -44,6 +44,7 @@ export default async function ShippingPage({ searchParams }) {
   const { options, error: optionsError } = await getShippingOptions({
     address: { ...checkout.shipping_address, name: checkout.full_name },
     items: priced.items,
+    subtotal: priced.subtotal,
   });
 
   return (

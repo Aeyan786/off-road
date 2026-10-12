@@ -107,7 +107,7 @@ export default function ProductReviews({ productId, reviews, count, average }) {
           )}
         </div>
         <Button type="button" className="cursor-pointer rounded-sm px-4" onClick={() => setOpen((v) => !v)}>
-          {open ? "Close" : "Post a Review"}
+          {open ? "Close" : "Review"}
         </Button>
       </div>
 

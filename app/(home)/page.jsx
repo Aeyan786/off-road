@@ -26,9 +26,10 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const supabase = await createClient();
-  const [subcategories, products, recentBlogs] = await Promise.all([
+  const [subcategories, products, newArrivalRows, recentBlogs] = await Promise.all([
     safeQuery(getSecondLevelCategories(supabase), []),
     safeQuery(getProducts(supabase), []),
+    safeQuery(getProducts(supabase, { newArrivalsOnly: true, limit: 5 }), []),
     // Published only — getBlogs() leaves drafts out in the query.
     safeQuery(getBlogs(supabase, { limit: 6 }), []),
   ]);
@@ -36,9 +37,10 @@ export default async function HomePage() {
   const storefrontProducts = products.slice(0,9).map(toStorefrontProduct);
   // Real categories as tabs; skips products already shown in Our Products.
   const suggestionTabs = buildSuggestionTabs(products, {
-    exclude: new Set(products.map((p) => p.id)),
+    // Only skip what is already shown above this section.
+    exclude: new Set(storefrontProducts.map((item) => item.id)),
   }).map((tab) => ({ ...tab, products: tab.products.map(toStorefrontProduct) }));
-  const newArrival = products.filter((e)=>e.new_arrival === true && e.status == "active").slice(0,4).map(toStorefrontProduct);
+  const newArrival = newArrivalRows.map(toStorefrontProduct);
 
   return (
     <>

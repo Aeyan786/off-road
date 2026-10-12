@@ -11,26 +11,28 @@ import {
   Camera,
   Phone,
 } from 'lucide-react'
+import WarningBox, { WarningList } from '@/components/ui/warning-box'
 
 export const metadata = {
-  title: "Returns & Refunds",
+  title: "Returns & refunds",
   description: "Our returns window, refund process and what can be returned.",
 };
 
 const RefundsPage = () => {
   const sections = [
-    { id: 'standard-returns', title: 'Standard Returns' },
-    { id: 'cannot-return', title: 'Items That Cannot Be Returned' },
-    { id: 'custom-orders', title: 'Custom Built Orders' },
+    { id: 'standard-returns', title: 'Standard returns' },
+    { id: 'cannot-return', title: 'Items that cannot be returned' },
+    { id: 'custom-orders', title: 'Custom built orders' },
     { id: 'refunds', title: 'Refunds' },
-    { id: 'damaged-items', title: 'Damaged or Incorrect Items' },
-    { id: 'how-to-return', title: 'How to Initiate a Return' },
+    { id: 'damaged-items', title: 'Damaged or incorrect items' },
+    { id: 'how-to-return', title: 'How to initiate a return' },
   ]
 
   const eligibleConditions = [
     'In its original, unopened packaging',
     'In new and resalable condition, with no signs of use, installation, or modification',
     'Returned with all original parts, accessories, and documentation',
+    'To ensure your return is protected, we recommend insuring the shipment for its full value. Any damage or loss during the return shipment is the responsibility of you and your shipping carrier.',
   ]
 
   const nonReturnable = [
@@ -42,21 +44,21 @@ const RefundsPage = () => {
     {
       icon: <Phone className="h-6 w-6" />,
       step: '1',
-      title: 'Contact Us',
+      title: 'Contact us',
       description:
         "Please email or call our customer service team to request a 'Return Merchandise Authorization' (RMA) number.",
     },
     {
       icon: <Package className="h-6 w-6" />,
       step: '2',
-      title: 'Package Your Item',
+      title: 'Package your item',
       description:
         'Securely pack the item in its original box, including all parts and paperwork. Clearly write the RMA number on the outside of the shipping box.',
     },
     {
       icon: <Truck className="h-6 w-6" />,
       step: '3',
-      title: 'Ship It Back',
+      title: 'Ship it back',
       description:
         'Send the package to the address provided by our team. We recommend using a trackable and insured shipping method.',
     },
@@ -111,7 +113,7 @@ const RefundsPage = () => {
             {/* STANDARD RETURNS */}
             <div id="standard-returns" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Standard Returns
+                Standard returns
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 We are happy to accept returns on most new, unused items
@@ -120,51 +122,31 @@ const RefundsPage = () => {
               </p>
 
               <h3 className="mt-8 text-lg font-semibold text-gray-900">
-                Conditions for Standard Returns
+                Conditions for standard returns
               </h3>
-              <p className="mt-3 text-gray-600 leading-relaxed">
-                To be eligible for a full refund, your item must be:
-              </p>
-
-              <div className="mt-5 space-y-3">
-                {eligibleConditions.map((condition) => (
-                  <div key={condition} className="flex items-start gap-3">
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#1B9DDB]" />
-                    <span className="text-gray-600">{condition}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-6 flex items-start gap-3 rounded-lg bg-[#1B9DDB]/5 p-4">
-                <Info className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#1B9DDB]" />
-                <p className="text-sm text-gray-700">
-                  To ensure your return is protected, we recommend insuring
-                  the shipment for its full value. Any damage or loss during
-                  the return shipment is the responsibility of you and your
-                  shipping carrier.
-                </p>
-              </div>
+              <WarningBox
+                tone="warning"
+                title="To be eligible for a full refund, your item must be:"
+                className="mt-5"
+              >
+                <WarningList tone="warning" items={eligibleConditions} />
+              </WarningBox>
             </div>
 
             {/* ITEMS THAT CANNOT BE RETURNED */}
             <div id="cannot-return" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Items That Cannot Be Returned
+                Items that cannot be returned
               </h2>
-              <div className="mt-5 space-y-3">
-                {nonReturnable.map((item) => (
-                  <div key={item} className="flex items-start gap-3">
-                    <XCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-gray-400" />
-                    <span className="text-gray-600">{item}</span>
-                  </div>
-                ))}
-              </div>
+              <WarningBox tone="danger" className="mt-5">
+                <WarningList tone="danger" items={nonReturnable} />
+              </WarningBox>
             </div>
 
             {/* CUSTOM BUILT ORDERS */}
             <div id="custom-orders" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Custom Built Orders
+                Custom built orders
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 Products that are custom-built to your specific requirements
@@ -174,22 +156,15 @@ const RefundsPage = () => {
               <h3 className="mt-6 text-lg font-semibold text-gray-900">
                 Why?
               </h3>
-              <div className="mt-3 space-y-3">
-                <div className="flex items-start gap-3">
-                  <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#1B9DDB]" />
-                  <span className="text-gray-600">
-                    These items are made specifically for your vehicle and
-                    cannot be resold to other customers.
-                  </span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#1B9DDB]" />
-                  <span className="text-gray-600">
-                    Once production begins on a custom order, we are unable
-                    to cancel it with the manufacturer.
-                  </span>
-                </div>
-              </div>
+              <WarningBox tone="danger" className="mt-3">
+                <WarningList
+                  tone="danger"
+                  items={[
+                    'These items are made specifically for your vehicle and cannot be resold to other customers.',
+                    'Once production begins on a custom order; we are unable to cancel it with the manufacturer.',
+                  ]}
+                />
+              </WarningBox>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 We appreciate your understanding.
               </p>
@@ -239,7 +214,7 @@ const RefundsPage = () => {
             {/* DAMAGED OR INCORRECT ITEMS */}
             <div id="damaged-items" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Damaged or Incorrect Items
+                Damaged or incorrect items
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 We take great care in packaging and shipping your order. We
@@ -251,9 +226,8 @@ const RefundsPage = () => {
                 <Camera className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#1B9DDB]" />
                 <p className="text-sm text-gray-700">
                   If you receive a damaged or incorrect item, please contact
-                  our customer service team within{' '}
-                  <strong>48 hours of delivery</strong>. We will work with
-                  you to resolve the issue promptly.
+                  Support within 48 hours of delivery. We will work with you
+                  to resolve the issue promptly.
                 </p>
               </div>
             </div>
@@ -261,7 +235,7 @@ const RefundsPage = () => {
             {/* HOW TO INITIATE A RETURN */}
             <div id="how-to-return" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                How to Initiate a Return
+                How to initiate a return
               </h2>
 
               <div className="mt-8 space-y-6">
@@ -307,14 +281,14 @@ const RefundsPage = () => {
                   Ready to start a return?
                 </p>
                 <p className="mt-1 text-sm text-gray-600">
-                  Contact our support team at{' '}
+                  Contact our Support team at{' '}
                   <a
                     href="mailto:returns@offroadperformance.com"
                     className="font-medium text-[#1B9DDB] hover:underline"
                   >
                     returns@offroadperformance.com
                   </a>{' '}
-                  to request your RMA number.
+                  to request your RMA number
                 </p>
               </div>
             </div>

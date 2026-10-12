@@ -5,30 +5,29 @@ import {
   Package,
   MapPin,
   Mail,
-  AlertCircle,
   Info,
-  Zap,
 } from 'lucide-react'
+import WarningBox from '@/components/ui/warning-box'
 
 export const metadata = {
-  title: "Shipping & Delivery",
+  title: "Shipping policy",
   description: "Dispatch times, couriers and delivery estimates for your order.",
 };
 
 const ShippingPage = () => {
   const sections = [
-    { id: 'processing', title: 'Order Processing & Dispatch' },
-    { id: 'shipping-costs', title: 'Shipping Costs' },
-    { id: 'tracking', title: 'Order Tracking' },
-    { id: 'contact', title: 'When to Contact Us' },
-    { id: 'considerations', title: 'Important Considerations' },
-    { id: 'urgent', title: 'Urgent Orders' },
+    { id: 'processing', title: 'Order processing & dispatch times' },
+    { id: 'shipping-costs', title: 'Shipping costs' },
+    { id: 'tracking', title: 'Order tracking' },
+    { id: 'contact', title: 'When to contact us' },
+    { id: 'considerations', title: 'Important considerations' },
+    { id: 'urgent', title: 'Urgent orders' },
   ]
 
   const depots = [
     {
       icon: <MapPin className="h-5 w-5" />,
-      title: 'In Stock UK Items',
+      title: 'In stock UK items',
       rows: [
         { label: 'Ordered before 2:00pm', value: 'Dispatched same working day' },
         { label: 'Ordered after 2:00pm', value: 'Dispatched next working day' },
@@ -36,7 +35,7 @@ const ShippingPage = () => {
     },
     {
       icon: <Truck className="h-5 w-5" />,
-      title: 'European Depot',
+      title: 'European depot',
       rows: [
         { label: 'Transit to UK facility', value: '48–72 hours' },
         { label: 'Dispatch to you', value: 'Same day as arrival' },
@@ -44,7 +43,7 @@ const ShippingPage = () => {
     },
     {
       icon: <Package className="h-5 w-5" />,
-      title: 'North American Depot (US/Canada)',
+      title: 'North American depot (US/Canada)',
       rows: [
         { label: 'Transit to UK facility', value: '48–72 hours' },
         { label: 'Dispatch to you', value: 'Same day as arrival' },
@@ -57,9 +56,8 @@ const ShippingPage = () => {
       {/* HERO SECTION */}
       <section className="relative overflow-hidden bg-[#1B9DDB] py-16">
         <div className="mx-auto max-w-4xl px-4 text-center">
-     
           <h1 className="mt-6 text-4xl font-extrabold text-white sm:text-5xl">
-            Shipping Policy
+            Shipping policy
           </h1>
           <p className="mt-4 text-white/90">
             At Off Road Performance (ORP) we work hard to get your order to
@@ -101,7 +99,7 @@ const ShippingPage = () => {
             {/* PROCESSING & DISPATCH */}
             <div id="processing" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Order Processing & Dispatch Times
+                Order processing &amp; dispatch times
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 We dispatch orders on working days (Monday – Friday,
@@ -142,7 +140,7 @@ const ShippingPage = () => {
               </div>
 
               <h3 className="mt-10 text-lg font-semibold text-gray-900">
-                Custom Built or Made to Order Items
+                Custom built or made to order items
               </h3>
               <p className="mt-3 text-gray-600 leading-relaxed">
                 These products always have a manufacturing lead time. We
@@ -151,15 +149,14 @@ const ShippingPage = () => {
                 placed after business hours.
               </p>
 
-              <div className="mt-5 flex items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4">
-                <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-600" />
-                <p className="text-sm text-gray-700">
+              <WarningBox tone="warning" className="mt-5">
+                <p>
                   <strong>Please note:</strong> once your order has been
                   placed and paid it cannot be cancelled or refunded — this
                   is a custom-built product built to your specifications and
                   therefore of no use to anyone else.
                 </p>
-              </div>
+              </WarningBox>
 
               <div className="mt-6 flex items-start gap-3 rounded-lg bg-[#1B9DDB]/5 p-4">
                 <Info className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#1B9DDB]" />
@@ -173,7 +170,7 @@ const ShippingPage = () => {
             {/* SHIPPING COSTS */}
             <div id="shipping-costs" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Shipping Costs
+                Shipping costs
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 Shipping costs are calculated automatically at checkout. Once
@@ -186,25 +183,24 @@ const ShippingPage = () => {
             {/* ORDER TRACKING */}
             <div id="tracking" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Order Tracking
+                Order tracking
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 Once your order has been dispatched, you will receive a
                 shipping confirmation email containing your tracking
                 information. You can also find these details in the{' '}
-                <strong>"My Account"</strong> section of our website.
+                <strong>&quot;My Account&quot;</strong> section of our website.
               </p>
               <p className="mt-4 text-gray-600 leading-relaxed">
-                We use trusted global partners, including{' '}
-                <strong>UPS, DHL and Royal Mail</strong>, to deliver your
-                orders safely.
+                We use trusted global partners, including UPS, DHL &amp; Royal
+                Mail, to deliver your orders safely.
               </p>
             </div>
 
             {/* WHEN TO CONTACT US */}
             <div id="contact" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                When to Contact Us
+                When to contact us
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 We recommend checking your tracking information first for
@@ -221,37 +217,39 @@ const ShippingPage = () => {
             {/* IMPORTANT CONSIDERATIONS */}
             <div id="considerations" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Important Considerations
+                Important considerations
               </h2>
-              <div className="mt-5 flex items-start gap-3 rounded-lg bg-[#1B9DDB]/5 p-4">
-                <Clock className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#1B9DDB]" />
-                <p className="text-sm text-gray-700">
+
+              <WarningBox tone="warning" className="mt-5">
+                <p>
                   <strong>Estimates, not guarantees:</strong> all the
                   timelines provided are estimates based on typical
                   conditions. Whilst we strive to meet them, they are not
                   guaranteed.
                 </p>
-              </div>
+              </WarningBox>
             </div>
 
             {/* URGENT ORDERS */}
             <div id="urgent" className="mt-14 scroll-mt-24">
               <h2 className="text-2xl font-bold text-gray-900">
-                Urgent Orders
+                Urgent orders
               </h2>
-              <p className="mt-4 text-gray-600 leading-relaxed">
-                If you have a specific deadline, we strongly recommend
-                contacting us before placing your order. Our team can
-                confirm stock levels and provide a more accurate delivery
-                estimate to avoid any disappointment.
-              </p>
 
-              <div className="mt-5 flex items-start gap-3 rounded-lg border border-gray-200 p-4">
-                <p className="text-sm text-gray-700">
-                  Need it fast? Reach out to our team before ordering and
-                  we'll do everything we can to help you meet your deadline.
+              <WarningBox tone="warning" className="mt-5">
+                <p>
+                  If you have a specific deadline, we strongly recommend
+                  contacting us before placing your order. Our team can
+                  confirm stock levels and provide a more accurate delivery
+                  estimate to avoid any disappointment.
                 </p>
-              </div>
+              </WarningBox>
+
+              <WarningBox tone="danger" className="mt-4">
+                <p>
+                  {"Need it fast, reach out to our Support team before ordering and we'll do everything we can to help you meet your deadline."}
+                </p>
+              </WarningBox>
             </div>
 
             {/* CONTACT CALLOUT */}

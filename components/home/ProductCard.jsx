@@ -31,6 +31,7 @@ export default function ProductCard({ product, variant = "grid" }) {
     id,
     vendor,
     title,
+    fullTitle: fullTitleProp,
     price,
     image,
     model,
@@ -44,12 +45,16 @@ export default function ProductCard({ product, variant = "grid" }) {
   // out of stock.
   const outOfStock = stock !== undefined && stock <= 0;
 
+  // Mock/static data has no fullTitle, so compose it from whatever is given.
+  const fullTitle =
+    fullTitleProp ??
+    [manufacturer, model, year, title].filter(Boolean).join(" ");
 
   if (variant === "row") {
     return (
       <Link
         href={`/products/${id}`}
-        className="flex items-center gap-4 rounded-md bg-neutral-50 p-3 transition-colors hover:bg-neutral-100"
+        className="flex items-center gap-4 rounded-md p-3 transition-colors hover:bg-neutral-100"
       >
         <ProductImage
           image={image}
@@ -57,11 +62,11 @@ export default function ProductCard({ product, variant = "grid" }) {
           className="size-14 shrink-0 overflow-hidden rounded"
         />
         <div className="min-w-0 flex-1">
-          <p className="text-[11px] font-medium uppercase tracking-wide text-neutral-500">
+          <p className="text-[11px] font-medium tracking-wide text-neutral-500">
             {vendor}
           </p>
           <p className="truncate text-sm font-medium text-neutral-800">
-            {`${manufacturer} ${model} ${year} ${title}`}
+            {fullTitle}
           </p>
           {outOfStock ? (
             <p className="text-[11px] font-semibold uppercase tracking-wide text-destructive">
@@ -88,7 +93,7 @@ export default function ProductCard({ product, variant = "grid" }) {
   }
 
   return (
-    <div className="group bg-white">
+    <div className="group overflow-hidden rounded-lg  border border-gray-200  bg-white">
       <div className="relative aspect-square overflow-hidden bg-neutral-100">
         <Link href={`/products/${id}`}>
           <ProductImage image={image} alt={title} className="h-full w-full" />
@@ -101,14 +106,14 @@ export default function ProductCard({ product, variant = "grid" }) {
         <ProductCardActions productId={id} inStock={!outOfStock} />
       </div>
       <div className="space-y-3 px-3 pt-4 pb-2">
-        <p className="text-[11px] font-medium uppercase tracking-wide text-neutral-500">
+        <p className="text-[11px] font-medium tracking-wide text-neutral-500">
           {vendor}
         </p>
         <Link
           href={`/products/${id}`}
           className="block text-sm font-medium text-neutral-800 hover:text-brand"
         >
-          {`${manufacturer} ${model} ${year} ${title}`}
+          {fullTitle}
         </Link>
         {discount_price !== "£0.00" ? (
           <div className="flex gap-4 items-end">
