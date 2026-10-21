@@ -16,6 +16,10 @@ import {
   SELECTABLE_FILTER_KEYS,
   toValueList,
 } from "@/lib/catalog-filters";
+import { cascadeOptions, pruneSelection } from "@/lib/catalog-cascade";
+
+// The levels a parent change can invalidate.
+const CASCADE_KEYS = ["manufacturer", "model", "year"];
 import { cn } from "@/lib/utils";
 
 /** { supplier: [...], manufacturer: [...], ... } from the URL. */
@@ -338,20 +342,29 @@ export default function ProductFilters({
   }
 
   /**
-   * Replaces every value of a checkbox filter with `values`.
+   * Replaces every value of a checkbox filter with `values`, then unticks
+   * any manufacturer, model or year that no longer belongs to the levels
+   * above it — in the same navigation, so the results never briefly go
+   * empty because of a hidden mismatch.
    */
   function setValues(name, values) {
-    setSelection((previous) => ({
-      ...previous,
-      [name]: values,
-    }));
-
     const params = pendingParams.current;
 
-    params.delete(name);
+    // Read the latest selection from the pending params rather than state,
+    // so rapid clicks build on each other instead of overwriting.
+    const current = readSelection(params);
+    const changed = { ...current, [name]: values };
+    // Without a tree (facets failed to load) nothing can be judged stale,
+    // so selections are left exactly as the customer made them.
+    const next = hasTree ? pruneSelection(facets.tree, changed) : changed;
 
-    for (const value of values) {
-      params.append(name, value);
+    setSelection((previous) => ({ ...previous, ...next }));
+
+    for (const key of new Set([name, ...CASCADE_KEYS])) {
+      params.delete(key);
+      for (const value of next[key] ?? []) {
+        params.append(key, value);
+      }
     }
 
     navigate();
@@ -440,6 +453,12 @@ export default function ProductFilters({
 
   const searchTerm = searchParams.get("q")?.trim();
 
+  // Each list narrowed by the levels above it; see lib/catalog-cascade.js.
+  const hasTree = facets.tree?.rows?.length > 0;
+  const options = hasTree
+    ? cascadeOptions(facets.tree, selection)
+    : { manufacturers: facets.manufacturers, models: facets.models, years: facets.years };
+
   // Selections below the ticked main category get their own chips.
   const subcategories = activeCategories.filter((c) => c.slug !== c.rootSlug);
 
@@ -455,7 +474,7 @@ export default function ProductFilters({
   ].some((key) => searchParams.get(key));
 
   return (
-    <aside className="max-h-200 space-y-5 px-5 overflow-y-auto">
+    <aside className="space-y-5 px-5 pb-25 lg:max-h-[calc(100vh-12.5rem)] lg:overflow-y-auto lg:overscroll-contain">
       {/* HEADER */}
       <div className="flex items-center justify-between">
         <h2 className="flex items-center gap-2 text-sm font-bold text-neutral-900">
@@ -598,7 +617,7 @@ export default function ProductFilters({
       <FilterCheckboxGroup
         name="manufacturer"
         label="Manufacturer"
-        options={facets.manufacturers}
+        options={options.manufacturers}
         selected={selection.manufacturer}
         onToggle={(value, checked) =>
           toggle("manufacturer", value, checked)
@@ -610,7 +629,7 @@ export default function ProductFilters({
       <FilterCheckboxGroup
         name="model"
         label="Model"
-        options={facets.models}
+        options={options.models}
         selected={selection.model}
         onToggle={(value, checked) =>
           toggle("model", value, checked)
@@ -622,7 +641,7 @@ export default function ProductFilters({
       <FilterCheckboxGroup
         name="year"
         label="Year"
-        options={facets.years}
+        options={options.years}
         selected={selection.year}
         onToggle={(value, checked) =>
           toggle("year", value, checked)

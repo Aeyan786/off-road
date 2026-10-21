@@ -19,7 +19,7 @@ const LINK_COLUMNS = [
       { label: "Privacy", href: "/privacy" },
       { label: "Terms", href: "/terms" },
       { label: "Service", href: "/service" },
-      { label: "Support", href: "/contact" },
+      { label: "Make an inquiry", href: "/contact" },
     ],
   },
   {
