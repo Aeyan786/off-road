@@ -15,6 +15,8 @@ import ProductGrid from "@/components/home/ProductGrid";
 import ProductActions from "@/components/cart/ProductActions";
 import ProductReviews from "@/components/product/ProductReviews";
 import { getProductReviews } from "@/lib/data/reviews";
+import { getUnitsSoldLast24h } from "@/lib/data/productActivity";
+import ProductActivityToast from "@/components/product/ProductActivityToast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const dynamic = "force-dynamic";
@@ -82,6 +84,9 @@ export default async function ProductDetailsPage({ params }) {
     }),
     []
   );
+
+  // A failure here only hides the toast's sales line — never the page.
+  const soldLast24h = await safeQuery(getUnitsSoldLast24h(product.id), 0);
 
   const reviews = await safeQuery(getProductReviews(supabase, product.id), {
     reviews: [],
@@ -259,6 +264,12 @@ export default async function ProductDetailsPage({ params }) {
           </TabsContent>
         </Tabs>
       </div>
+
+      <ProductActivityToast
+        key={product.id}
+        productId={product.id}
+        initialSoldLast24h={soldLast24h}
+      />
 
       {/* REVIEWS */}
       <ProductReviews

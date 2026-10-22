@@ -59,8 +59,8 @@ const CookiesPage = () => {
           {/* TABLE OF CONTENTS */}
           <aside className="lg:col-span-1">
             <div className="sticky top-44">
-              <h3 className="text-sm font-bold uppercase tracking-wider text-gray-500">
-                On This Page
+              <h3 className="text-sm font-bold  tracking-wider text-gray-500">
+                On this page
               </h3>
               <nav className="mt-4 space-y-3 border-l-2 border-gray-100">
                 {sections.map((section) => (

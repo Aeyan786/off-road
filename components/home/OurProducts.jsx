@@ -19,22 +19,20 @@ export default function OurProducts({ products = [] }) {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
           {/* Get New Plans */}
           <div className="flex flex-col justify-center gap-4 bg-white p-8 lg:col-span-2">
-            <p className="text-xs font-semibold uppercase tracking-wide text-brand">
-              The #1 supplier of car parts
+            <p className="text-xs font-semibold tracking-wide text-brand">
+              Aftermarket parts specialists
             </p>
 
             <h3 className="text-2xl font-bold leading-snug text-neutral-900">
-              Providing high-quality car parts for any brands
+              Distributors of high-quality parts to the powersports industry
             </h3>
 
             <p className="text-sm leading-relaxed text-neutral-500">
-              We provide high-quality car parts for all major brands, ensuring
-              reliable performance, durability, and a perfect fit for every
-              vehicle.
+              Where marquee brands meet worldclass distribution.
             </p>
 
             <ButtonLink href="/contact" className="w-fit">
-              Get New Plans
+              Support
             </ButtonLink>
           </div>
 

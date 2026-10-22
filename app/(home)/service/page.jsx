@@ -4,19 +4,10 @@ import Link from 'next/link'
 import {
   Wrench,
   Award,
-  Clock,
-  CheckCircle2,
-  AlertCircle,
-  Phone,
   Mail,
   Settings,
-  Gauge,
   ArrowRight,
-  Disc,
-  Cog,
-  CircleGauge,
   ShieldCheck,
-  PoundSterling,
   Banknote,
 } from 'lucide-react'
 import WarningBox from '@/components/ui/warning-box'
@@ -25,6 +16,11 @@ export const metadata = {
   title: "Workshop Services",
   description: "Cylinder re-plating, carburettor cleaning, vapour blasting, dyno tuning, rebuilds and repairs.",
 };
+
+// Every service on this page uses the same icon, so the treatment stays
+// uniform; change it here and every card, heading and list item follows.
+// (The "Why choose us" metrics keep their own icons — they aren't services.)
+const ServiceIcon = Wrench
 
 const ServicePage = () => {
   const otherServices = [
@@ -49,7 +45,6 @@ const ServicePage = () => {
 
   const featuredServices = [
     {
-      icon: <Disc className="h-7 w-7" />,
       title: 'Top end rebuilds',
       description: 'Cylinder re-plating, boring & repairs',
       image:
@@ -57,7 +52,6 @@ const ServicePage = () => {
       href: '#top-end-rebuilds',
     },
     {
-      icon: <Gauge className="h-7 w-7" />,
       title: 'Carburettor Cleaning',
       description: 'Ultrasonic cleaning & rebuilds',
       image:
@@ -65,7 +59,6 @@ const ServicePage = () => {
       href: '#carb-cleaning',
     },
     {
-      icon: <Cog className="h-7 w-7" />,
       title: 'Vapour blasting',
       description: 'Restore parts to a satin finish',
       image:
@@ -73,7 +66,6 @@ const ServicePage = () => {
       href: '#vapour-blasting',
     },
     {
-      icon: <CircleGauge className="h-7 w-7" />,
       title: 'Dyno Tuning',
       description: 'Precision tuning & diagnostics',
       image:
@@ -89,7 +81,6 @@ const ServicePage = () => {
         'A clean, straightforward re-plating service for cylinders in good base condition.',
       single: '£136.00',
       twin: '£187.57',
-      icon: <Disc className="h-6 w-6" />,
     },
     {
       title: 'Repair & re-plate',
@@ -100,7 +91,6 @@ const ServicePage = () => {
       twinNote: 'repair on one',
       twinAlt: '£258.40',
       twinAltNote: 'repair on two',
-      icon: <Wrench className="h-6 w-6" />,
     },
     {
       title: 'Bore out & re-plate',
@@ -109,7 +99,6 @@ const ServicePage = () => {
       single: '£182.00',
       twin: '£258.40',
       twinNote: 'bore on both',
-      icon: <Gauge className="h-6 w-6" />,
     },
     {
       title: 'Repair Detonation & Re-plate',
@@ -120,7 +109,6 @@ const ServicePage = () => {
       twinNote: 'repair on one',
       twinAlt: '£299.00',
       twinAltNote: 'repair on two',
-      icon: <AlertCircle className="h-6 w-6" />,
     },
     {
       title: 'Rebuild Skirt & Re-plate',
@@ -131,7 +119,6 @@ const ServicePage = () => {
       twinNote: 'repair on one',
       twinAlt: '£299.00',
       twinAltNote: 'repair on two',
-      icon: <Settings className="h-6 w-6" />,
     },
   ]
 
@@ -300,7 +287,7 @@ const ServicePage = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-3 left-3 flex h-10 w-10 items-center justify-center rounded-lg bg-[#1B9DDB] text-white transition group-hover:scale-110">
-                  {service.icon}
+                  <ServiceIcon className="h-7 w-7" />
                 </div>
               </div>
               <div className="p-5">
@@ -437,7 +424,7 @@ const ServicePage = () => {
         className="mx-auto max-w-7xl px-4 py-16 scroll-mt-24"
       >
         <div className="flex items-center gap-3">
-          <Gauge className="h-7 w-7 text-[#1B9DDB]" />
+          <ServiceIcon className="h-7 w-7 text-[#1B9DDB]" />
           <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
             Top end rebuilds
           </h2>
@@ -456,7 +443,7 @@ const ServicePage = () => {
               className="group rounded-2xl border border-gray-200 bg-white p-6 transition duration-300 hover:-translate-y-1 hover:border-[#1B9DDB] hover:shadow-xl"
             >
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#1B9DDB]/10 text-[#1B9DDB] transition group-hover:bg-[#1B9DDB] group-hover:text-white">
-                {service.icon}
+                <ServiceIcon className="h-6 w-6" />
               </div>
               <h3 className="mt-5 text-lg font-bold text-gray-900">
                 {service.title}
@@ -521,7 +508,7 @@ const ServicePage = () => {
       >
         <div className="mx-auto max-w-7xl px-4">
           <div className="flex items-center gap-3">
-            <Gauge className="h-7 w-7 text-[#1B9DDB]" />
+            <ServiceIcon className="h-7 w-7 text-[#1B9DDB]" />
             <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
               Ultrasonic carburettor cleaning
             </h2>
@@ -540,7 +527,7 @@ const ServicePage = () => {
                 className="group flex flex-col rounded-2xl border border-gray-200 bg-white p-6 text-center transition duration-300 hover:-translate-y-1 hover:border-[#1B9DDB] hover:shadow-xl"
               >
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#1B9DDB]/10 text-[#1B9DDB] transition group-hover:bg-[#1B9DDB] group-hover:text-white">
-                  <PoundSterling className="h-6 w-6" />
+                  <ServiceIcon className="h-6 w-6" />
                 </div>
                 <h3 className="mt-4 font-bold text-gray-900">
                   {item.label}
@@ -566,7 +553,7 @@ const ServicePage = () => {
         className="mx-auto max-w-7xl px-4 py-16 scroll-mt-24"
       >
         <div className="flex items-center gap-3">
-          <Cog className="h-7 w-7 text-[#1B9DDB]" />
+          <ServiceIcon className="h-7 w-7 text-[#1B9DDB]" />
           <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
             Vapour blasting
           </h2>
@@ -601,7 +588,7 @@ const ServicePage = () => {
                     }`}
                   >
                     <div className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-[#1B9DDB]" />
+                      <ServiceIcon className="h-4 w-4 flex-shrink-0 text-[#1B9DDB]" />
                       <span className="text-sm text-gray-700">
                         {item.name}
                       </span>
@@ -635,7 +622,7 @@ const ServicePage = () => {
                 className="group flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-4 transition duration-300 hover:-translate-y-1 hover:border-[#1B9DDB] hover:shadow-md"
               >
                 <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-[#1B9DDB]/10 text-[#1B9DDB] transition group-hover:bg-[#1B9DDB] group-hover:text-white">
-                  <CheckCircle2 className="h-5 w-5" />
+                  <ServiceIcon className="h-5 w-5" />
                 </div>
                 <span className="text-sm font-medium text-gray-700">
                   {service}

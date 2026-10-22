@@ -79,8 +79,7 @@ export default function Footer() {
               Off Road<span className="text-brand"> Performance</span>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">
-              Quality auto and ATV parts backed by a team that knows off-road
-              performance inside and out.
+              Where marquee brands meet world-class distribution.
             </p>
             <div className="mt-6">
               <p className="text-sm font-medium text-white/80">Socials</p>

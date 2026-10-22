@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { getProducts, getProductFacets, NEW_ARRIVAL_DAYS } from "@/lib/data/products";
-import { getCategoryBranches, getTopLevelCategories } from "@/lib/data/categories";
+import { getCategoryBranches, getCategoryFilterTree } from "@/lib/data/categories";
 import { safeQuery } from "@/lib/data/safe";
 import ProductCatalog from "@/components/product/ProductCatalog";
 import { CatalogSkeleton } from "@/components/states/Skeletons";
@@ -41,7 +41,7 @@ async function NewArrivalsResults({ params }) {
 
   const [facets, categories, products] = await Promise.all([
     safeQuery(getProductFacets(supabase, { newArrivalsOnly: true }), EMPTY_FACETS),
-    safeQuery(getTopLevelCategories(supabase), []),
+    safeQuery(getCategoryFilterTree(supabase), []),
     safeQuery(
       getProducts(supabase, {
         ...readCatalogFilters(params),
@@ -57,8 +57,7 @@ async function NewArrivalsResults({ params }) {
       title="New arrivals"
       products={products}
       facets={facets}
-      categories={categories}
-      activeCategories={branches?.categories ?? []}
+      categoryTree={categories}
       basePath="/new-arrivals"
       countNoun={`added in the last ${NEW_ARRIVAL_DAYS} days`}
       emptyMessage={`No products have been added in the last ${NEW_ARRIVAL_DAYS} days.`}

@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
+import ButtonLink from '@/components/ui/button-link';
 
 export const metadata = {
   title: "About Us",
@@ -23,7 +24,7 @@ const AboutPage = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent" />
 
         <div className="relative z-10 w-full px-6 pb-16 sm:px-10 lg:px-16">
-          <p className="mb-6 text-xs font-semibold uppercase tracking-[0.3em] text-white/70">
+          <p className="mb-6 text-xs font-semibold tracking-[0.3em] text-white/70">
             Off Road Performance — ORP
           </p>
           <h1 className="max-w-4xl text-4xl font-black leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
@@ -38,8 +39,8 @@ const AboutPage = () => {
       <section className="border-b border-neutral-100 px-6 py-20 sm:px-10 lg:px-16">
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-12">
           <div className="lg:col-span-3">
-            <span className="text-sm font-semibold uppercase tracking-widest text-[#1B9DDB]">
-              01 — New Website
+            <span className="text-sm font-semibold tracking-widest text-[#1B9DDB]">
+              New website
             </span>
           </div>
           <div className="lg:col-span-9">
@@ -63,7 +64,7 @@ const AboutPage = () => {
         <div className="mx-auto max-w-5xl text-center">
           <p className="text-2xl font-bold leading-snug text-white sm:text-4xl lg:text-5xl">
             Where marquee brands meet{' '}
-            <span className="font-serif font-medium">
+            <span className=" font-bold">
               world-class distribution.
             </span>
           </p>
@@ -74,8 +75,8 @@ const AboutPage = () => {
       <section className="px-6 py-24 sm:px-10 lg:px-16">
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <span className="text-sm font-semibold uppercase tracking-widest text-[#1B9DDB]">
-              02 — Who We Are
+            <span className="text-sm font-semibold  tracking-widest text-[#1B9DDB]">
+              Who we are
             </span>
             <h2 className="mt-4 text-3xl font-black leading-tight tracking-tight sm:text-4xl">
               Your trusted destination for off-road excellence.
@@ -122,8 +123,8 @@ const AboutPage = () => {
             />
           </div>
           <div className="order-1 lg:order-2 lg:col-span-5">
-            <span className="text-sm font-semibold uppercase tracking-widest text-[#1B9DDB]">
-              03 — Our Standard
+            <span className="text-sm font-semibold tracking-widest text-[#1B9DDB]">
+               Our standard
             </span>
             <h2 className="mt-4 text-3xl font-black leading-tight tracking-tight sm:text-4xl">
               Built for every terrain.
@@ -148,8 +149,8 @@ const AboutPage = () => {
       {/* OUR MISSION */}
       <section className="border-t border-neutral-100 px-6 py-24 sm:px-10 lg:px-16">
         <div className="mx-auto max-w-4xl">
-          <span className="text-sm font-semibold uppercase tracking-widest text-[#1B9DDB]">
-            04 — Our Mission
+          <span className="text-sm font-semibold  tracking-widest text-[#1B9DDB]">
+            Our mission
           </span>
           <p className="mt-6 text-2xl font-medium leading-snug text-neutral-900 sm:text-3xl">
             We're committed to helping our customers build and upgrade their
@@ -171,8 +172,8 @@ const AboutPage = () => {
       {/* WHY CHOOSE US */}
       <section className="bg-neutral-900 px-6 py-24 sm:px-10 lg:px-16">
         <div className="mx-auto max-w-6xl">
-          <span className="text-sm font-semibold uppercase tracking-widest text-[#1B9DDB]">
-            05 — Why Off Road Performance
+          <span className="text-sm font-semibold  tracking-widest text-[#1B9DDB]">
+            Why off road performance
           </span>
           <h2 className="mt-4 max-w-3xl text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl">
             Reliability, passion, and a commitment to excellence.
@@ -191,7 +192,7 @@ const AboutPage = () => {
           </p>
 
           <div className="mt-14 grid grid-cols-1 divide-y divide-white/10 border-t border-white/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
-            {['Quality', 'Consistency', 'Customer Satisfaction'].map(
+            {['Quality', 'Consistency', 'Customer satisfaction'].map(
               (word) => (
                 <div key={word} className="py-6 sm:px-8 sm:py-8">
                   <p className="text-lg font-semibold text-white">{word}</p>
@@ -207,27 +208,26 @@ const AboutPage = () => {
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 border-t border-neutral-100 pt-16 sm:flex-row sm:items-end">
           <div>
             <h2 className="max-w-md text-3xl font-black leading-tight tracking-tight sm:text-4xl">
-              Ready to find your perfect part?
+             Looking for a specific part?
             </h2>
             <p className="mt-4 max-w-md leading-relaxed text-neutral-500">
-              Search our catalog by your vehicle's year, make, and model —
-              and get parts you know will fit, delivered fast.
+              You can search manufacturer, model & year by clicking the Shop button here or drop us a message by clicking Support 
             </p>
           </div>
           <div className="flex flex-shrink-0 flex-col gap-3 sm:flex-row">
-            <Link
+            <ButtonLink
               href="/products"
-              className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#1B9DDB] px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-[#1685bb]"
+              className="mt-2"
             >
               Shop Now
               <ArrowUpRight className="h-4 w-4" />
-            </Link>
-            <Link
+            </ButtonLink>
+            <ButtonLink
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 rounded-sm border border-neutral-300 px-7 py-3.5 text-sm font-semibold text-neutral-900 transition hover:border-neutral-900"
+              className="mt-2"
             >
-              Contact Us
-            </Link>
+              Support
+            </ButtonLink>
           </div>
         </div>
       </section>

@@ -35,7 +35,7 @@ const TermsPage = () => {
         <div className="mx-auto max-w-4xl px-4 text-center">
       
           <h1 className="mt-6 text-4xl font-extrabold text-white sm:text-5xl">
-            Terms of Service
+            Terms of service
           </h1>
           <p className="mt-4 text-white/90">
             Welcome to Off Road Performance (ORP)
@@ -53,7 +53,7 @@ const TermsPage = () => {
           <aside className="lg:col-span-1">
             <div className="sticky top-44 max-h-[calc(100vh-8rem)] overflow-y-auto">
               <h3 className="text-sm font-bold uppercase tracking-wider text-gray-500">
-                On This Page
+                On this page
               </h3>
               <nav className="mt-4 space-y-3 border-l-2 border-gray-100">
                 {sections.map((section) => (
@@ -122,7 +122,7 @@ const TermsPage = () => {
 
             {/* OUR RIGHTS */}
             <div id="our-rights" className="mt-14 scroll-mt-24">
-              <h2 className="text-2xl font-bold text-gray-900">Our Rights</h2>
+              <h2 className="text-2xl font-bold text-gray-900">Our rights</h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 We reserve the right to refuse service, terminate accounts,
                 remove or edit content, or cancel orders at our sole

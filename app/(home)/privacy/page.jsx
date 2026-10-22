@@ -23,7 +23,7 @@ const PrivacyPage = () => {
         <div className="mx-auto max-w-4xl px-4 text-center">
        
           <h1 className="mt-6 text-4xl font-extrabold text-white sm:text-5xl">
-            Privacy Policy
+            Privacy policy
           </h1>
           <p className="mt-4 text-white/90">
             Your privacy is important to us at Off Road Performance (ORP)
@@ -40,8 +40,8 @@ const PrivacyPage = () => {
           {/* TABLE OF CONTENTS - STICKY SIDEBAR */}
           <aside className="lg:col-span-1">
             <div className="sticky top-44">
-              <h3 className="text-sm font-bold uppercase tracking-wider text-gray-500">
-                On This Page
+              <h3 className="text-sm font-bold  tracking-wider text-gray-500">
+                On this page
               </h3>
               <nav className="mt-4 space-y-3 border-l-2 border-gray-100">
                 {sections.map((section) => (
@@ -252,10 +252,10 @@ const PrivacyPage = () => {
                 <p className="mt-1 text-sm text-gray-600">
                   Reach out to our support team at{' '}
                   <a
-                    href="mailto:privacy@offroadperformance.com"
+                    href="mailto:support@offroadperformance.com"
                     className="font-medium text-[#1B9DDB] hover:underline"
                   >
-                    privacy@offroadperformance.com
+                    support@offroadperformance.com
                   </a>
                 </p>
               </div>

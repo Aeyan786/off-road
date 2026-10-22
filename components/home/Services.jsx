@@ -44,7 +44,7 @@ export default function Services() {
     <section className="bg-neutral-900 text-white">
       <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 px-6 py-16 lg:grid-cols-[minmax(0,340px)_1fr] lg:items-center">
         <div className="space-y-5">
-          <p className="text-xs font-semibold uppercase tracking-wide text-brand">
+          <p className="text-xs font-semibold  tracking-wide text-brand">
             Service
           </p>
           <h2 className="text-3xl font-bold leading-tight sm:text-4xl">

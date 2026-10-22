@@ -24,7 +24,7 @@ export default function SuggestedForYou({ tabs = [] }) {
           <div>
       
             <h2 className="mt-2 text-3xl font-bold text-neutral-900 sm:text-4xl">
-              Suggested For You
+              Suggested for you
             </h2>
             <p className="mt-2 max-w-xl text-sm text-neutral-500">
               Popular parts from our most-stocked categories.

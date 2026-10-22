@@ -36,27 +36,29 @@ const ContactPage = () => {
   const contactInfo = [
     {
       icon: <Phone className="h-5 w-5" />,
-      title: "Call Us",
+      title: "Call",
       detail: "07984 720499",
       subDetail: "Mon–Fri, 8am–8pm",
     },
     {
       icon: <Mail className="h-5 w-5" />,
-      title: "Email Us",
+      title: "Mail",
       detail: "support@offroadperformance.com",
-      subDetail: "We reply within 24 hours",
+      subDetail: "Our support team will get back to you ASAP",
     },
     {
       icon: <MapPin className="h-5 w-5" />,
-      title: "Visit Us",
+      title: "Visit us",
       detail: "CH66",
       subDetail: "Appointment only",
     },
     {
       icon: <Clock className="h-5 w-5" />,
       title: "Business Hours",
-      detail: "Mon – Sat: 8am – 8pm",
-      subDetail: "Sunday: 10am – 4pm",
+      detail: "Mon – Fri: 9am – 5pm",
+      detail2: "Weekends – closed ",
+      subDetail:
+        "We usually respond to WhatsApp messages and Mail outside of working hours",
     },
   ];
 
@@ -88,15 +90,12 @@ const ContactPage = () => {
       {/* HERO */}
       <section className="border-b border-neutral-100 px-6 py-24 sm:px-10 lg:px-16">
         <div className="mx-auto max-w-6xl">
-          <p className="mb-6 text-xs font-semibold uppercase tracking-[0.3em] text-[#1B9DDB]">
-            Get In Touch
-          </p>
           <h1 className="max-w-3xl text-4xl font-black leading-[1.05] tracking-tight sm:text-6xl">
             Let's talk parts.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-neutral-500">
-            Questions about fitment, orders, or your build? Our team of
-            gearheads is ready to assist.
+            Do you have questions about your order, parts fitment or your build?
+            Our team of specialists are ready to assist.
           </p>
         </div>
       </section>
@@ -107,12 +106,17 @@ const ContactPage = () => {
           {contactInfo.map((info) => (
             <div key={info.title} className="py-8 sm:px-8 sm:py-10">
               <div className="text-[#1B9DDB]">{info.icon}</div>
-              <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-neutral-400">
+              <p className="mt-4 text-xs font-semibold  tracking-widest text-neutral-400">
                 {info.title}
               </p>
               <p className="mt-2 text-sm font-semibold text-neutral-900">
                 {info.detail}
               </p>
+              {info.detail2 && (
+                <p className="mt-2 text-sm font-semibold text-neutral-900">
+                  {info.detail2}
+                </p>
+              )}
               <p className="mt-1 text-sm text-neutral-500">{info.subDetail}</p>
             </div>
           ))}
@@ -124,7 +128,7 @@ const ContactPage = () => {
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-16 lg:grid-cols-12">
           {/* FORM */}
           <div className="lg:col-span-7">
-            <span className="text-sm font-semibold uppercase tracking-widest text-[#1B9DDB]">
+            <span className="text-sm font-semibold  tracking-widest text-[#1B9DDB]">
               Send a Message
             </span>
             <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
@@ -136,9 +140,9 @@ const ContactPage = () => {
                 <div>
                   <label
                     htmlFor="name"
-                    className="mb-2 block text-xs font-semibold uppercase tracking-widest text-neutral-500"
+                    className="mb-2 block text-xs font-semibold  tracking-widest text-neutral-500"
                   >
-                    Full Name
+                    Full name
                   </label>
                   <input
                     type="text"
@@ -154,9 +158,9 @@ const ContactPage = () => {
                 <div>
                   <label
                     htmlFor="email"
-                    className="mb-2 block text-xs font-semibold uppercase tracking-widest text-neutral-500"
+                    className="mb-2 block text-xs font-semibold  tracking-widest text-neutral-500"
                   >
-                    Email Address
+                    Mail
                   </label>
                   <input
                     type="email"
@@ -175,9 +179,9 @@ const ContactPage = () => {
                 <div>
                   <label
                     htmlFor="phone"
-                    className="mb-2 block text-xs font-semibold uppercase tracking-widest text-neutral-500"
+                    className="mb-2 block text-xs font-semibold  tracking-widest text-neutral-500"
                   >
-                    Phone Number
+                    Number
                   </label>
                   <input
                     type="tel"
@@ -192,7 +196,7 @@ const ContactPage = () => {
                 <div>
                   <label
                     htmlFor="subject"
-                    className="mb-2 block text-xs font-semibold uppercase tracking-widest text-neutral-500"
+                    className="mb-2 block text-xs font-semibold  tracking-widest text-neutral-500"
                   >
                     Subject
                   </label>
@@ -204,9 +208,9 @@ const ContactPage = () => {
                     className="w-full cursor-pointer border-b border-neutral-300 bg-transparent py-2.5 text-sm outline-none transition focus:border-[#1B9DDB]"
                   >
                     <option value="">Select a topic</option>
-                    <option value="order">Order Support</option>
-                    <option value="fitment">Fitment Question</option>
-                    <option value="returns">Returns & Warranty</option>
+                    <option value="order">Order support</option>
+                    <option value="fitment">Fitment question</option>
+                    <option value="returns">Returns</option>
                     <option value="other">Other</option>
                   </select>
                 </div>
@@ -215,7 +219,7 @@ const ContactPage = () => {
               <div>
                 <label
                   htmlFor="message"
-                  className="mb-2 block text-xs font-semibold uppercase tracking-widest text-neutral-500"
+                  className="mb-2 block text-xs font-semibold  tracking-widest text-neutral-500"
                 >
                   Message
                 </label>
@@ -226,16 +230,16 @@ const ContactPage = () => {
                   required
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="Tell us about your vehicle, part number, or question..."
+                  placeholder="Type your message here..."
                   className="w-full resize-none border-b border-neutral-300 bg-transparent py-2.5 text-sm outline-none transition focus:border-[#1B9DDB]"
                 />
               </div>
 
               <button
                 type="submit"
-                className="inline-flex cursor-pointer items-center gap-2 rounded-sm bg-[#1B9DDB] px-8 py-4 text-sm font-semibold text-white transition hover:bg-[#1685bb]"
+                className="inline-flex cursor-pointer items-center gap-2 rounded-sm bg-[#1B9DDB] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1685bb]"
               >
-                Send Message
+                Support 
                 <ArrowUpRight className="h-4 w-4" />
               </button>
             </form>
@@ -244,8 +248,8 @@ const ContactPage = () => {
           {/* ADDRESS / SOCIAL SIDE */}
           <div className="lg:col-span-5 lg:pl-6">
             <div className="border-t border-neutral-900 pt-8">
-              <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400">
-                Our Location
+              <p className="text-xs font-semibold  tracking-widest text-neutral-400">
+                Our location
               </p>
               <p className="mt-3 text-lg font-semibold leading-snug text-neutral-900">
                 CH66
@@ -255,7 +259,7 @@ const ContactPage = () => {
             </div>
 
             <div className="mt-10 border-t border-neutral-100 pt-8">
-              <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400">
+              <p className="text-xs font-semibold  tracking-widest text-neutral-400">
                 Socials
               </p>
               <div className="mt-4 flex gap-4">
@@ -275,12 +279,12 @@ const ContactPage = () => {
             </div>
 
             <div className="mt-10 border-t border-neutral-100 pt-8">
-              <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400">
-                Response Time
+              <p className="text-xs font-semibold  tracking-widest text-neutral-400">
+                Responding to messages
               </p>
               <p className="mt-3 text-sm leading-relaxed text-neutral-600">
-                Most enquiries are answered within 24 hours. For urgent fitment
-                or order questions, calling us directly is fastest.
+                Most enquiries are answered within 24 hours, if you have an
+                issue, calling or WhatsApp messaging us directly is fastest.
               </p>
             </div>
           </div>
@@ -290,7 +294,7 @@ const ContactPage = () => {
       {/* FAQ SECTION */}
       <section className="border-t border-neutral-100 px-6 py-24 sm:px-10 lg:px-16">
         <div className="mx-auto max-w-4xl">
-          <span className="text-sm font-semibold uppercase tracking-widest text-[#1B9DDB]">
+          <span className="text-sm font-semibold  tracking-widest text-[#1B9DDB]">
             FAQs
           </span>
           <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">

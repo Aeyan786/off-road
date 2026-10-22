@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   ChevronDown,
@@ -17,6 +17,8 @@ import {
   toValueList,
 } from "@/lib/catalog-filters";
 import { cascadeOptions, pruneSelection } from "@/lib/catalog-cascade";
+import { indexCategoryTree, toggleCategory } from "@/lib/category-selection";
+import CategoryTreeFilter from "@/components/product/CategoryTreeFilter";
 
 // The levels a parent change can invalidate.
 const CASCADE_KEYS = ["manufacturer", "model", "year"];
@@ -39,10 +41,11 @@ function readSelection(searchParams) {
 function FilterCheckboxGroup({
   name,
   label,
-  options,
+  options = [],
   selected,
   onToggle,
   onClear,
+  children,
 }) {
   const [open, setOpen] = useState(false);
 
@@ -125,7 +128,10 @@ function FilterCheckboxGroup({
       >
         <div className="min-h-0 overflow-hidden">
           <div className="space-y-0.5 bg-white p-1 pt-2">
-            {values.length === 0 ? (
+            {/* Custom content (the category drill-down) replaces the flat list. */}
+            {children ? (
+              children
+            ) : values.length === 0 ? (
               <p className="px-1.5 py-1 text-xs text-neutral-400">
                 No options
               </p>
@@ -263,12 +269,14 @@ function PriceRangeFilter({
  */
 export default function ProductFilters({
   facets,
-  categories = [],
-  activeCategories = [],
+  categoryTree = [],
   basePath = "/products",
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  // Parent/child lookups for the category drill-down, built once per tree.
+  const categoryIndex = useMemo(() => indexCategoryTree(categoryTree), [categoryTree]);
 
   const [minPrice, setMinPrice] = useState(
     searchParams.get("min") ?? ""
@@ -383,46 +391,14 @@ export default function ProductFilters({
     );
   }
 
-  /** Top-level slug a selected category belongs to (itself when top-level). */
-  function rootOf(slug) {
-    return activeCategories.find((c) => c.slug === slug)?.rootSlug ?? slug;
-  }
-
   /*
-   * A main category counts as ticked when it is selected itself or when
-   * something beneath it is — so a subcategory deep-link still shows which
-   * main category is being filtered.
+   * Category ticks narrow as the shopper goes deeper (see
+   * lib/category-selection.js); the cascade below then drops any make,
+   * model or year the new category scope no longer contains.
    */
-  function isCategoryChecked(rootSlug) {
-    return selection.category.some(
-      (slug) => slug === rootSlug || rootOf(slug) === rootSlug
-    );
-  }
-
-  /*
-   * Unticking a main category also drops any deeper selection beneath it,
-   * so the ticked boxes and the results can never disagree.
-   */
-  function toggleCategory(rootSlug, checked) {
+  function onCategoryToggle(slug, checked) {
     const current = toValueList(pendingParams.current.getAll("category"));
-
-    setValues(
-      "category",
-      checked
-        ? [...new Set([...current, rootSlug])]
-        : current.filter(
-            (slug) => slug !== rootSlug && rootOf(slug) !== rootSlug
-          )
-    );
-  }
-
-  function clearCategory(slug) {
-    setValues(
-      "category",
-      toValueList(pendingParams.current.getAll("category")).filter(
-        (value) => value !== slug
-      )
-    );
+    setValues("category", toggleCategory(categoryIndex, current, slug, checked));
   }
 
   /*
@@ -453,14 +429,13 @@ export default function ProductFilters({
 
   const searchTerm = searchParams.get("q")?.trim();
 
+
   // Each list narrowed by the levels above it; see lib/catalog-cascade.js.
   const hasTree = facets.tree?.rows?.length > 0;
   const options = hasTree
     ? cascadeOptions(facets.tree, selection)
     : { manufacturers: facets.manufacturers, models: facets.models, years: facets.years };
 
-  // Selections below the ticked main category get their own chips.
-  const subcategories = activeCategories.filter((c) => c.slug !== c.rootSlug);
 
   const hasFilters = [
     "q",
@@ -537,49 +512,22 @@ export default function ProductFilters({
         </div>
       ) : null}
 
-      {/* CATEGORY — top-level categories only; selecting one also matches
-          everything filed beneath it (the branch is resolved server-side). */}
+      {/* CATEGORY — main categories, then the ticked one's subcategories,
+          each opening its own sub-subcategories. Every level matches its
+          whole branch (resolved server-side). */}
       <FilterCheckboxGroup
         name="category"
         label="Category"
-        options={categories.map((category) => ({
-          value: category.slug,
-          label: category.name,
-        }))}
-        selected={categories
-          .map((category) => category.slug)
-          .filter((slug) => isCategoryChecked(slug))}
-        onToggle={(slug, checked) => toggleCategory(slug, checked)}
+        selected={selection.category}
         onClear={() => setValues("category", [])}
-      />
-
-      {/* A selection deeper than the ticked box — e.g. a subcategory the
-          mega menu linked to — shown so the rail never understates it. */}
-      {subcategories.length > 0 ? (
-        <div className="space-y-1.5">
-          <span className="text-xs font-medium text-neutral-600">
-            Subcategory
-          </span>
-
-          {subcategories.map((category) => (
-            <span
-              key={category.slug}
-              className="flex items-center justify-between gap-2 rounded-sm border bg-white px-2 py-1.5 text-sm text-neutral-800"
-            >
-              <span className="truncate">{category.name}</span>
-
-              <button
-                type="button"
-                onClick={() => clearCategory(category.slug)}
-                aria-label={`Clear ${category.name} subcategory filter`}
-                className="cursor-pointer text-neutral-400 hover:text-neutral-700"
-              >
-                <X className="size-3.5" />
-              </button>
-            </span>
-          ))}
-        </div>
-      ) : null}
+      >
+        <CategoryTreeFilter
+          tree={categoryTree}
+          index={categoryIndex}
+          selected={selection.category}
+          onToggle={onCategoryToggle}
+        />
+      </FilterCheckboxGroup>
 
       {/* SUPPLIER — chosen from the header's vendor dropdown, not here */}
       {selection.supplier.length > 0 ? (

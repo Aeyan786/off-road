@@ -12,7 +12,7 @@ export default function ShopByCategory({ categories = [] }) {
   return (
     <section className="mx-auto max-w-[1400px] px-6 py-16 text-center">
       <h2 className="text-3xl font-bold text-neutral-900 sm:text-4xl">
-        Shop By Category
+        Shop by category
       </h2>
       <p className="mt-3 text-sm text-neutral-500">
         Browse parts and accessories organized by category.
