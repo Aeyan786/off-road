@@ -71,11 +71,11 @@ const RefundsPage = () => {
         <div className="mx-auto max-w-4xl px-4 text-center">
    
           <h1 className="mt-6 text-4xl font-extrabold text-white sm:text-5xl">
-            Returns & Refunds
+            Returns & refunds
           </h1>
           <p className="mt-4 text-white/90">
             We want you to be completely satisfied with your purchase from
-            Off Road Performance (ORP)
+            Off road performance (ORP)
           </p>
         </div>
       </section>

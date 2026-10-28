@@ -44,10 +44,10 @@ const CookiesPage = () => {
         <div className="mx-auto max-w-4xl px-4 text-center">
         
           <h1 className="mt-6 text-4xl font-extrabold text-white sm:text-5xl">
-            Cookie Policy
+            Cookie policy
           </h1>
           <p className="mt-4 text-white/90">
-            At Off Road Performance (ORP) we value your privacy and want to
+            At Off road performance (ORP) we value your privacy and want to
             make your shopping experience smooth and secure.
           </p>
         </div>
