@@ -25,7 +25,7 @@ const AboutPage = () => {
 
         <div className="relative z-10 w-full px-6 pb-16 sm:px-10 lg:px-16">
           <p className="mb-6 text-xs font-semibold tracking-[0.3em] text-white/70">
-            Off Road Performance — ORP
+            Off road performance — ORP
           </p>
           <h1 className="max-w-4xl text-4xl font-black leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
             Building world-class rides
@@ -92,13 +92,13 @@ const AboutPage = () => {
               parts and accessories designed to enhance your ride, give you
               ultimate control and reliable performance.
             </p>
-            <Link
+           <ButtonLink
               href="/products"
-              className="mt-8 inline-flex items-center gap-2 border-b-2 border-neutral-900 pb-1 text-sm font-semibold text-neutral-900 transition hover:border-[#1B9DDB] hover:text-[#1B9DDB]"
+              className="mt-9"
             >
-              Explore the catalog
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+              Shop now
+              <ArrowUpRight className="h-4 w-4" />
+            </ButtonLink>
           </div>
           <div className="relative h-80 w-full overflow-hidden rounded-sm sm:h-[28rem] lg:col-span-7">
             <Image
@@ -219,7 +219,7 @@ const AboutPage = () => {
               href="/products"
               className="mt-2"
             >
-              Shop Now
+              Shop now
               <ArrowUpRight className="h-4 w-4" />
             </ButtonLink>
             <ButtonLink
