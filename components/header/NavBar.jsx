@@ -47,7 +47,7 @@ export default function NavBar({ categories = [] }) {
             href="/contact"
             className="rounded-sm bg-white px-4 py-1.5 text-sm font-semibold text-brand hover:bg-white/90"
           >
-            Make an Inquiry
+            Support
           </Link>
         </div>
       </div>

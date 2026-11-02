@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { getSecondLevelCategories, withCategoryImages } from "@/lib/data/categories";
+import { getCategoryTree, withCategoryImages } from "@/lib/data/categories";
 import { getProducts, toStorefrontProduct } from "@/lib/data/products";
 import { getBlogs } from "@/lib/data/blogs";
 import { safeQuery } from "@/lib/data/safe";
@@ -26,8 +26,10 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const supabase = await createClient();
-  const [subcategories, products, newArrivalRows, recentBlogs] = await Promise.all([
-    safeQuery(getSecondLevelCategories(supabase), []),
+  const [topCategories, products, newArrivalRows, recentBlogs] = await Promise.all([
+    // Top-level categories, with their children so images can come from
+    // anywhere in each branch.
+    safeQuery(getCategoryTree(supabase), []),
     safeQuery(getProducts(supabase), []),
     safeQuery(getProducts(supabase, { newArrivalsOnly: true, limit: 5 }), []),
     // Published only — getBlogs() leaves drafts out in the query.
@@ -45,7 +47,7 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
-      <ShopByCategory categories={withCategoryImages(subcategories, products)} />
+      <ShopByCategory categories={withCategoryImages(topCategories, products)} />
       <OurProducts products={storefrontProducts} />
       <Services />
       <SuggestedForYou tabs={suggestionTabs} />

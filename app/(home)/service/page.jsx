@@ -1,15 +1,12 @@
 import React from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import {
   Wrench,
-  Award,
   Mail,
-  Settings,
   ArrowRight,
   ShieldCheck,
-  Banknote,
 } from 'lucide-react'
+import ButtonLink from '@/components/ui/button-link'
 import WarningBox from '@/components/ui/warning-box'
 
 export const metadata = {
@@ -21,6 +18,9 @@ export const metadata = {
 // uniform; change it here and every card, heading and list item follows.
 // (The "Why choose us" metrics keep their own icons — they aren't services.)
 const ServiceIcon = Wrench
+
+// The "Why choose us" points share one icon of their own, the same way.
+const ReasonIcon = ShieldCheck
 
 const ServicePage = () => {
   const otherServices = [
@@ -194,22 +194,18 @@ const ServicePage = () => {
 
   const whyChooseUs = [
     {
-      icon: <Award className="h-6 w-6" />,
       title: '40+ years experience',
       description: 'Decades of combined expertise from our lead technicians.',
     },
     {
-      icon: <Settings className="h-6 w-6" />,
       title: '4,000 sq ft facility',
       description: 'A dedicated service centre built for powersports.',
     },
     {
-      icon: <Banknote/>,
       title: '10-20% savings',
       description: 'Better pricing than most main dealer workshops.',
     },
     {
-      icon: <ShieldCheck className="h-6 w-6" />,
       title: 'Free estimates',
       description: 'No obligation quotes, usually same or next day.',
     },
@@ -235,12 +231,9 @@ const ServicePage = () => {
               Offering decades of experience; building reliable performance to
               suit your needs
             </p>
-            <Link
-              href="/contact"
-              className="mt-8 inline-flex items-center gap-2 rounded-lg bg-[#1B9DDB] px-8 py-3.5 text-sm font-semibold tracking-wide text-white transition hover:bg-[#1685bb]"
-            >
+            <ButtonLink href="/contact" className="mt-8 w-fit cursor-pointer">
               Support
-            </Link>
+            </ButtonLink>
           </div>
 
           <div className="relative h-72 w-full sm:h-96 md:h-[420px]">
@@ -330,7 +323,7 @@ const ServicePage = () => {
               {whyChooseUs.map((item) => (
                 <div key={item.title} className="flex items-start gap-4">
                   <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-[#1B9DDB]/10 text-[#1B9DDB]">
-                    {item.icon}
+                    <ReasonIcon className="h-6 w-6" />
                   </div>
                   <div>
                     <p className="font-bold text-gray-900">{item.title}</p>

@@ -108,7 +108,7 @@ export default function RecentUpdates({ blogs = [] }) {
             <BlogCard
               key={blog.id}
               blog={blog}
-              className="w-full shrink-0 snap-start sm:w-[calc((100%-2rem)/2)] lg:w-[calc((100%-4rem)/3)]"
+              className="w-full shrink-0 snap-start sm:w-[calc((100%-2rem)/2)] lg:w-[calc((100%-6rem)/4)]"
             />
           ))}
         </div>

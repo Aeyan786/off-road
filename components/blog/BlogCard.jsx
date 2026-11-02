@@ -18,10 +18,10 @@ export default function BlogCard({ blog, className }) {
   const date = blog.published_at ? new Date(blog.published_at) : null;
 
   return (
-    <article className={`group flex flex-col ${className ?? ""}`}>
+    <article className={`group flex flex-col border  rounded-lg ${className ?? ""}`}>
       <Link
         href={href}
-        className="relative block aspect-[4/3] overflow-hidden bg-neutral-200"
+        className="relative block aspect-[4/3]  rounded-t-lg overflow-hidden bg-neutral-200"
         tabIndex={-1}
         aria-hidden="true"
       >
@@ -31,7 +31,7 @@ export default function BlogCard({ blog, className }) {
             alt=""
             fill
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+            className="object-cover rounded-t-lg transition-transform duration-500 ease-out"
           />
         ) : (
           <ImagePlaceholder className="h-full w-full" />
@@ -45,7 +45,7 @@ export default function BlogCard({ blog, className }) {
         ) : null}
       </Link>
 
-      <div className="mt-4 flex flex-1 flex-col gap-2">
+      <div className="mt-4 flex flex-1 flex-col gap-2 p-5">
         <h3 className="font-semibold text-neutral-900">
           <Link href={href} className="transition-colors hover:text-brand">
             {blog.title}

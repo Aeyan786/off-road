@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ChevronDown, ChevronRight, Mail, Menu, Smartphone } from "lucide-react";
+import { ChevronDown, Mail, Menu, Smartphone } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { SOCIAL_LINKS } from "@/components/social-links";
-import { MAX_NAV_SUBCATEGORIES, NAV_LINKS } from "@/components/header/nav-links";
+import { MAX_NAV_CATEGORIES, NAV_LINKS } from "@/components/header/nav-links";
 import { cn } from "@/lib/utils";
 
 const ROW_CLASS =
@@ -39,105 +39,22 @@ function Section({ label, children }) {
 }
 
 /**
- * Categories as a drill-down, mirroring the desktop mega menu: a discipline
- * expands to its subcategories, and a subcategory with children of its own
- * expands again. Native <details> means it works by tap and by keyboard
- * without any hover. Three levels deep, as specified — nothing lower is
- * listed here, and every level links to its own category page.
+ * The main categories only, mirroring the desktop Shop dropdown: up to
+ * MAX_NAV_CATEGORIES top-level categories, each linking to its whole branch.
+ * Subcategories are browsed from the shop page's filters.
  */
 function CategoryItems({ categories, onNavigate }) {
-  return categories.map((discipline) => {
-    const subcategories = discipline.children ?? [];
-
-    if (subcategories.length === 0) {
-      return (
-        <li key={discipline.id}>
-          <Link
-            href={`/products?category=${discipline.slug}`}
-            onClick={onNavigate}
-            className="block rounded-md px-2 py-2 text-sm font-semibold text-neutral-900 hover:bg-neutral-100 hover:text-brand"
-          >
-            {discipline.name}
-          </Link>
-        </li>
-      );
-    }
-
-    return (
-      <li key={discipline.id}>
-        <Section label={discipline.name}>
-          <li>
-            <Link
-              href={`/products?category=${discipline.slug}`}
-              onClick={onNavigate}
-              className="block rounded-md px-2 py-2 text-sm font-semibold text-brand hover:bg-neutral-100"
-            >
-              All {discipline.name}
-            </Link>
-          </li>
-
-          {subcategories.slice(0, MAX_NAV_SUBCATEGORIES).map((subcategory) => {
-            const children = subcategory.children ?? [];
-
-            if (children.length === 0) {
-              return (
-                <li key={subcategory.id}>
-                  <Link
-                    href={`/products?category=${subcategory.slug}`}
-                    onClick={onNavigate}
-                    className="block rounded-md px-2 py-2 text-sm text-neutral-600 hover:bg-neutral-100 hover:text-brand"
-                  >
-                    {subcategory.name}
-                  </Link>
-                </li>
-              );
-            }
-
-            return (
-              <li key={subcategory.id}>
-                <Section label={subcategory.name}>
-                  <li>
-                    <Link
-                      href={`/products?category=${subcategory.slug}`}
-                      onClick={onNavigate}
-                      className="block rounded-md px-2 py-2 text-sm font-medium text-brand hover:bg-neutral-100"
-                    >
-                      All {subcategory.name}
-                    </Link>
-                  </li>
-
-                  {children.map((child) => (
-                    <li key={child.id}>
-                      <Link
-                        href={`/products?category=${child.slug}`}
-                        onClick={onNavigate}
-                        className="block rounded-md px-2 py-2 text-sm text-neutral-600 hover:bg-neutral-100 hover:text-brand"
-                      >
-                        {child.name}
-                      </Link>
-                    </li>
-                  ))}
-                </Section>
-              </li>
-            );
-          })}
-
-          {subcategories.length > MAX_NAV_SUBCATEGORIES ? (
-            <li>
-              <Link
-                href={`/products?category=${discipline.slug}`}
-                onClick={onNavigate}
-                className="flex items-center gap-1 rounded-md px-2 py-2 text-sm font-semibold text-brand hover:bg-neutral-100"
-              >
-                View all
-                <ChevronRight className="size-3.5" />
-              </Link>
-            </li>
-          ) : null}
-        </Section>
-      </li>
-    );
-  });
+  return categories.slice(0, MAX_NAV_CATEGORIES).map((category) => (
+    <li key={category.id}>
+      <Link
+        href={`/products?category=${category.slug}`}
+        onClick={onNavigate}
+        className="block rounded-md px-2 py-2 text-sm font-semibold text-neutral-900 hover:bg-neutral-100 hover:text-brand"
+      >
+        {category.name}
+      </Link>
+    </li>
+  ));
 }
 
 /**
@@ -231,7 +148,7 @@ export default function MobileMenu({ categories = [], suppliers = [] }) {
             onClick={close}
             className="rounded-sm bg-brand px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-brand/90"
           >
-            Make an Inquiry
+            Support
           </Link>
 
           <div className="space-y-1 text-sm text-neutral-700">

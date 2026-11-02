@@ -8,8 +8,9 @@ export const NAV_LINKS = [
 ];
 
 /**
- * Subcategories listed under a main category in the navbar menus before a
- * "View All" link takes over. Shared by the desktop mega menu and the
- * mobile slide-over so they always show the same thing.
+ * Main categories listed under Shop in the navbar menus. Only top-level
+ * categories are shown there — subcategories are browsed from the shop
+ * page's filters. Shared by the desktop dropdown and the mobile slide-over
+ * so they always show the same thing.
  */
-export const MAX_NAV_SUBCATEGORIES = 6;
+export const MAX_NAV_CATEGORIES = 10;

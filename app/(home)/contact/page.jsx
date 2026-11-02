@@ -38,7 +38,7 @@ const ContactPage = () => {
       icon: <Phone className="h-5 w-5" />,
       title: "Call",
       detail: "07984 720499",
-      subDetail: "Mon–Fri, 8am–8pm",
+      subDetail: "",
     },
     {
       icon: <Mail className="h-5 w-5" />,
@@ -54,7 +54,7 @@ const ContactPage = () => {
     },
     {
       icon: <Clock className="h-5 w-5" />,
-      title: "Business Hours",
+      title: "Business hours",
       detail: "Mon – Fri: 9am – 5pm",
       detail2: "Weekends – closed ",
       subDetail:
@@ -129,7 +129,7 @@ const ContactPage = () => {
           {/* FORM */}
           <div className="lg:col-span-7">
             <span className="text-sm font-semibold  tracking-widest text-[#1B9DDB]">
-              Send a Message
+              Send your message
             </span>
             <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
               Tell us about your build.
@@ -240,7 +240,6 @@ const ContactPage = () => {
                 className="inline-flex cursor-pointer items-center gap-2 rounded-sm bg-[#1B9DDB] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1685bb]"
               >
                 Support 
-                <ArrowUpRight className="h-4 w-4" />
               </button>
             </form>
           </div>

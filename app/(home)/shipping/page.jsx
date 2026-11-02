@@ -7,6 +7,7 @@ import {
   Mail,
   Info,
 } from 'lucide-react'
+import ButtonLink from '@/components/ui/button-link'
 import WarningBox from '@/components/ui/warning-box'
 
 export const metadata = {
@@ -257,7 +258,7 @@ const ShippingPage = () => {
               <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#1B9DDB]">
                 <Mail className="h-5 w-5 text-white" />
               </div>
-              <div>
+              <div className="flex flex-col">
                 <p className="font-semibold text-gray-900">
                   Questions about your shipment?
                 </p>
@@ -270,6 +271,9 @@ const ShippingPage = () => {
                     support@offroadperformance.com
                   </a>
                 </p>
+                <ButtonLink href="/contact" className="mt-3 w-fit cursor-pointer">
+                  Support
+                </ButtonLink>
               </div>
             </div>
           </div>

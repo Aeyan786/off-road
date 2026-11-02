@@ -11,6 +11,7 @@ import {
   Camera,
   Phone,
 } from 'lucide-react'
+import ButtonLink from '@/components/ui/button-link'
 import WarningBox, { WarningList } from '@/components/ui/warning-box'
 
 export const metadata = {
@@ -75,7 +76,7 @@ const RefundsPage = () => {
           </h1>
           <p className="mt-4 text-white/90">
             We want you to be completely satisfied with your purchase from
-            Off road performance (ORP)
+            Off Road Performance (ORP)
           </p>
         </div>
       </section>
@@ -276,7 +277,7 @@ const RefundsPage = () => {
               <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#1B9DDB]">
                 <Mail className="h-5 w-5 text-white" />
               </div>
-              <div>
+              <div className="flex flex-col">
                 <p className="font-semibold text-gray-900">
                   Ready to start a return?
                 </p>
@@ -290,6 +291,9 @@ const RefundsPage = () => {
                   </a>{' '}
                   to request your RMA number
                 </p>
+                <ButtonLink href="/contact" className="mt-3 w-fit cursor-pointer">
+                  Support
+                </ButtonLink>
               </div>
             </div>
           </div>

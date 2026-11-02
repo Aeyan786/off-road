@@ -70,7 +70,7 @@ export default function BlogFilters() {
     <div className="mb-8 rounded-sm border bg-neutral-50 p-4">
       {/* Every field has a visible label above it, so the inputs share one
           baseline; the reset action sits in the same row on wide screens. */}
-      <div className="grid grid-cols-1 items-end gap-4 sm:grid-cols-2 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_auto]">
+      <div className="grid grid-cols-1 items-end gap-4 sm:grid-cols-2 lg:grid-cols-1">
         <div className="space-y-1.5 sm:col-span-2 lg:col-span-1">
           <label htmlFor="blog-search" className={LABEL_CLASS}>
             Search
@@ -113,33 +113,9 @@ export default function BlogFilters() {
           </select>
         </div>
 
-        <div className="space-y-1.5">
-          <label htmlFor="blog-from" className={LABEL_CLASS}>
-            Published from
-          </label>
-          <Input
-            id="blog-from"
-            type="date"
-            value={from}
-            max={to || undefined}
-            onChange={(event) => apply({ from: event.target.value })}
-            className={`${FIELD_CLASS} cursor-pointer`}
-          />
-        </div>
+       
 
-        <div className="space-y-1.5">
-          <label htmlFor="blog-to" className={LABEL_CLASS}>
-            Published to
-          </label>
-          <Input
-            id="blog-to"
-            type="date"
-            value={to}
-            min={from || undefined}
-            onChange={(event) => apply({ to: event.target.value })}
-            className={`${FIELD_CLASS} cursor-pointer`}
-          />
-        </div>
+      
 
         <div className="flex h-9 items-center justify-end gap-2 sm:col-span-2 lg:col-span-1">
           {isPending ? (

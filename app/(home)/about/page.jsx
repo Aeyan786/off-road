@@ -25,9 +25,9 @@ const AboutPage = () => {
 
         <div className="relative z-10 w-full px-6 pb-16 sm:px-10 lg:px-16">
           <p className="mb-6 text-xs font-semibold tracking-[0.3em] text-white/70">
-            Off road performance — ORP
+            Off Road Performance — ORP
           </p>
-          <h1 className="max-w-4xl text-4xl font-black leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
+          <h1 className="max-w-4xl text-4xl font-black leading-[1.05] tracking-tight text-white sm:text-4xl lg:text-5xl">
             Building world-class rides
             <br />
             from the ground up.
@@ -60,7 +60,7 @@ const AboutPage = () => {
       </section>
 
       {/* TAGLINE STATEMENT */}
-      <section className="bg-[#1B9DDB] px-6 py-24 sm:px-10 lg:px-16">
+      <section className="bg-[#1B9DDB] px-6 py-34 sm:px-10 lg:px-16">
         <div className="mx-auto max-w-5xl text-center">
           <p className="text-2xl font-bold leading-snug text-white sm:text-4xl lg:text-5xl">
             Where marquee brands meet{' '}
@@ -76,7 +76,7 @@ const AboutPage = () => {
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <span className="text-sm font-semibold  tracking-widest text-[#1B9DDB]">
-              Who we are
+              Off Road Performance 'ORP' 
             </span>
             <h2 className="mt-4 text-3xl font-black leading-tight tracking-tight sm:text-4xl">
               Your trusted destination for off-road excellence.
@@ -96,7 +96,7 @@ const AboutPage = () => {
               href="/products"
               className="mt-9"
             >
-              Shop now
+              Shop
               <ArrowUpRight className="h-4 w-4" />
             </ButtonLink>
           </div>
@@ -173,7 +173,7 @@ const AboutPage = () => {
       <section className="bg-neutral-900 px-6 py-24 sm:px-10 lg:px-16">
         <div className="mx-auto max-w-6xl">
           <span className="text-sm font-semibold  tracking-widest text-[#1B9DDB]">
-            Why off road performance
+           Why choose Off Road Performance 'ORP'
           </span>
           <h2 className="mt-4 max-w-3xl text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl">
             Reliability, passion, and a commitment to excellence.
@@ -219,7 +219,7 @@ const AboutPage = () => {
               href="/products"
               className="mt-2"
             >
-              Shop now
+              Shop
               <ArrowUpRight className="h-4 w-4" />
             </ButtonLink>
             <ButtonLink

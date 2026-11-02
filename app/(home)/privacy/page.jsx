@@ -1,5 +1,6 @@
 import React from 'react'
 import { Shield, Lock, FileText, Mail } from 'lucide-react'
+import ButtonLink from '@/components/ui/button-link'
 
 export const metadata = {
   title: "Privacy policy",
@@ -245,7 +246,7 @@ const PrivacyPage = () => {
               <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-[#1B9DDB]">
                 <Mail className="h-5 w-5 text-white" />
               </div>
-              <div>
+              <div className="flex flex-col">
                 <p className="font-semibold text-gray-900">
                   Have questions about our privacy practices?
                 </p>
@@ -258,6 +259,9 @@ const PrivacyPage = () => {
                     support@offroadperformance.com
                   </a>
                 </p>
+                <ButtonLink href="/contact" className="mt-3 w-fit cursor-pointer">
+                  Support
+                </ButtonLink>
               </div>
             </div>
           </div>

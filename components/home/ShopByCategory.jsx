@@ -3,9 +3,13 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import ImagePlaceholder from "@/components/ui/image-placeholder";
 
+// Main categories shown here; subcategories are browsed from the shop page.
+const MAX_CATEGORIES = 10;
+
 /**
- * Second-level categories, each shown with the first image of its first
- * product (see lib/data/categories.js#withCategoryImages). Categories with
+ * Top-level categories only (up to MAX_CATEGORIES, in discipline order),
+ * each shown with the first image of the first product anywhere in its
+ * branch (see lib/data/categories.js#withCategoryImages). Categories with
  * no imaged products fall back to the placeholder.
  */
 export default function ShopByCategory({ categories = [] }) {
@@ -19,8 +23,8 @@ export default function ShopByCategory({ categories = [] }) {
       </p>
 
       {categories.length > 0 ? (
-        <div className="mt-12 grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-6">
-          {categories.slice(0,12).map((category) => (
+        <div className="mt-12 grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5">
+          {categories.slice(0, MAX_CATEGORIES).map((category) => (
             <Link
               key={category.id}
               href={`/products?category=${category.slug}`}
