@@ -46,6 +46,7 @@ function FilterCheckboxGroup({
   onToggle,
   onClear,
   children,
+  collapseOnSelect = false,
 }) {
   const [open, setOpen] = useState(false);
 
@@ -151,9 +152,12 @@ function FilterCheckboxGroup({
                   >
                     <Checkbox
                       checked={checked}
-                      onCheckedChange={(next) =>
-                        onToggle(value, next)
-                      }
+                      onCheckedChange={(next) => {
+                        onToggle(value, next);
+                        // Ticking a value closes the dropdown; unticking
+                        // leaves it open while the shopper adjusts.
+                        if (next && collapseOnSelect) setOpen(false);
+                      }}
                       className="cursor-pointer"
                     />
 
@@ -564,6 +568,7 @@ export default function ProductFilters({
       {/* MANUFACTURER */}
       <FilterCheckboxGroup
         name="manufacturer"
+        collapseOnSelect
         label="Manufacturer"
         options={options.manufacturers}
         selected={selection.manufacturer}
@@ -576,6 +581,7 @@ export default function ProductFilters({
       {/* MODEL */}
       <FilterCheckboxGroup
         name="model"
+        collapseOnSelect
         label="Model"
         options={options.models}
         selected={selection.model}
@@ -588,6 +594,7 @@ export default function ProductFilters({
       {/* YEAR */}
       <FilterCheckboxGroup
         name="year"
+        collapseOnSelect
         label="Year"
         options={options.years}
         selected={selection.year}
