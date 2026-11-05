@@ -78,7 +78,7 @@ export default function Hero() {
 
       <HeroPanel
         className="lg:col-span-5"
-        eyebrow="Auto Parts Supplier"
+        eyebrow="Auto parts supplier"
         title="Quality parts for every vehicle"
         src="/hero.webp"
         description="We supply a wide range of genuine and reliable car parts for different makes and models, helping you keep your vehicle running smoothly."

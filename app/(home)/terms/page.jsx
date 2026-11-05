@@ -311,7 +311,8 @@ const TermsPage = () => {
                   Questions about our Terms of service?
                 </p>
                 <p className="mt-1 text-sm text-gray-600">
-                  Click Support to get in touch
+                  Reach out to our support team at support@offroadperformance.com
+
                 </p>
                 <ButtonLink href="/contact" className="mt-3 w-fit cursor-pointer">
                   Support
