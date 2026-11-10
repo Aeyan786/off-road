@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { SOCIAL_LINKS } from "@/components/social-links";
-import { MAX_NAV_CATEGORIES, NAV_LINKS } from "@/components/header/nav-links";
+import { NAV_LINKS } from "@/components/header/nav-links";
 import { cn } from "@/lib/utils";
 
 const ROW_CLASS =
@@ -39,30 +39,11 @@ function Section({ label, children }) {
 }
 
 /**
- * The main categories only, mirroring the desktop Shop dropdown: up to
- * MAX_NAV_CATEGORIES top-level categories, each linking to its whole branch.
- * Subcategories are browsed from the shop page's filters.
- */
-function CategoryItems({ categories, onNavigate }) {
-  return categories.slice(0, MAX_NAV_CATEGORIES).map((category) => (
-    <li key={category.id}>
-      <Link
-        href={`/products?category=${category.slug}`}
-        onClick={onNavigate}
-        className="block rounded-md px-2 py-2 text-sm font-semibold text-neutral-900 hover:bg-neutral-100 hover:text-brand"
-      >
-        {category.name}
-      </Link>
-    </li>
-  ));
-}
-
-/**
  * Below lg the navbar collapses into this slide-over. It mirrors the
- * desktop navbar: the Shop mega-menu and the vendor dropdown become
- * expandable sections. Search stays visible in the header itself.
+ * desktop navbar: the same links, with the vendor dropdown as an
+ * expandable section. Search stays visible in the header itself.
  */
-export default function MobileMenu({ categories = [], suppliers = [] }) {
+export default function MobileMenu({ suppliers = [] }) {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
 
@@ -90,30 +71,13 @@ export default function MobileMenu({ categories = [], suppliers = [] }) {
 
         <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-5 py-5">
           <ul className="flex flex-col gap-1 text-sm font-medium">
-            {NAV_LINKS.map((link) =>
-              link.hasCategoryMenu && categories.length > 0 ? (
-                <li key={link.label}>
-                  <Section label={link.label}>
-                    <li>
-                      <Link
-                        href={link.href}
-                        onClick={close}
-                        className="block rounded-md px-2 py-2 text-sm font-semibold text-brand hover:bg-neutral-100"
-                      >
-                        All products
-                      </Link>
-                    </li>
-                    <CategoryItems categories={categories} onNavigate={close} />
-                  </Section>
-                </li>
-              ) : (
-                <li key={link.label}>
-                  <Link href={link.href} onClick={close} className={ROW_CLASS}>
-                    {link.label}
-                  </Link>
-                </li>
-              )
-            )}
+            {NAV_LINKS.map((link) => (
+              <li key={link.label}>
+                <Link href={link.href} onClick={close} className={ROW_CLASS}>
+                  {link.label}
+                </Link>
+              </li>
+            ))}
 
             {suppliers.length > 0 ? (
               <li>

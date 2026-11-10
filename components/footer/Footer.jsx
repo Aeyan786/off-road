@@ -34,12 +34,12 @@ const LINK_COLUMNS = [
 ];
 
 const image = [
-  "/foot1.webp",
-  "/foot2.webp",
-  "/foot3.avif",
-  "/foot4.avif",
-  "/foot5.webp",
-  "/foot6.avif",
+  "/foot1.jpg",
+  "/foot2.jpg",
+  "/foot3.jpg",
+  "/hero1.jpg",
+  "/hero2.jpg",
+  "/hero3.jpg",
 ];
 
 export default function Footer() {
@@ -76,7 +76,7 @@ export default function Footer() {
               href="/"
               className="flex items-center gap-2 text-xl font-extrabold"
             >
-              Off Road<span className="text-brand"> Performance</span>
+              <Image src="/footer.png" height={250} width={250}/>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">
               Where marquee brands meet world-class distribution.
@@ -116,9 +116,14 @@ export default function Footer() {
             ))}
           </div>
 
-          <div className="grid grid-cols-3 gap-2">
+          {/* The photos come in different shapes (wide, square and tall), so
+              each sits in an equal square tile and is cropped to fill it —
+              every tile is the same size whatever the source image. */}
+          <div className="grid w-full max-w-xs grid-cols-3 gap-2">
             {image.map((e, i) => (
-              <Image key={i} src={e} height={100} width={100} alt="image" />
+              <div key={i} className="relative aspect-square overflow-hidden bg-white/5">
+                <Image src={e} alt="image" fill sizes="110px" className="object-cover" />
+              </div>
             ))}
           </div>
         </div>

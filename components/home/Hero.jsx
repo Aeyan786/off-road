@@ -19,7 +19,7 @@ function HeroPanel({ eyebrow, title, src, description, href = "/products", cta, 
         alt="hero"
         className="object-cover transition-all duration-800 ease-out group-hover:scale-102 group-hover:blur-xs"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/80 to-transparent transition-opacity duration-500 group-hover:from-black/90 group-hover:via-black/85" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/80 to-transparent transition-opacity duration-500 group-hover:from-black/80 group-hover:via-black/85" />
 
       <Link
         href={href}
@@ -54,7 +54,7 @@ function HeroTile({ title, src }) {
           className="object-cover transition-all duration-800 ease-out group-hover:scale-102 group-hover:blur-xs"
         />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/80 to-transparent transition-opacity duration-500 group-hover:from-black/90 group-hover:via-black/85" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/80 to-transparent transition-opacity duration-500 group-hover:from-black/80 group-hover:via-black/85" />
         <h3 className="relative text-xl font-bold leading-snug transition-transform duration-500 group-hover:translate-y-[-2px]">
           {title}
         </h3>
@@ -70,7 +70,7 @@ export default function Hero() {
         className="lg:col-span-4"
         eyebrow="Aftermarket parts specialists"
         title="Distributors of high-quality parts to the powersports industry"
-        src="/hero3.webp"
+        src="/hero3.jpg"
         description="Where marquee brands meet worldclass distribution."
         href="/products"
         cta={{ label: "Support", href: "/contact" }}
@@ -80,15 +80,15 @@ export default function Hero() {
         className="lg:col-span-5"
         eyebrow="Auto parts supplier"
         title="Quality parts for every vehicle"
-        src="/hero.webp"
+        src="/hero5.jpg"
         description="We supply a wide range of genuine and reliable car parts for different makes and models, helping you keep your vehicle running smoothly."
         href="/products"
         cta={{ label: "Shop Now", href: "/products" }}
       />
 
       <div className="flex flex-col gap-2 lg:col-span-3">
-        <HeroTile title="Car Parts for All Models" src="/hero1.webp" />
-        <HeroTile title="Professional Car Tools" src="/hero2.webp" />
+        <HeroTile title="Car Parts for All Models" src="/foot3.jpg" />
+        <HeroTile title="Professional Car Tools" src="/foot1.jpg" />
       </div>
     </section>
   );

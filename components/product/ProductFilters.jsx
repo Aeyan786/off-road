@@ -130,7 +130,11 @@ function FilterCheckboxGroup({
         <div className="min-h-0 overflow-hidden">
           <div className="space-y-0.5 bg-white p-1 pt-2">
             {/* Custom content (the category drill-down) replaces the flat list. */}
-            {children ? (
+            {/* Custom content (the category drill-down) replaces the flat
+                list; as a function it also gets a way to collapse the group. */}
+            {typeof children === "function" ? (
+              children({ collapse: () => setOpen(false) })
+            ) : children ? (
               children
             ) : values.length === 0 ? (
               <p className="px-1.5 py-1 text-xs text-neutral-400">
@@ -525,12 +529,19 @@ export default function ProductFilters({
         selected={selection.category}
         onClear={() => setValues("category", [])}
       >
-        <CategoryTreeFilter
-          tree={categoryTree}
-          index={categoryIndex}
-          selected={selection.category}
-          onToggle={onCategoryToggle}
-        />
+        {({ collapse }) => (
+          <CategoryTreeFilter
+            tree={categoryTree}
+            index={categoryIndex}
+            selected={selection.category}
+            onToggle={(slug, checked) => {
+              onCategoryToggle(slug, checked);
+              // Ticking at any level closes the dropdown; reopening it shows
+              // the ticked category's subcategories to drill further.
+              if (checked) collapse();
+            }}
+          />
+        )}
       </FilterCheckboxGroup>
 
       {/* SUPPLIER — chosen from the header's vendor dropdown, not here */}

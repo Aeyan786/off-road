@@ -158,8 +158,15 @@ function SubcategoryRow({ category, selected, index, onToggle, openSlug, setOpen
  * @param {string[]} selected the slugs in the URL
  * @param {(slug: string, checked: boolean) => void} onToggle
  */
-export default function CategoryTreeFilter({ tree, index, selected, onToggle }) {
+export default function CategoryTreeFilter({ tree, index, selected, onToggle: onToggleProp }) {
   const [openSlug, setOpenSlug] = useState(null);
+
+  // A tick at any level closes the open side menu: it lives in a portal, so
+  // it would otherwise stay on screen after the filter dropdown collapses.
+  function onToggle(slug, checked) {
+    if (checked) setOpenSlug(null);
+    onToggleProp(slug, checked);
+  }
 
   if (tree.length === 0) {
     return <p className="px-1.5 py-1 text-xs text-neutral-400">No options</p>;

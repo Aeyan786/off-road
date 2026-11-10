@@ -4,8 +4,9 @@ import HeaderStoreActions from "@/components/cart/HeaderStoreActions";
 import HeaderSearch from "@/components/header/HeaderSearch";
 import MobileMenu from "@/components/header/MobileMenu";
 import VendorDropdown from "@/components/header/VendorDropdown";
+import Image from "next/image";
 
-export default function MainHeader({ categories = [], suppliers = [] }) {
+export default function MainHeader({ suppliers = [] }) {
   return (
     <div className="border-b bg-white">
       <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-3 px-4 py-3 sm:gap-4 sm:px-6 sm:py-4">
@@ -13,7 +14,7 @@ export default function MainHeader({ categories = [], suppliers = [] }) {
           href="/"
           className="min-w-0 truncate text-lg font-extrabold tracking-tight text-neutral-900 underline decoration-2 underline-offset-4 sm:text-2xl"
         >
-          Off Road Performance
+          <Image src="/navlogo.png" height={150} width={150} />
         </Link>
 
         <div className="hidden flex-1 items-center justify-center lg:flex">
@@ -36,7 +37,7 @@ export default function MainHeader({ categories = [], suppliers = [] }) {
           </div>
 
           <HeaderStoreActions />
-          <MobileMenu categories={categories} suppliers={suppliers} />
+          <MobileMenu suppliers={suppliers} />
         </div>
       </div>
 

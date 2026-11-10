@@ -1,31 +1,24 @@
 import Link from "next/link";
 import { SOCIAL_LINKS } from "@/components/social-links";
 import { NAV_LINKS } from "@/components/header/nav-links";
-import ShopMenu from "@/components/header/ShopMenu";
 
-export default function NavBar({ categories = [] }) {
+export default function NavBar() {
   return (
     <nav className="hidden bg-brand text-white lg:block">
-      {/* relative: the Shop mega-menu positions itself against this container
-          so it spans the full navbar width. */}
-      <div className="relative mx-auto flex max-w-[1400px] items-center justify-between px-6">
+      <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6">
         <ul className="flex items-center gap-8 text-sm font-medium">
-          {NAV_LINKS.map((link) =>
-            link.hasCategoryMenu ? (
-              <ShopMenu key={link.label} link={link} categories={categories} />
-            ) : (
-              <li key={link.label}>
-                <Link
-                  href={link.href}
-                  className="group relative inline-block cursor-pointer py-3.5 text-white"
-                >
-                  {link.label}
+          {NAV_LINKS.map((link) => (
+            <li key={link.label}>
+              <Link
+                href={link.href}
+                className="group relative inline-block cursor-pointer py-3.5 text-white"
+              >
+                {link.label}
 
-                  <span className="absolute bottom-2 left-0 h-px w-0 bg-white transition-all duration-300 ease-out group-hover:w-full" />
-                </Link>
-              </li>
-            ),
-          )}
+                <span className="absolute bottom-2 left-0 h-px w-0 bg-white transition-all duration-300 ease-out group-hover:w-full" />
+              </Link>
+            </li>
+          ))}
         </ul>
 
         <div className="flex items-center gap-5">
