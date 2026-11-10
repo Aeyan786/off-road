@@ -63,11 +63,7 @@ export default function MobileMenu({ suppliers = [] }) {
         }
       />
       <SheetContent side="left" className="flex w-[85vw] max-w-80 flex-col gap-0 p-0">
-        <SheetHeader className="border-b px-5 py-4 text-left">
-          <SheetTitle className="text-lg font-bold underline decoration-2 underline-offset-4">
-            Off Road Performance
-          </SheetTitle>
-        </SheetHeader>
+       
 
         <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-5 py-5">
           <ul className="flex flex-col gap-1 text-sm font-medium">
