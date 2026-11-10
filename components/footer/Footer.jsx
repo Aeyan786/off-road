@@ -76,7 +76,7 @@ export default function Footer() {
               href="/"
               className="flex items-center gap-2 text-xl font-extrabold"
             >
-              <Image src="/footer.png" height={150} width={150}/>
+              <Image src="/footer.png" height={170} width={170}/>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">
               Where marquee brands meet world-class distribution.
