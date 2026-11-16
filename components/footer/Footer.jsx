@@ -130,7 +130,8 @@ export default function Footer() {
       </div>
 
       <div className="bg-brand text-white">
-        <div className="mx-auto flex max-w-[1400px] flex-col items-center gap-3 px-6 py-3 text-xs sm:flex-row sm:justify-end">
+        <div className="mx-auto flex max-w-[1400px] flex-col items-center gap-3 px-6 py-3 text-xs sm:flex-row sm:justify-between">
+          <p>All Right Reserved © 2026 Design Concept By Vebryx Ltd</p>
           <p>Off Road Performance ‘ORP’ © 2026</p>
         </div>
       </div>
