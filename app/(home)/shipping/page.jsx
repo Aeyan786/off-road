@@ -61,8 +61,7 @@ const ShippingPage = () => {
             Shipping policy
           </h1>
           <p className="mt-4 text-white/90">
-            At Off Road Performance ‘ORP’ we work hard to get your order to
-            you as quickly and efficiently as possible.
+            Have a question regarding Off Road Performance 'ORP' shipping policy, click Support at the bottom of this page.
           </p>
         </div>
       </section>
@@ -259,17 +258,9 @@ const ShippingPage = () => {
                 <Mail className="h-5 w-5 text-white" />
               </div>
               <div className="flex flex-col">
-                <p className="font-semibold text-gray-900">
-                  Questions about your shipment?
-                </p>
+              
                 <p className="mt-1 text-sm text-gray-600">
-                  Reach out to our support team at{' '}
-                  <a
-                    href="mailto:support@offroadperformance.com"
-                    className="font-medium text-[#1B9DDB] hover:underline"
-                  >
-                    support@offroadperformance.com
-                  </a>
+               Have any further questions for Off Road Performance 'ORP' simply click Support
                 </p>
                 <ButtonLink href="/contact" className="mt-3 w-fit cursor-pointer">
                   Support

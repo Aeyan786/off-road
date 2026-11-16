@@ -27,7 +27,7 @@ const PrivacyPage = () => {
             Privacy policy
           </h1>
           <p className="mt-4 text-white/90">
-            Your privacy is important to us at Off Road Performance ‘ORP’
+            Have a question regarding Off Road Performance 'ORP' privacy policy, click Support at the bottom of this page.
           </p>
           <p className="mt-2 text-sm text-white/70">
             Last updated: {lastUpdated}
@@ -247,17 +247,9 @@ const PrivacyPage = () => {
                 <Mail className="h-5 w-5 text-white" />
               </div>
               <div className="flex flex-col">
-                <p className="font-semibold text-gray-900">
-                  Have questions about our privacy practices?
-                </p>
+            
                 <p className="mt-1 text-sm text-gray-600">
-                  Reach out to our support team at{' '}
-                  <a
-                    href="mailto:support@offroadperformance.com"
-                    className="font-medium text-[#1B9DDB] hover:underline"
-                  >
-                    support@offroadperformance.com
-                  </a>
+                Have any further questions for Off Road Performance 'ORP' simply click Support
                 </p>
                 <ButtonLink href="/contact" className="mt-3 w-fit cursor-pointer">
                   Support

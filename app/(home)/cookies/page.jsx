@@ -48,8 +48,7 @@ const CookiesPage = () => {
             Cookie policy
           </h1>
           <p className="mt-4 text-white/90">
-            At Off Road Performance ‘ORP’ we value your privacy and want to
-            make your shopping experience smooth and secure.
+            Have a question regarding Off Road Performance 'ORP' cookies, click Support at the bottom of this page.
           </p>
         </div>
       </section>
@@ -155,17 +154,9 @@ const CookiesPage = () => {
                 <Mail className="h-5 w-5 text-white" />
               </div>
               <div className="flex flex-col">
-                <p className="font-semibold text-gray-900">
-                  Questions about our use of cookies?
-                </p>
+             
                 <p className="mt-1 text-sm text-gray-600">
-                  Reach out to our support team at{' '}
-                  <a
-                    href="mailto:support@offroadperformance.com"
-                    className="font-medium text-[#1B9DDB] hover:underline"
-                  >
-                    support@offroadperformance.com
-                  </a>
+                Have any further questions for Off Road Performance 'ORP' simply click Support
                 </p>
                 <ButtonLink href="/contact" className="mt-3 w-fit cursor-pointer">
                   Support
