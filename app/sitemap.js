@@ -31,7 +31,7 @@ export default async function sitemap() {
     ["/about", 0.5, "monthly"],
     ["/contact", 0.5, "monthly"],
     ["/shipping", 0.3, "yearly"],
-    ["/refunds", 0.3, "yearly"],
+    ["/returns", 0.3, "yearly"],
     ["/privacy", 0.3, "yearly"],
     ["/terms", 0.3, "yearly"],
     ["/cookies", 0.3, "yearly"],

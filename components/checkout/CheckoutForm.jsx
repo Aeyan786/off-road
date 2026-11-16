@@ -190,8 +190,8 @@ export default function CheckoutForm({ countries, disabled = false }) {
         disabled={disabled || isPending}
         className="w-full cursor-pointer rounded-sm px-6 sm:w-auto"
       >
-        {isPending ? <Loader2 className="size-4 animate-spin" /> : <ArrowRight className="size-4" />}
-        {isPending ? "Saving your details…" : "Proceed to Checkout"}
+        {isPending ? <Loader2 className="size-4 animate-spin" /> : null}
+        {isPending ? "Saving your details…" : "Checkout"}
       </Button>
     </form>
   );

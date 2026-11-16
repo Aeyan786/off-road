@@ -71,7 +71,7 @@ export default function RecentUpdates({ blogs = [] }) {
             Blog
           </h2>
           <p className="mt-3 max-w-xl text-sm text-neutral-500">
-            {"What's new at Off Road Performance 'ORP'"}
+            {"What's new at Off Road Performance ‘ORP’"}
           </p>
         </div>
         {blogs.length > 0 ? (

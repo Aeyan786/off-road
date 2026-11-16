@@ -70,8 +70,8 @@ export default function BlogFilters() {
     <div className="mb-8 rounded-sm border bg-neutral-50 p-4">
       {/* Every field has a visible label above it, so the inputs share one
           baseline; the reset action sits in the same row on wide screens. */}
-      <div className="grid grid-cols-1 items-end gap-4 sm:grid-cols-2 lg:grid-cols-1">
-        <div className="space-y-1.5 sm:col-span-2 lg:col-span-1">
+      <div className="grid grid-cols-1 items-end gap-4 sm:grid-cols-4">
+        <div className="space-y-1.5 sm:col-span-2">
           <label htmlFor="blog-search" className={LABEL_CLASS}>
             Search
           </label>
@@ -117,7 +117,7 @@ export default function BlogFilters() {
 
       
 
-        <div className="flex h-9 items-center justify-end gap-2 sm:col-span-2 lg:col-span-1">
+        <div className="flex h-9 items-center justify-end gap-2">
           {isPending ? (
             <span className="flex items-center gap-1.5 text-xs text-neutral-500" role="status">
               <Loader2 className="size-3.5 animate-spin" />

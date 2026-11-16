@@ -35,7 +35,7 @@ export default async function BlogsPage({ searchParams }) {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-neutral-900 sm:text-4xl">Blogs</h1>
         <p className="mt-2 text-sm text-neutral-500">
-          {"Latest news and updates from Off Road Performance 'ORP'"}
+          {"Latest news and updates from Off Road Performance ‘ORP’"}
         </p>
       </div>
 

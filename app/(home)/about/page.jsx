@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, ArrowUpRight } from 'lucide-react'
+
 import ButtonLink from '@/components/ui/button-link';
 
 export const metadata = {
@@ -25,7 +25,7 @@ const AboutPage = () => {
 
         <div className="relative z-10 w-full px-6 pb-16 sm:px-10 lg:px-16">
           <p className="mb-6 text-xs font-semibold tracking-[0.3em] text-white/70">
-            Off Road Performance — ORP
+            Off Road Performance ‘ORP’
           </p>
           <h1 className="max-w-4xl text-4xl font-black leading-[1.05] tracking-tight text-white sm:text-4xl lg:text-5xl">
             Building world-class rides
@@ -76,13 +76,13 @@ const AboutPage = () => {
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <span className="text-sm font-semibold  tracking-widest text-[#1B9DDB]">
-              Off Road Performance 'ORP' 
+              Off Road Performance ‘ORP’ 
             </span>
             <h2 className="mt-4 text-3xl font-black leading-tight tracking-tight sm:text-4xl">
               Your trusted destination for off-road excellence.
             </h2>
             <p className="mt-6 leading-relaxed text-neutral-600">
-              Off Road Performance was created for those who live life
+              Off Road Performance ‘ORP’ was created for those who live life
               outside of work. We understand the thrill of racing or the
               need for some weekend leisure time — we know your ride needs
               to be just as tough as the journey ahead.
@@ -97,7 +97,6 @@ const AboutPage = () => {
               className="mt-9"
             >
               Shop
-              <ArrowUpRight className="h-4 w-4" />
             </ButtonLink>
           </div>
           <div className="relative h-80 w-full overflow-hidden rounded-sm sm:h-[28rem] lg:col-span-7">
@@ -130,7 +129,7 @@ const AboutPage = () => {
               Built for every terrain.
             </h2>
             <p className="mt-6 leading-relaxed text-neutral-600">
-              Off Road Performance is built around the idea that no terrain
+              Off Road Performance ‘ORP’ is built around the idea that no terrain
               should limit your journey. We know that the parts we recommend
               need to perform consistently while under pressure.
             </p>
@@ -163,7 +162,7 @@ const AboutPage = () => {
             also a seamless and reliable shopping experience.
           </p>
           <p className="mt-4 leading-relaxed text-neutral-600">
-            At Off Road Performance, our mission goes beyond selling — it's
+            At Off Road Performance ‘ORP’ our mission goes beyond selling — it's
             about enabling every ride with confidence and peace of mind.
           </p>
         </div>
@@ -173,7 +172,7 @@ const AboutPage = () => {
       <section className="bg-neutral-900 px-6 py-24 sm:px-10 lg:px-16">
         <div className="mx-auto max-w-6xl">
           <span className="text-sm font-semibold  tracking-widest text-[#1B9DDB]">
-           Why choose Off Road Performance 'ORP'
+           Why choose Off Road Performance ‘ORP’
           </span>
           <h2 className="mt-4 max-w-3xl text-3xl font-black leading-tight tracking-tight text-white sm:text-4xl">
             Reliability, passion, and a commitment to excellence.
@@ -220,7 +219,6 @@ const AboutPage = () => {
               className="mt-2"
             >
               Shop
-              <ArrowUpRight className="h-4 w-4" />
             </ButtonLink>
             <ButtonLink
               href="/contact"

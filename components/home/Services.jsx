@@ -11,28 +11,28 @@ import ButtonLink from "@/components/ui/button-link";
 const SERVICES = [
   {
     Icon: Disc,
-    title: "Top End Rebuilds",
+    title: "Top end rebuilds",
     description: "Cylinder re-plating, boring & repairs",
     image: "https://images.unsplash.com/photo-1615906655593-ad0386982a0f?w=800&q=80",
     href: "/service#top-end-rebuilds",
   },
   {
     Icon: Gauge,
-    title: "Carburettor Cleaning",
+    title: "Carburettor cleaning",
     description: "Ultrasonic cleaning & rebuilds",
     image: "/abou2.avif",
     href: "/service#carb-cleaning",
   },
   {
     Icon: Cog,
-    title: "Vapour Blasting",
+    title: "Vapour blasting",
     description: "Restore parts to a satin finish",
     image: "/about1.avif",
     href: "/service#vapour-blasting",
   },
   {
     Icon: CircleGauge,
-    title: "Dyno Tuning",
+    title: "Dyno tuning",
     description: "Precision tuning & diagnostics",
     image: "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=800&q=80",
     href: "/service#other-services",
@@ -59,8 +59,7 @@ export default function Services() {
             servicing - we have got you covered.
           </p>
           <ButtonLink href="/service" className="cursor-pointer rounded-sm px-4">
-            Explore all services
-            <ArrowRight className="size-4" />
+            Services
           </ButtonLink>
         </div>
 

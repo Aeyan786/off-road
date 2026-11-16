@@ -21,7 +21,7 @@ export default function BlogCard({ blog, className }) {
     <article className={`group flex flex-col border  rounded-lg ${className ?? ""}`}>
       <Link
         href={href}
-        className="relative block aspect-[4/3]  rounded-t-lg overflow-hidden bg-neutral-200"
+        className="relative block aspect-[4/3] overflow-hidden rounded-t-lg bg-white"
         tabIndex={-1}
         aria-hidden="true"
       >
@@ -31,7 +31,7 @@ export default function BlogCard({ blog, className }) {
             alt=""
             fill
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover rounded-t-lg transition-transform duration-500 ease-out"
+            className="object-contain rounded-t-lg transition-transform duration-500 ease-out"
           />
         ) : (
           <ImagePlaceholder className="h-full w-full" />

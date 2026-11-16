@@ -38,7 +38,7 @@ const TermsPage = () => {
             Terms of service
           </h1>
           <p className="mt-4 text-white/90">
-            Welcome to Off Road Performance (ORP)
+            Welcome to Off Road Performance ‘ORP’
           </p>
           <p className="mt-2 text-sm text-white/70">
             Last updated: {lastUpdated}
@@ -136,7 +136,7 @@ const TermsPage = () => {
                 Website use & conduct
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
-                Off Road Performance ('ORP') grants you a limited license to
+                Off Road Performance ‘ORP’ grants you a limited license to
                 access and make personal use of this site. This license does
                 not include any right to resell or commercially use our site
                 or its contents, download or copy account information for
@@ -166,7 +166,7 @@ const TermsPage = () => {
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 By posting content on our site, you grant Off Road
-                Performance ('ORP') a nonexclusive, royalty-free, perpetual
+                Performance ‘ORP’ a nonexclusive, royalty-free, perpetual
                 right to use, reproduce, modify, and display such content in
                 any media. You confirm that you own the rights to the
                 content you post and that it is accurate.
@@ -179,7 +179,7 @@ const TermsPage = () => {
               <p className="mt-4 text-gray-600 leading-relaxed">
                 All content on this site including text, graphics, logos,
                 images, and software is the property of Off Road Performance
-                ('ORP') or its content suppliers and is protected by United
+                ‘ORP’ or its content suppliers and is protected by United
                 Kingdom and international copyright laws.
               </p>
             </div>
@@ -190,8 +190,8 @@ const TermsPage = () => {
                 Trademarks
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
-                The 'Off Road Performance' and 'ORP' names and logos are
-                trademarks of © Off Road Performance 'ORP' - 2026 All Rights
+                The ‘Off Road Performance’ and ‘ORP’ names and logos are
+                trademarks of © Off Road Performance ‘ORP’ - 2026 All Rights
                 Reserved.
               </p>
               <p className="mt-4 text-gray-600 leading-relaxed">
@@ -224,7 +224,7 @@ const TermsPage = () => {
                 Risk of loss
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
-                All items purchased from Off Road Performance ('ORP') are
+                All items purchased from Off Road Performance ‘ORP’ are
                 made pursuant to a shipment contract. This means that the
                 risk of loss and title for such items pass to you upon our
                 delivery of the package to the shipping carrier.
@@ -238,17 +238,17 @@ const TermsPage = () => {
               </h2>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 This site and all information, content and products included
-                on it are provided by Off Road Performance ('ORP') on an "AS
+                on it are provided by Off Road Performance ‘ORP’ on an "AS
                 IS" and "AS AVAILABLE" basis.
               </p>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 You expressly agree that your use of this site is at your
                 sole risk. To the fullest extent permissible by law, Off
-                Road Performance ('ORP') disclaims all warranties, express
+                Road Performance ‘ORP’ disclaims all warranties, express
                 or implied.
               </p>
               <p className="mt-4 text-gray-600 leading-relaxed">
-                Off Road Performance ('ORP') will not be liable for any
+                Off Road Performance ‘ORP’ will not be liable for any
                 damages of any kind arising from the use of this site or
                 from any products purchased from this site, including but
                 not limited to direct, indirect or incidental punitive and
@@ -271,7 +271,7 @@ const TermsPage = () => {
                 By visiting our website, you agree that the laws of the
                 United Kingdom will govern these "Terms of Service" and any
                 dispute that might arise between you and Off Road
-                Performance ('ORP').
+                Performance ‘ORP’.
               </p>
             </div>
 

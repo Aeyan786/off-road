@@ -1,4 +1,3 @@
-import { ArrowRight } from "lucide-react";
 import ButtonLink from "@/components/ui/button-link";
 import ProductGrid from "@/components/home/ProductGrid";
 
@@ -31,8 +30,7 @@ export default function NewArrivals({ products = [] }) {
 
             <div className="mt-10 text-center">
               <ButtonLink href="/new-arrivals" className="cursor-pointer">
-                View all new arrivals
-                <ArrowRight className="size-4" />
+                New arrivals
               </ButtonLink>
             </div>
           </>

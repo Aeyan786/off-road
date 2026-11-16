@@ -52,7 +52,7 @@ const ServicePage = () => {
       href: '#top-end-rebuilds',
     },
     {
-      title: 'Carburettor Cleaning',
+      title: 'Carburettor cleaning',
       description: 'Ultrasonic cleaning & rebuilds',
       image:
         '/abou2.avif',
@@ -66,7 +66,7 @@ const ServicePage = () => {
       href: '#vapour-blasting',
     },
     {
-      title: 'Dyno Tuning',
+      title: 'Dyno tuning',
       description: 'Precision tuning & diagnostics',
       image:
         'https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=800&q=80',
@@ -101,7 +101,7 @@ const ServicePage = () => {
       twinNote: 'bore on both',
     },
     {
-      title: 'Repair Detonation & Re-plate',
+      title: 'Repair detonation & re-plate',
       description:
         'Restores cylinders damaged by detonation with a full re-plate finish.',
       single: '£193.00',
@@ -111,7 +111,7 @@ const ServicePage = () => {
       twinAltNote: 'repair on two',
     },
     {
-      title: 'Rebuild Skirt & Re-plate',
+      title: 'Rebuild skirt & re-plate',
       description:
         'Rebuilds worn piston skirts prior to a fresh cylinder re-plate.',
       single: '£195.00',
@@ -124,27 +124,27 @@ const ServicePage = () => {
 
   const carbCleaning = [
     {
-      label: 'Single Carburettor',
+      label: 'Single carburettor',
       price: '£45.00',
       description: 'Full ultrasonic clean for one carburettor unit.',
     },
     {
-      label: 'Twin Carburettors',
+      label: 'Twin carburettors',
       price: '£55.00',
       description: 'Ultrasonic cleaning for a matched pair of carburettors.',
     },
     {
-      label: 'Carburettor (Set of 3)',
+      label: 'Carburettor (set of 3)',
       price: '£65.00',
       description: 'Full set cleaning for triple carburettor set-ups.',
     },
     {
-      label: 'Carburettor (Set of 4)',
+      label: 'Carburettor (set of 4)',
       price: '£75.00',
       description: 'Complete ultrasonic service for four-carb systems.',
     },
     {
-      label: 'Strip Down & Rebuild',
+      label: 'Strip down & rebuild',
       price: '£25.00',
       description: 'Individual carburettor strip and rebuild (plus parts if needed).',
     },
@@ -152,42 +152,42 @@ const ServicePage = () => {
 
   const vapourBlastingItems = [
     {
-      category: 'Single Cylinders',
+      category: 'Single cylinder',
       items: [
         { name: 'Head', price: '£35.00' },
         { name: 'Barrel', price: '£40.00' },
         { name: 'Crankcases (each)', price: '£30.00' },
-        { name: 'Clutch Cover', price: '£25.00' },
-        { name: 'Generator Cover', price: '£25.00' },
+        { name: 'Clutch cover', price: '£25.00' },
+        { name: 'Generator cover', price: '£25.00' },
       ],
     },
     {
-      category: 'Other Parts',
+      category: 'Other parts',
       items: [
         { name: 'Carburettor', price: '£20.00' },
-        { name: 'Brake Callipers', price: '£28.00' },
-        { name: 'Fork Yokes (pair)', price: '£35.00' },
-        { name: 'Fork Bottoms (pair)', price: '£38.00' },
-        { name: 'Wheel Hub', price: '£30.00' },
-        { name: 'Magnesium Wheels', price: '£55.00' },
+        { name: 'Brake calliper', price: '£28.00' },
+        { name: 'Fork yokes (pair)', price: '£35.00' },
+        { name: 'Fork bottoms (pair)', price: '£38.00' },
+        { name: 'Wheel hub', price: '£30.00' },
+        { name: 'Magnesium wheels', price: '£55.00' },
       ],
     },
     {
-      category: 'Twin Cylinders',
+      category: 'Twin cylinders',
       items: [
         { name: 'Head', price: '£45.00' },
         { name: 'Barrel', price: '£50.00' },
         { name: 'Crankcases (each)', price: '£35.00' },
-        { name: 'Clutch Cover', price: '£28.00' },
-        { name: 'Generator Cover', price: '£28.00' },
+        { name: 'Clutch cover', price: '£28.00' },
+        { name: 'Generator cover', price: '£28.00' },
       ],
     },
     {
-      category: 'Complete Engines',
+      category: 'Complete engines',
       items: [
-        { name: 'Single Cylinder', price: '£120.00' },
-        { name: 'Twin Cylinder', price: '£165.00' },
-        { name: 'Four Cylinder', price: '£220.00' },
+        { name: 'Single cylinder', price: '£120.00' },
+        { name: 'Twin cylinder', price: '£165.00' },
+        { name: 'Four cylinder', price: '£220.00' },
       ],
     },
   ]
@@ -222,7 +222,7 @@ const ServicePage = () => {
         <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-4 py-16 md:grid-cols-2 md:py-24">
           <div>
             <span className="text-sm font-medium text-gray-500">
-              {"Off Road Performance 'ORP' service centre"}
+              {"Off Road Performance ‘ORP’ service centre"}
             </span>
             <h1 className="mt-3 text-4xl font-extrabold leading-tight text-gray-900 sm:text-5xl">
               A service centre that cares about your ride
@@ -344,7 +344,7 @@ const ServicePage = () => {
           Aftermarket & OEM parts
         </h2>
         <p className="mt-4 leading-relaxed text-gray-600">
-          Off Road Performance ('ORP') hold huge stocks of OEM, service and
+          Off Road Performance ‘ORP’ hold huge stocks of OEM, service and
           aftermarket performance parts from all the industry's leading
           manufacturers. We hope to continue offering excellent customer
           service while placing your needs above all else, and to continue

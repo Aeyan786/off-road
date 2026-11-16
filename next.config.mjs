@@ -17,6 +17,10 @@ const nextConfig = {
       },
     ],
   },
+  // The Returns page used to live at /refunds.
+  redirects() {
+    return [{ source: "/refunds", destination: "/returns", permanent: true }];
+  },
   experimental: {
     // Media/product image uploads and ZIP imports post their files through
     // Server Actions, which cap request bodies at 1MB by default.

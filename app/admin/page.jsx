@@ -66,7 +66,7 @@ function SectionHeader({ title, description, href, linkLabel }) {
       </div>
       {href ? (
         <Link href={href} className="cursor-pointer text-sm font-medium text-brand hover:underline">
-          {linkLabel ?? "View all"} →
+          {linkLabel ?? "View "} →
         </Link>
       ) : null}
     </div>
@@ -377,7 +377,7 @@ export default async function AdminDashboardPage({ searchParams }) {
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Recent Orders</CardTitle>
                 <Link href="/admin/orders" className="cursor-pointer text-xs text-brand hover:underline">
-                  View all
+                  View 
                 </Link>
               </CardHeader>
               <CardContent>
@@ -417,7 +417,7 @@ export default async function AdminDashboardPage({ searchParams }) {
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Newest Products</CardTitle>
                 <Link href="/admin/products" className="cursor-pointer text-xs text-brand hover:underline">
-                  View all
+                  View 
                 </Link>
               </CardHeader>
               <CardContent>
@@ -454,7 +454,7 @@ export default async function AdminDashboardPage({ searchParams }) {
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Recent Customers</CardTitle>
                 <Link href="/admin/customers" className="cursor-pointer text-xs text-brand hover:underline">
-                  View all
+                  View 
                 </Link>
               </CardHeader>
               <CardContent>
@@ -487,7 +487,7 @@ export default async function AdminDashboardPage({ searchParams }) {
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Latest Blogs</CardTitle>
                 <Link href="/admin/blogs" className="cursor-pointer text-xs text-brand hover:underline">
-                  View all
+                  View 
                 </Link>
               </CardHeader>
               <CardContent>

@@ -48,7 +48,7 @@ const CookiesPage = () => {
             Cookie policy
           </h1>
           <p className="mt-4 text-white/90">
-            At Off road performance (ORP) we value your privacy and want to
+            At Off Road Performance ‘ORP’ we value your privacy and want to
             make your shopping experience smooth and secure.
           </p>
         </div>

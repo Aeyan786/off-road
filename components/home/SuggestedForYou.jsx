@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import ProductCard from "@/components/home/ProductCard";
 import ButtonLink from "@/components/ui/button-link";
 import { cn } from "@/lib/utils";
@@ -68,8 +68,7 @@ export default function SuggestedForYou({ tabs = [] }) {
             href={active.key === "all" ? "/products" : `/products?category=${active.slug}`}
             className="cursor-pointer rounded-sm px-4"
           >
-            {active.key === "all" ? "Browse all products" : `View all ${active.label}`}
-            <ArrowRight className="size-4" />
+            {active.key === "all" ? "Browse" : `View  ${active.label}`}
           </ButtonLink>
         </div>
       </div>

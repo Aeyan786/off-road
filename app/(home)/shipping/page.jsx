@@ -61,7 +61,7 @@ const ShippingPage = () => {
             Shipping policy
           </h1>
           <p className="mt-4 text-white/90">
-            At Off Road Performance (ORP) we work hard to get your order to
+            At Off Road Performance ‘ORP’ we work hard to get your order to
             you as quickly and efficiently as possible.
           </p>
         </div>

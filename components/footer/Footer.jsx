@@ -27,7 +27,7 @@ const LINK_COLUMNS = [
     links: [
       { label: "About Us", href: "/about" },
       { label: "Cookies", href: "/cookies" },
-       { label: "Refunds", href: "/refunds" },
+       { label: "Returns", href: "/returns" },
       { label: "Shipping", href: "/shipping" },
     ],
   },
@@ -130,11 +130,8 @@ export default function Footer() {
       </div>
 
       <div className="bg-brand text-white">
-        <div className="mx-auto flex max-w-[1400px] flex-col items-center gap-3 px-6 py-3 text-xs sm:flex-row sm:justify-between">
-          <p>All Right Reserved &copy; 2025 Design Concept By Vebryx Ltd</p>
-          {/* The social buttons live in the Socials block above, leaving this
-              side for the business line. */}
-          <p>{"Off Road Performance © 2026"}</p>
+        <div className="mx-auto flex max-w-[1400px] flex-col items-center gap-3 px-6 py-3 text-xs sm:flex-row sm:justify-end">
+          <p>Off Road Performance ‘ORP’ © 2026</p>
         </div>
       </div>
     </footer>

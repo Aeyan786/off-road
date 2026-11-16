@@ -7,8 +7,6 @@ import {
   MapPin,
   Clock,
   ArrowUpRight,
-  Plus,
-  Minus,
   X,
 } from "lucide-react";
 import { SOCIAL_LINKS } from "@/components/social-links";
@@ -21,8 +19,6 @@ const ContactPage = () => {
     subject: "",
     message: "",
   });
-
-  const [openFaq, setOpenFaq] = useState(0);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -59,29 +55,6 @@ const ContactPage = () => {
       detail2: "Weekends – closed ",
       subDetail:
         "We usually respond to WhatsApp messages and Mail outside of working hours",
-    },
-  ];
-
-  const faqs = [
-    {
-      question: "How do I know if a part fits my vehicle?",
-      answer:
-        "Use our Year/Make/Model search tool on any product page — it filters out parts that won't fit your specific vehicle.",
-    },
-    {
-      question: "What is your return policy?",
-      answer:
-        "We are happy to accept returns on most new, unused items within 7 days of delivery, provided they are in their original packaging",
-    },
-    {
-      question: "Do you ship internationally?",
-      answer:
-        "Currently we only ship within the UK, with plans to expand soon.",
-    },
-    {
-      question: "How fast is shipping?",
-      answer:
-        "Most orders ship within 24 hours and arrive within 2-5 business days depending on location.",
     },
   ];
 
@@ -286,62 +259,6 @@ const ContactPage = () => {
                 issue, calling or WhatsApp messaging us directly is fastest.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ SECTION */}
-      <section className="border-t border-neutral-100 px-6 py-24 sm:px-10 lg:px-16">
-        <div className="mx-auto max-w-4xl">
-          <span className="text-sm font-semibold  tracking-widest text-[#1B9DDB]">
-            FAQs
-          </span>
-          <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">
-            Frequently asked questions.
-          </h2>
-
-          <div className="mt-12 divide-y divide-neutral-200 border-t border-neutral-200">
-            {faqs.map((faq, index) => {
-              const isOpen = openFaq === index;
-
-              return (
-                <div key={faq.question}>
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaq(isOpen ? -1 : index)}
-                    className="flex w-full items-center cursor-pointer justify-between gap-6 py-6 text-left"
-                  >
-                    <span className="text-lg font-semibold text-neutral-900">
-                      {faq.question}
-                    </span>
-
-                    <span
-                      className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border border-neutral-300 text-neutral-500 transition-transform duration-300 ${
-                        isOpen ? "rotate-0" : ""
-                      }`}
-                    >
-                      {isOpen ? (
-                        <X className="h-3.5 w-3.5" />
-                      ) : (
-                        <Plus className="h-3.5 w-3.5" />
-                      )}
-                    </span>
-                  </button>
-
-                  <div
-                    className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
-                      isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                    }`}
-                  >
-                    <div className="overflow-hidden">
-                      <p className="max-w-2xl pb-6 text-sm leading-relaxed text-neutral-500">
-                        {faq.answer}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
           </div>
         </div>
       </section>

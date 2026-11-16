@@ -9,7 +9,6 @@ import {
   RotateCcw,
   X,
 } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -130,11 +129,8 @@ function FilterCheckboxGroup({
         <div className="min-h-0 overflow-hidden">
           <div className="space-y-0.5 bg-white p-1 pt-2">
             {/* Custom content (the category drill-down) replaces the flat list. */}
-            {/* Custom content (the category drill-down) replaces the flat
-                list; as a function it also gets a way to collapse the group. */}
-            {typeof children === "function" ? (
-              children({ collapse: () => setOpen(false) })
-            ) : children ? (
+            {/* Custom content (the category drill-down) replaces the flat list. */}
+            {children ? (
               children
             ) : values.length === 0 ? (
               <p className="px-1.5 py-1 text-xs text-neutral-400">
@@ -180,93 +176,6 @@ function FilterCheckboxGroup({
 }
 
 /**
- * Price range accordion.
- */
-function PriceRangeFilter({
-  minPrice,
-  maxPrice,
-  setMinPrice,
-  setMaxPrice,
-  facets,
-}) {
-  const [open, setOpen] = useState(true);
-
-  const hasPrice = minPrice !== "" || maxPrice !== "";
-
-  return (
-    <div>
-      {/* Accordion header */}
-      <button
-        type="button"
-        onClick={() => setOpen((previous) => !previous)}
-        className="flex w-full cursor-pointer items-center justify-between gap-2 py-1 text-left"
-        aria-expanded={open}
-      >
-        <span className="flex items-center gap-1.5 text-xs font-medium text-neutral-600">
-          Price range
-
-          {hasPrice ? (
-            <span className="rounded-full bg-brand px-1.5 py-px text-[10px] font-semibold leading-4 text-white">
-              1
-            </span>
-          ) : null}
-        </span>
-
-        {open ? (
-          <ChevronUp className="size-4 text-neutral-500" />
-        ) : (
-          <ChevronDown className="size-4 text-neutral-500" />
-        )}
-      </button>
-
-      {/* Accordion content */}
-      <div
-        className={cn(
-          "grid transition-[grid-template-rows] duration-200 ease-in-out",
-          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-        )}
-      >
-        <div className="min-h-0 overflow-hidden">
-          <div className="flex items-center gap-2 pt-2">
-            <Input
-              type="number"
-              min="0"
-              step="0.01"
-              inputMode="decimal"
-              value={minPrice}
-              onChange={(event) =>
-                setMinPrice(event.target.value)
-              }
-              placeholder={`Min £${facets.minPrice}`}
-              className="h-9 text-sm"
-              aria-label="Minimum price"
-            />
-
-            <span className="text-xs text-neutral-400">
-              –
-            </span>
-
-            <Input
-              type="number"
-              min="0"
-              step="0.01"
-              inputMode="decimal"
-              value={maxPrice}
-              onChange={(event) =>
-                setMaxPrice(event.target.value)
-              }
-              placeholder={`Max £${facets.maxPrice}`}
-              className="h-9 text-sm"
-              aria-label="Maximum price"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/**
  * Storefront product filters.
  *
  * Every filter lives in the URL, so:
@@ -285,14 +194,6 @@ export default function ProductFilters({
 
   // Parent/child lookups for the category drill-down, built once per tree.
   const categoryIndex = useMemo(() => indexCategoryTree(categoryTree), [categoryTree]);
-
-  const [minPrice, setMinPrice] = useState(
-    searchParams.get("min") ?? ""
-  );
-
-  const [maxPrice, setMaxPrice] = useState(
-    searchParams.get("max") ?? ""
-  );
 
   const [isPending, startTransition] = useTransition();
 
@@ -409,32 +310,6 @@ export default function ProductFilters({
     setValues("category", toggleCategory(categoryIndex, current, slug, checked));
   }
 
-  /*
-   * Price is typed rather than picked, so debounce it.
-   */
-  useEffect(() => {
-    const current = searchParams.get("min") ?? "";
-    const currentMax = searchParams.get("max") ?? "";
-
-    if (
-      minPrice === current &&
-      maxPrice === currentMax
-    ) {
-      return;
-    }
-
-    const timeout = setTimeout(() => {
-      apply({
-        min: minPrice,
-        max: maxPrice,
-      });
-    }, 400);
-
-    return () => clearTimeout(timeout);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [minPrice, maxPrice]);
-
   const searchTerm = searchParams.get("q")?.trim();
 
 
@@ -452,8 +327,6 @@ export default function ProductFilters({
     "manufacturer",
     "model",
     "year",
-    "min",
-    "max",
   ].some((key) => searchParams.get(key));
 
   return (
@@ -474,8 +347,6 @@ export default function ProductFilters({
             variant="ghost"
             className="cursor-pointer rounded-sm px-3 text-xs"
             onClick={() => {
-              setMinPrice("");
-              setMaxPrice("");
               setSelection(
                 readSelection(new URLSearchParams())
               );
@@ -529,19 +400,14 @@ export default function ProductFilters({
         selected={selection.category}
         onClear={() => setValues("category", [])}
       >
-        {({ collapse }) => (
-          <CategoryTreeFilter
-            tree={categoryTree}
-            index={categoryIndex}
-            selected={selection.category}
-            onToggle={(slug, checked) => {
-              onCategoryToggle(slug, checked);
-              // Ticking at any level closes the dropdown; reopening it shows
-              // the ticked category's subcategories to drill further.
-              if (checked) collapse();
-            }}
-          />
-        )}
+        {/* Stays open on tick, so a ticked category's subcategories (and
+            their sub-subcategories) stay in view to drill down. */}
+        <CategoryTreeFilter
+          tree={categoryTree}
+          index={categoryIndex}
+          selected={selection.category}
+          onToggle={onCategoryToggle}
+        />
       </FilterCheckboxGroup>
 
       {/* SUPPLIER — chosen from the header's vendor dropdown, not here */}
@@ -613,15 +479,6 @@ export default function ProductFilters({
           toggle("year", value, checked)
         }
         onClear={() => setValues("year", [])}
-      />
-
-      {/* PRICE RANGE */}
-      <PriceRangeFilter
-        minPrice={minPrice}
-        maxPrice={maxPrice}
-        setMinPrice={setMinPrice}
-        setMaxPrice={setMaxPrice}
-        facets={facets}
       />
     </aside>
   );

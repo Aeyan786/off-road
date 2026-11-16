@@ -68,10 +68,7 @@ export default function OrderSummary({ items, subtotal, shipping, shippingNote }
         </div>
       </dl>
 
-      <p className="mt-4 flex items-center gap-1.5 text-xs text-neutral-500">
-        <Lock className="size-3.5" />
-        You&apos;ll pay securely on Stripe&apos;s checkout page.
-      </p>
+     
     </aside>
   );
 }

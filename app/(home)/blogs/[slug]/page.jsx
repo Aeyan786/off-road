@@ -70,15 +70,17 @@ export default async function BlogDetailsPage({ params }) {
           </div>
         </header>
 
+        {/* Same 4:3 frame as the blog cards, with the whole image shown on
+            white — featured images come in many shapes, and none is cut. */}
         {blog.image ? (
-          <div className="relative mt-8 aspect-video overflow-hidden rounded-sm bg-neutral-100">
+          <div className="relative mt-8 aspect-[4/3] overflow-hidden rounded-sm bg-white">
             <Image
               src={blog.image}
               alt={blog.title}
               fill
               priority
-              sizes="(min-width: 768px) 768px, 100vw"
-              className="object-cover"
+              sizes="(min-width: 896px) 896px, 100vw"
+              className="object-contain"
             />
           </div>
         ) : null}

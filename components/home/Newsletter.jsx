@@ -1,6 +1,5 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -40,7 +39,6 @@ export default function Newsletter() {
             className="gap-1.5 rounded-none px-5"
           >
             Subscribe
-            <ArrowRight className="size-4" />
           </Button>
         </form>
       </div>

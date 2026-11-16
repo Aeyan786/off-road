@@ -15,7 +15,7 @@ import ButtonLink from '@/components/ui/button-link'
 import WarningBox, { WarningList } from '@/components/ui/warning-box'
 
 export const metadata = {
-  title: "Returns & refunds",
+  title: "Returns",
   description: "Our returns window, refund process and what can be returned.",
 };
 
@@ -72,11 +72,11 @@ const RefundsPage = () => {
         <div className="mx-auto max-w-4xl px-4 text-center">
    
           <h1 className="mt-6 text-4xl font-extrabold text-white sm:text-5xl">
-            Returns & refunds
+            Returns
           </h1>
           <p className="mt-4 text-white/90">
             We want you to be completely satisfied with your purchase from
-            Off Road Performance (ORP)
+            Off Road Performance ‘ORP’
           </p>
         </div>
       </section>
@@ -182,7 +182,7 @@ const RefundsPage = () => {
               <div className="mt-6 space-y-4 border-l-2 border-[#1B9DDB]/20 pl-6">
                 <div>
                   <p className="font-semibold text-gray-800">
-                    Items from Off Road Performance ('ORP') stock
+                    Items from Off Road Performance ‘ORP’ stock
                   </p>
                   <p className="text-gray-600">
                     If your return is approved, a full refund will be

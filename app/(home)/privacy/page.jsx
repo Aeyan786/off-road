@@ -27,7 +27,7 @@ const PrivacyPage = () => {
             Privacy policy
           </h1>
           <p className="mt-4 text-white/90">
-            Your privacy is important to us at Off Road Performance (ORP)
+            Your privacy is important to us at Off Road Performance ‘ORP’
           </p>
           <p className="mt-2 text-sm text-white/70">
             Last updated: {lastUpdated}
