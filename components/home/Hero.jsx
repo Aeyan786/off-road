@@ -70,7 +70,7 @@ export default function Hero() {
         className="lg:col-span-4"
         eyebrow="Aftermarket parts specialists"
         title="Distributors of high-quality parts to the powersports industry"
-        src="/hero3.jpg"
+        src="/banners/mx.png"
         description="Where marquee brands meet worldclass distribution."
         href="/products"
         cta={{ label: "Support", href: "/contact" }}
@@ -80,15 +80,15 @@ export default function Hero() {
         className="lg:col-span-5"
         eyebrow="Auto parts supplier"
         title="Quality parts for every vehicle"
-        src="/hero5.jpg"
+        src="/banners/utv.png"
         description="We supply a wide range of genuine and reliable car parts for different makes and models, helping you keep your vehicle running smoothly."
         href="/products"
         cta={{ label: "Shop Now", href: "/products" }}
       />
 
       <div className="flex flex-col gap-2 lg:col-span-3">
-        <HeroTile title="Car Parts for All Models" src="/foot3.jpg" />
-        <HeroTile title="Professional Car Tools" src="/foot1.jpg" />
+        <HeroTile title="Car Parts for All Models" src="/banners/sport-utility.png" />
+        <HeroTile title="Professional Car Tools" src="/banners/pit-bike.png" />
       </div>
     </section>
   );

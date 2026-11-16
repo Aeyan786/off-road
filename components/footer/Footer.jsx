@@ -34,12 +34,12 @@ const LINK_COLUMNS = [
 ];
 
 const image = [
-  "/foot1.jpg",
-  "/foot2.jpg",
-  "/foot3.jpg",
-  "/hero1.jpg",
-  "/hero2.jpg",
-  "/hero3.jpg",
+  "/banners/spyder.png",
+  "/banners/truck.png",
+  "/banners/pwc.png",
+  "/banners/jeep-wrangler.png",
+  "/banners/enduro.png",
+  "/banners/street.png",
 ];
 
 export default function Footer() {

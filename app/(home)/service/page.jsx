@@ -48,28 +48,28 @@ const ServicePage = () => {
       title: 'Top end rebuilds',
       description: 'Cylinder re-plating, boring & repairs',
       image:
-        'https://images.unsplash.com/photo-1615906655593-ad0386982a0f?w=800&q=80',
+        '/banners/spyder.png',
       href: '#top-end-rebuilds',
     },
     {
       title: 'Carburettor cleaning',
       description: 'Ultrasonic cleaning & rebuilds',
       image:
-        '/abou2.avif',
+        '/banners/truck.png',
       href: '#carb-cleaning',
     },
     {
       title: 'Vapour blasting',
       description: 'Restore parts to a satin finish',
       image:
-        '/about1.avif',
+        '/banners/pwc.png',
       href: '#vapour-blasting',
     },
     {
       title: 'Dyno tuning',
       description: 'Precision tuning & diagnostics',
       image:
-        'https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=800&q=80',
+        '/banners/jeep-wrangler.png',
       href: '#other-services',
     },
   ]
@@ -238,8 +238,8 @@ const ServicePage = () => {
 
           <div className="relative h-72 w-full sm:h-96 md:h-[420px]">
             <Image
-              src="/foot5.webp"
-              alt="Off-road vehicle service"
+              src="/banners/atv.png"
+              alt="ATV quad bike"
               fill
               className="rounded-2xl object-cover"
               priority
@@ -301,8 +301,8 @@ const ServicePage = () => {
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 md:grid-cols-2">
           <div className="relative h-72 w-full sm:h-96">
             <Image
-              src="/abou2.avif"
-              alt="ORP service workshop"
+              src="/banners/street.png"
+              alt="Street motorbike"
               fill
               className="rounded-2xl object-cover"
             />
