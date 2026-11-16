@@ -14,7 +14,7 @@ export default function MainHeader({ suppliers = [] }) {
           href="/"
           className="min-w-0 truncate text-lg font-extrabold tracking-tight text-neutral-900 underline decoration-2 underline-offset-4 sm:text-2xl"
         >
-          <Image src="/navlogo.png" height={150} width={150} />
+          <Image src="/navbarlogo.png" height={150} width={150} />
         </Link>
 
         <div className="hidden flex-1 items-center justify-center lg:flex">
